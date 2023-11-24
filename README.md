@@ -37,6 +37,3 @@
 ---
 
 ##### Note: More rules might be added later on.
-Deadline
-    Seminar: 8th week 24/7
-    Project: 11th week 14/8
