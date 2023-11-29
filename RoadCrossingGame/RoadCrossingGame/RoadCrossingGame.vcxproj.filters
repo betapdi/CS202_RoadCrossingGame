@@ -18,5 +18,46 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CGAME.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CASSET.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CLAYER.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CBACKGROUND.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CMENU.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CGAME.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Constants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CSingleton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CASSET.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CLAYER.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CBACKGROUND.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CMENU.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowConnector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

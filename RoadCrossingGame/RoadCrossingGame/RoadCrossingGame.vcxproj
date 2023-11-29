@@ -139,7 +139,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CASSET.cpp" />
+    <ClCompile Include="CBACKGROUND.cpp" />
+    <ClCompile Include="CGAME.cpp" />
+    <ClCompile Include="CLAYER.cpp" />
+    <ClCompile Include="CMENU.cpp" />
     <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CASSET.h" />
+    <ClInclude Include="CBACKGROUND.h" />
+    <ClInclude Include="CGAME.h" />
+    <ClInclude Include="CLAYER.h" />
+    <ClInclude Include="CMENU.h" />
+    <ClInclude Include="Constants.h" />
+    <ClInclude Include="CSingleton.h" />
+    <ClInclude Include="WindowConnector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
