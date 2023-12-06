@@ -152,6 +152,7 @@
     <ClInclude Include="CGAME.h" />
     <ClInclude Include="CLAYER.h" />
     <ClInclude Include="CMENU.h" />
+    <ClInclude Include="COBJECT.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="CSingleton.h" />
     <ClInclude Include="WindowConnector.h" />
