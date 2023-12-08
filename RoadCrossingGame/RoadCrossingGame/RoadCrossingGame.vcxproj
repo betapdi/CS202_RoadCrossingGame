@@ -144,7 +144,13 @@
     <ClCompile Include="CGAME.cpp" />
     <ClCompile Include="CLAYER.cpp" />
     <ClCompile Include="CMENU.cpp" />
+    <ClCompile Include="CSETTING.cpp" />
+    <ClCompile Include="CSHAPE.cpp" />
+    <ClCompile Include="GANIMATION.cpp" />
+    <ClCompile Include="GBUTTON.cpp" />
+    <ClCompile Include="GSTATE.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="STATEMACHINE.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CASSET.h" />
@@ -154,7 +160,13 @@
     <ClInclude Include="CMENU.h" />
     <ClInclude Include="COBJECT.h" />
     <ClInclude Include="Constants.h" />
+    <ClInclude Include="CSETTING.h" />
+    <ClInclude Include="CSHAPE.h" />
     <ClInclude Include="CSingleton.h" />
+    <ClInclude Include="GANIMATION.h" />
+    <ClInclude Include="GBUTTON.h" />
+    <ClInclude Include="GSTATE.h" />
+    <ClInclude Include="STATEMACHINE.h" />
     <ClInclude Include="WindowConnector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

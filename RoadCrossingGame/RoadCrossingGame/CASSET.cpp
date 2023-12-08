@@ -205,6 +205,106 @@ sf::Font* CASSET::GetFont(std::string name) {
 	return font;
 }
 
+void CASSET::AddSound(std::string name) {
+	path = "../Assets/";
+	soundPath = path + "Audio/";
+
+	sf::Sound* sound = new sf::Sound;
+	sf::SoundBuffer* buffer = new sf::SoundBuffer;
+	buffer->loadFromFile(soundPath + name);
+	sound->setBuffer(*buffer);
+
+	//check if the same sound
+	auto it = m_sound.find(name);
+	if (it != m_sound.end()) {
+		return;
+	}
+	m_sound.insert(std::pair<std::string, sf::Sound*>(name, sound));
+}
+
+void CASSET::RemoveSound(std::string name) {
+	auto it = m_sound.find(name);
+	if (it != m_sound.end()) {
+		return;
+	}
+	if (it->second != nullptr) delete it->second;
+	m_sound.erase(it);
+}
+
+sf::Sound* CASSET::GetSound(std::string name) {
+	path = "../Assets/";
+	fontPath = path + "Audio/";
+
+	auto it = m_sound.find(name);
+	if (it != m_sound.end()) {
+		return it->second;
+	}
+
+	sf::Sound* sound = new sf::Sound;
+	sf::SoundBuffer* buffer = new sf::SoundBuffer;
+	buffer->loadFromFile(fontPath + name);
+	sound->setBuffer(*buffer);
+	m_sound.insert(std::pair<std::string, sf::Sound*>(name, sound));
+	return sound;
+}
+
+void CASSET::AddMusic(std::string name) {
+	path = "../Assets/";
+	soundPath = path + "Audio/";
+
+	sf::Music* music = new sf::Music;
+	music->openFromFile(soundPath + name);
+
+	//check if the same sound
+	auto it = m_music.find(name);
+	if (it != m_music.end()) {
+		return;
+	}
+	m_music.insert(std::pair<std::string, sf::Music*>(name, music));
+}
+
+void CASSET::RemoveMusic(std::string name) {
+	auto it = m_music.find(name);
+	if (it != m_music.end()) {
+		return;
+	}
+	if (it->second != nullptr) delete it->second;
+	m_music.erase(it);
+}
+
+sf::Music* CASSET::GetMusic(std::string name) {
+	path = "../Assets/";
+	soundPath = path + "Audio/";
+
+	auto it = m_music.find(name);
+	if (it != m_music.end()) {
+		return it->second;
+	}
+
+	sf::Music* music = new sf::Music;
+	music->openFromFile(soundPath + name);
+	m_music.insert(std::pair<std::string, sf::Music*>(name, music));	
+	return music;
+}
+
+void CASSET::playMusic(std::string name) {
+	if (isAllowed) {
+		//play music
+		GetMusic(name)->play();
+	}
+}
+
+void CASSET::playSFX(std::string name) {
+	if (isAllowed) {
+		// play sfx
+		GetSound(name)->play();
+	}
+}
+
+void CASSET::setAllow(bool isAllowed) {
+	this->isAllowed = isAllowed;
+}
+
 CASSET::CASSET() {
 	//Textures
 	AddTexture("city/1.png");
@@ -213,8 +313,20 @@ CASSET::CASSET() {
 	AddTexture("city/4.png");
 	AddTexture("city/5.png");
 	AddTexture("city/6.png");
-	AddTexture("cursor.png");
-	AddTexture("hand-cursor.png");
+
+	AddTexture("gui/cursor.png");
+	AddTexture("gui/back.png");
+	AddTexture("gui/cursor1.png");
+	AddTexture("gui/move_left.png");
+	AddTexture("gui/move_right.png");
+	AddTexture("gui/music_off.png");
+	AddTexture("gui/music_on.png");
+	AddTexture("gui/sfx_off.png");
+	AddTexture("gui/sfx_on.png");
+	AddTexture("gui/quit.png");
+
+
+	AddTexture("character/clown.png");
 
 	ExtractObjectsTexture();
 

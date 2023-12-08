@@ -1,5 +1,5 @@
-#ifndef CBACKGROUND_
-#define CBACKGROUND_
+#ifndef CBACKGROUND_H
+#define CBACKGROUND_H
 #include <vector>
 #include "CLAYER.h"
 #include "SFML/Graphics.hpp"
@@ -13,4 +13,4 @@ private:
 	std::vector<CLAYER*> background;
 };
 
-#endif // !CBACKGROUND_
+#endif // !CBACKGROUND_H

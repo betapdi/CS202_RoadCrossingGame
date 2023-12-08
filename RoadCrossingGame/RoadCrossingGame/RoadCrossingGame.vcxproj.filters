@@ -33,6 +33,24 @@
     <ClCompile Include="CMENU.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CSHAPE.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="STATEMACHINE.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GSTATE.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GBUTTON.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CSETTING.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GANIMATION.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CGAME.h">
@@ -59,7 +77,26 @@
     <ClInclude Include="WindowConnector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< Updated upstream
     <ClInclude Include="COBJECT.h">
+=======
+    <ClInclude Include="CSHAPE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="STATEMACHINE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GSTATE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GBUTTON.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CSETTING.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GANIMATION.h">
+>>>>>>> Stashed changes
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
