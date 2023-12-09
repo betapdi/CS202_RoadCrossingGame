@@ -16,6 +16,8 @@ public:
 	void AddTexture(std::string name);
 	void RemoveTexture(std::string name);
 	void ExtractObjectsTexture();
+	void loadTexture(std::string path, std::string name, sf::IntRect area);
+	sf::Texture* GetObjectTexture(std::string name);
 	sf::Texture* GetTexture(std::string name);
 
 	//Font

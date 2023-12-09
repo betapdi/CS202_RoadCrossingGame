@@ -1,4 +1,5 @@
 #include "CASSET.h"
+#include <iostream>
 
 void CASSET::AddTexture(std::string name) {
 	path = "../Assets/";
@@ -25,126 +26,107 @@ void CASSET::RemoveTexture(std::string name) {
 	m_textures.erase(it);
 }
 
+void CASSET::loadTexture(std::string path, std::string name, sf::IntRect area) {
+	sf::Texture* texture = new sf::Texture;
+	texture->loadFromFile(path, area);
+	m_textures.insert(std::pair<std::string, sf::Texture*>(name, texture));
+}
+
+sf::Texture* CASSET::GetObjectTexture(std::string name) {
+	auto it = m_textures.find(name);
+	if (it != m_textures.end()) {
+		return it->second;
+	}
+
+	sf::Texture* texture = new sf::Texture;
+	texture->loadFromFile(texturePath + name);
+	m_textures.insert(std::pair<std::string, sf::Texture*>(name, texture));
+	return texture;
+}
+
 void CASSET::ExtractObjectsTexture() {
 	texturePath = "../Assets/Texture/objects/";
 
 	//Extract static objects
 	std::string staticsPath = texturePath + "Statics/Objects.png";
-	sf::Texture* texture = new sf::Texture;
 
 	//Streets
-	texture->loadFromFile(staticsPath, sf::IntRect(16, 608, 31, 623)); 
-	m_textures.insert(std::pair<std::string, sf::Texture*>("static_street_sewer", texture));
+	loadTexture(staticsPath, "static_street_sewer", sf::IntRect(16, 608, 16, 16));
 
-	texture->loadFromFile(staticsPath, sf::IntRect(48, 608, 63, 623));
-	m_textures.insert(std::pair<std::string, sf::Texture*>("static_street", texture));
+	loadTexture(staticsPath, "static_street", sf::IntRect(48, 608, 16, 16));
 
-	texture->loadFromFile(staticsPath, sf::IntRect(80, 608, 95, 623));
-	m_textures.insert(std::pair<std::string, sf::Texture*>("static_street_dotted_horizontal", texture));
+	loadTexture(staticsPath, "static_street_dotted_horizontal", sf::IntRect(80, 608, 16, 16));
 
-	texture->loadFromFile(staticsPath, sf::IntRect(112, 608, 127, 623));
-	m_textures.insert(std::pair<std::string, sf::Texture*>("static_street_dotted_vertical", texture));
+	loadTexture(staticsPath, "static_street_dotted_vertical", sf::IntRect(112, 608, 16, 16));
 
-	texture->loadFromFile(staticsPath, sf::IntRect(16, 640, 31, 655));
-	m_textures.insert(std::pair<std::string, sf::Texture*>("static_street_yellow_vertical", texture));
+	loadTexture(staticsPath, "static_street_yellow_vertical", sf::IntRect(16, 640, 16, 16));
 
-	texture->loadFromFile(staticsPath, sf::IntRect(48, 640, 63, 655));
-	m_textures.insert(std::pair<std::string, sf::Texture*>("static_street_yellow_horizontal", texture));
+	loadTexture(staticsPath, "static_street_yellow_horizontal", sf::IntRect(48, 640, 16, 16));
 
-	texture->loadFromFile(staticsPath, sf::IntRect(80, 640, 95, 655));
-	m_textures.insert(std::pair<std::string, sf::Texture*>("static_street_road_markings_right", texture));
+	loadTexture(staticsPath, "static_street_road_markings_right", sf::IntRect(80, 640, 16, 16));
 
-	texture->loadFromFile(staticsPath, sf::IntRect(112, 640, 127, 655));
-	m_textures.insert(std::pair<std::string, sf::Texture*>("static_street_road_markings_middle", texture));
+	loadTexture(staticsPath, "static_street_road_markings_middle", sf::IntRect(112, 640, 16, 16));
 
-	texture->loadFromFile(staticsPath, sf::IntRect(144, 640, 159, 655));
-	m_textures.insert(std::pair<std::string, sf::Texture*>("static_street_road_markings_left", texture));
+	loadTexture(staticsPath, "static_street_road_markings_left", sf::IntRect(144, 640, 16, 16));
 
-	texture->loadFromFile(staticsPath, sf::IntRect(16, 672, 31, 687));
-	m_textures.insert(std::pair<std::string, sf::Texture*>("static_street_manhole", texture));
+	loadTexture(staticsPath, "static_street_manhole", sf::IntRect(16, 672, 16, 16));
 
-	texture->loadFromFile(staticsPath, sf::IntRect(80, 672, 95, 687));
-	m_textures.insert(std::pair<std::string, sf::Texture*>("static_street_white_horizontal", texture));
+	loadTexture(staticsPath, "static_street_white_horizontal", sf::IntRect(80, 672, 16, 16));
 
 	//Vehicles
-	texture->loadFromFile(staticsPath, sf::IntRect(17, 384, 80, 415));
-	m_textures.insert(std::pair<std::string, sf::Texture*>("static_vehicle_van_horizontal_1", texture));
+	loadTexture(staticsPath, "static_vehicle_van_horizontal_1", sf::IntRect(17, 384, 64, 32));
 
-	texture->loadFromFile(staticsPath, sf::IntRect(16, 448, 79, 479));
-	m_textures.insert(std::pair<std::string, sf::Texture*>("static_vehicle_van_horizontal_2", texture));
+	loadTexture(staticsPath, "static_vehicle_van_horizontal_2", sf::IntRect(16, 448, 64, 32));
 
-	texture->loadFromFile(staticsPath, sf::IntRect(129, 389, 176, 415));
-	m_textures.insert(std::pair<std::string, sf::Texture*>("static_vehicle_car_horizontal_1", texture));
+	loadTexture(staticsPath, "static_vehicle_car_horizontal_1", sf::IntRect(129, 389, 48, 27));
 
-	texture->loadFromFile(staticsPath, sf::IntRect(128, 453, 175, 479));
-	m_textures.insert(std::pair<std::string, sf::Texture*>("static_vehicle_car_horizontal_2", texture));
+	loadTexture(staticsPath, "static_vehicle_car_horizontal_2", sf::IntRect(128, 453, 48, 27));
 
-	texture->loadFromFile(staticsPath, sf::IntRect(271, 400, 304, 449));
-	m_textures.insert(std::pair<std::string, sf::Texture*>("static_vehicle_van_horizontal_1", texture));
+	loadTexture(staticsPath, "static_vehicle_van_vertical_1", sf::IntRect(271, 400, 34, 50));
 
-	texture->loadFromFile(staticsPath, sf::IntRect(240, 483, 271, 527));
-	m_textures.insert(std::pair<std::string, sf::Texture*>("static_vehicle_car_horizontal_1", texture));
+	loadTexture(staticsPath, "static_vehicle_car_vertical_1", sf::IntRect(240, 483, 32, 45));
 
-	texture->loadFromFile(staticsPath, sf::IntRect(304, 483, 335, 527));
-	m_textures.insert(std::pair<std::string, sf::Texture*>("static_vehicle_car_horizontal_2", texture));
+	loadTexture(staticsPath, "static_vehicle_car_vertical_2", sf::IntRect(304, 483, 32, 45));
 
 	//Signs
-	texture->loadFromFile(staticsPath, sf::IntRect(385, 468, 398, 495));
-	m_textures.insert(std::pair<std::string, sf::Texture*>("static_sign_1", texture));
+	loadTexture(staticsPath, "static_sign_1", sf::IntRect(385, 468, 14, 27));
 
-	texture->loadFromFile(staticsPath, sf::IntRect(418, 470, 429, 495));
-	m_textures.insert(std::pair<std::string, sf::Texture*>("static_sign_2", texture));
+	loadTexture(staticsPath, "static_sign_2", sf::IntRect(418, 470, 12, 26));
 
-	texture->loadFromFile(staticsPath, sf::IntRect(450, 470, 461, 495));
-	m_textures.insert(std::pair<std::string, sf::Texture*>("static_sign_3", texture));
+	loadTexture(staticsPath, "static_sign_3", sf::IntRect(450, 470, 12, 26));
 
 	//Trees
-	texture->loadFromFile(staticsPath, sf::IntRect(384, 514, 399, 543));
-	m_textures.insert(std::pair<std::string, sf::Texture*>("static_tree_1", texture));
+	loadTexture(staticsPath, "static_tree_1", sf::IntRect(384, 514, 16, 30));
 
-	texture->loadFromFile(staticsPath, sf::IntRect(415, 517, 432, 543));
-	m_textures.insert(std::pair<std::string, sf::Texture*>("static_tree_2", texture));
+	loadTexture(staticsPath, "static_tree_2", sf::IntRect(415, 517, 18, 27));
 
 	//Fences
-	texture->loadFromFile(staticsPath, sf::IntRect(400, 131, 415, 143));
-	m_textures.insert(std::pair<std::string, sf::Texture*>("static_fence_1", texture));
+	loadTexture(staticsPath, "static_fence_1", sf::IntRect(400, 131, 16, 13));
 
-	texture->loadFromFile(staticsPath, sf::IntRect(432, 133, 447, 143));
-	m_textures.insert(std::pair<std::string, sf::Texture*>("static_fence_2", texture));
+	loadTexture(staticsPath, "static_fence_2", sf::IntRect(432, 133, 16, 11));
 
-	texture->loadFromFile(staticsPath, sf::IntRect(464, 128, 479, 143));
-	m_textures.insert(std::pair<std::string, sf::Texture*>("static_fence_3", texture));
+	loadTexture(staticsPath, "static_fence_3", sf::IntRect(464, 128, 16, 16));
 
-	texture->loadFromFile(staticsPath, sf::IntRect(497, 131, 510, 143));
-	m_textures.insert(std::pair<std::string, sf::Texture*>("static_fence_cone", texture));
+	loadTexture(staticsPath, "static_fence_cone", sf::IntRect(497, 131, 14, 13));
 
 	//Decorations (still obstacles)
-	texture->loadFromFile(staticsPath, sf::IntRect(401, 160, 414, 175));
-	m_textures.insert(std::pair<std::string, sf::Texture*>("static_decoration_bin_1", texture));
+	loadTexture(staticsPath, "static_decoration_bin_1", sf::IntRect(401, 160, 14, 16));
 
-	texture->loadFromFile(staticsPath, sf::IntRect(402, 192, 413, 207));
-	m_textures.insert(std::pair<std::string, sf::Texture*>("static_decoration_bin_2", texture));
+	loadTexture(staticsPath, "static_decoration_bin_2", sf::IntRect(402, 192, 12, 16));
 
-	texture->loadFromFile(staticsPath, sf::IntRect(434, 192, 445, 207));
-	m_textures.insert(std::pair<std::string, sf::Texture*>("static_decoration_bin_3", texture));
+	loadTexture(staticsPath, "static_decoration_bin_3", sf::IntRect(434, 192, 12, 16));
 
-	texture->loadFromFile(staticsPath, sf::IntRect(432, 160, 447, 175));
-	m_textures.insert(std::pair<std::string, sf::Texture*>("static_decoration_mailbox", texture));
+	loadTexture(staticsPath, "static_decoration_mailbox", sf::IntRect(432, 160, 16, 16));
 
-	texture->loadFromFile(staticsPath, sf::IntRect(466, 162, 475, 175));
-	m_textures.insert(std::pair<std::string, sf::Texture*>("static_decoration_fire_hydrant", texture));
+	loadTexture(staticsPath, "static_decoration_fire_hydrant", sf::IntRect(466, 162, 10, 14));
 
-	texture->loadFromFile(staticsPath, sf::IntRect(496, 176, 520, 207));
-	m_textures.insert(std::pair<std::string, sf::Texture*>("static_decoration_vending_machine", texture));
+	loadTexture(staticsPath, "static_decoration_vending_machine", sf::IntRect(496, 176, 25, 32));
 
-	texture->loadFromFile(staticsPath, sf::IntRect(544, 185, 559, 207));
-	m_textures.insert(std::pair<std::string, sf::Texture*>("static_decoration_cardboard_1", texture));
+	loadTexture(staticsPath, "static_decoration_cardboard_1", sf::IntRect(544, 185, 16, 23));
 
-	texture->loadFromFile(staticsPath, sf::IntRect(576, 185, 591, 207));
-	m_textures.insert(std::pair<std::string, sf::Texture*>("static_decoration_cardboard_2", texture));
+	loadTexture(staticsPath, "static_decoration_cardboard_2", sf::IntRect(576, 185, 16, 23));
 
-	texture->loadFromFile(staticsPath, sf::IntRect(608, 188, 630, 207));
-	m_textures.insert(std::pair<std::string, sf::Texture*>("static_decoration_cardboard_3", texture));
+	loadTexture(staticsPath, "static_decoration_cardboard_3", sf::IntRect(608, 188, 23, 20));
 
 	//Extract animations
 	std::string animationsPath1 = texturePath + "Animations/BD001.png";
