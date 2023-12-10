@@ -28,7 +28,6 @@ public:
 	void moveDown();
 	//void updateMenu(int choice);
 	//void draw(sf::RenderWindow* window);
-
 	//void draw(sf::RenderWindow* window, int menuState);
 	//void drawMenu();
 	//void drawSetting();

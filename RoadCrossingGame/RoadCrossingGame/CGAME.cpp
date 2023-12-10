@@ -142,13 +142,6 @@ void CGAME::run() {
 	sf::Time timeSinceLastUpdate = sf::Time::Zero;
 
 	while (window->isOpen()) {
-		//deltaTime = clock.restart().asSeconds();
-		//sf::Event event;
-		//while (window->pollEvent(event)) {
-		//	if (event.type == sf::Event::Closed) {
-		//		window->close();
-		//	}
-		//}
 		processEvents();
 		timeSinceLastUpdate += clock.restart();
 		while (timeSinceLastUpdate > TIME_PER_FRAME) {

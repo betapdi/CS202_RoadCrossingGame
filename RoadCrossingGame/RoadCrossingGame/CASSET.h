@@ -40,7 +40,7 @@ public:
 	void playMusic(std::string name);
 	void playSFX(std::string name);
 	void setAllow(bool isAllowed);
-private:
+public:
 	std::map<std::string, sf::Texture*> m_textures;
 	std::map<std::string, sf::Font*> m_fonts;
 	std::map<std::string, sf::Sound*> m_sound;

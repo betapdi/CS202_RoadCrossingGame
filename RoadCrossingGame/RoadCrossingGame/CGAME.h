@@ -17,7 +17,6 @@
 //	PAUSE,
 //	SETTING
 //};
-
 //class CGAME {
 //public:
 //	CGAME();

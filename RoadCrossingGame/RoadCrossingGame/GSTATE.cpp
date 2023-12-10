@@ -1,6 +1,7 @@
 #include "GSTATE.h"
 #include "CMENU.h"
 #include "CSETTING.h"
+#include "CPLAYING.h"
 
 GSTATE* GSTATE::createGState(stateTypes state) {
 	GSTATE* gState;
@@ -15,7 +16,7 @@ GSTATE* GSTATE::createGState(stateTypes state) {
 		gState = new CSETTING();
 		break;
 	case PLAYING:
-		gState = nullptr;
+		gState = new CPLAYING(curWindow->getWindow());
 		break;
 	case GAMEOVER:
 		gState = nullptr;

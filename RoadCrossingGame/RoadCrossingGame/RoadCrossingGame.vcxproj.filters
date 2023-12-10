@@ -1,103 +1,101 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CGAME.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CASSET.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="CASSET.cpp" />
+    <ClCompile Include="CGAME.cpp" />
+    <ClCompile Include="CMENU.cpp" />
+    <ClCompile Include="CSETTING.cpp" />
+    <ClCompile Include="GANIMATION.cpp" />
+    <ClCompile Include="GSTATE.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="STATEMACHINE.cpp" />
+    <ClCompile Include="CPLAYING.cpp" />
+    <ClCompile Include="COBJECT.cpp" />
+    <ClCompile Include="CBACKGROUND.cpp">
+      <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="CLAYER.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CBACKGROUND.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CMENU.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="CSHAPE.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="STATEMACHINE.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GSTATE.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="GBUTTON.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>GUI</Filter>
     </ClCompile>
-    <ClCompile Include="CSETTING.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="CSCENENODE.cpp">
+      <Filter>WORLD</Filter>
     </ClCompile>
-    <ClCompile Include="GANIMATION.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="CSPRITENODE.cpp">
+      <Filter>WORLD</Filter>
     </ClCompile>
+    <ClCompile Include="CENTITY.cpp">
+      <Filter>WORLD</Filter>
+    </ClCompile>
+    <ClCompile Include="GWORLD.cpp">
+      <Filter>WORLD</Filter>
+    </ClCompile>
+    <ClCompile Include="Aircraft.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CGAME.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Constants.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CSingleton.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CASSET.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClInclude Include="CASSET.h" />
+    <ClInclude Include="CGAME.h" />
+    <ClInclude Include="CMENU.h" />
+    <ClInclude Include="COBJECT.h" />
+    <ClInclude Include="Constants.h" />
+    <ClInclude Include="CSETTING.h" />
+    <ClInclude Include="CSingleton.h" />
+    <ClInclude Include="GANIMATION.h" />
+    <ClInclude Include="GSTATE.h" />
+    <ClInclude Include="STATEMACHINE.h" />
+    <ClInclude Include="WindowConnector.h" />
+    <ClInclude Include="CPLAYING.h" />
     <ClInclude Include="CLAYER.h">
-      <Filter>Header Files</Filter>
+      <Filter>GUI</Filter>
     </ClInclude>
     <ClInclude Include="CBACKGROUND.h">
-      <Filter>Header Files</Filter>
+      <Filter>GUI</Filter>
     </ClInclude>
-    <ClInclude Include="CMENU.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WindowConnector.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-<<<<<<< Updated upstream
-    <ClInclude Include="COBJECT.h">
-=======
     <ClInclude Include="CSHAPE.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="STATEMACHINE.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GSTATE.h">
-      <Filter>Header Files</Filter>
+      <Filter>GUI</Filter>
     </ClInclude>
     <ClInclude Include="GBUTTON.h">
-      <Filter>Header Files</Filter>
+      <Filter>GUI</Filter>
     </ClInclude>
-    <ClInclude Include="CSETTING.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="CSCENENODE.h">
+      <Filter>WORLD</Filter>
     </ClInclude>
-    <ClInclude Include="GANIMATION.h">
->>>>>>> Stashed changes
-      <Filter>Header Files</Filter>
+    <ClInclude Include="CSPRITENODE.h">
+      <Filter>WORLD</Filter>
     </ClInclude>
+    <ClInclude Include="CFOREACH.h">
+      <Filter>WORLD</Filter>
+    </ClInclude>
+    <ClInclude Include="CENTITY.h">
+      <Filter>WORLD</Filter>
+    </ClInclude>
+    <ClInclude Include="CRESOURCEHOLDER.h">
+      <Filter>WORLD</Filter>
+    </ClInclude>
+    <ClInclude Include="GWORLD.h">
+      <Filter>WORLD</Filter>
+    </ClInclude>
+    <ClInclude Include="RESOURCEIDENTIFIER.h">
+      <Filter>WORLD</Filter>
+    </ClInclude>
+    <ClInclude Include="Aircraft.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="GUI">
+      <UniqueIdentifier>{c5eb0d8f-ab01-4f4a-a50b-1873ef1339c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WORLD">
+      <UniqueIdentifier>{8c3fe70c-2c4e-40bf-9a48-6b534f6e2857}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CRESOURCEHOLDER.inl">
+      <Filter>WORLD</Filter>
+    </None>
   </ItemGroup>
 </Project>

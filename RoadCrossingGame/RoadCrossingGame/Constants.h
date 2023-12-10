@@ -5,11 +5,12 @@
 #include "SFML/Graphics.hpp"
 
 namespace Constants {
-	const int SCREEN_WIDTH = 1280;
-	const int SCREEN_HEIGHT = 720;
+	const int SCREEN_WIDTH			= 1280;
+	const int SCREEN_HEIGHT			= 720;
 
-	const int maxMenu = 4;
-	const int maxCharacters = 5;
+	const int maxMenu				= 4;
+	const int maxCharacters			= 5;
+	const int maxCar				= 7;
 
 	static sf::Font* LUCKIESTGUY	=		CASSET::getInstance()->GetFont("LuckiestGuy-Regular.ttf");
 	static sf::Font* BRUCE_FOREVER	=		CASSET::getInstance()->GetFont("BruceForeverRegular.ttf");
@@ -28,8 +29,8 @@ namespace Constants {
 	static sf::Texture* PENGUIN		=		CASSET::getInstance()->GetTexture("character/penguin.png");
 	static sf::Texture* CHICKEN		=		CASSET::getInstance()->GetTexture("character/chicken.png");
 	static sf::Texture* DUCK		=		CASSET::getInstance()->GetTexture("character/duck.png");
-	static sf::Texture* SQUIRREL		=		CASSET::getInstance()->GetTexture("character/squirrel.png");
+	static sf::Texture* SQUIRREL	=		CASSET::getInstance()->GetTexture("character/squirrel.png");
 
-	static sf::RenderWindow* getCurWindow = WindowConnector::getInstance()->getWindow();
+	//static sf::RenderWindow* getCurWindow = WindowConnector::getInstance()->getWindow();
 }
 #endif // !CONSTANT_H

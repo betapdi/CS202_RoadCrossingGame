@@ -139,35 +139,54 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Aircraft.cpp" />
     <ClCompile Include="CASSET.cpp" />
     <ClCompile Include="CBACKGROUND.cpp" />
+    <ClCompile Include="CENTITY.cpp" />
     <ClCompile Include="CGAME.cpp" />
     <ClCompile Include="CLAYER.cpp" />
     <ClCompile Include="CMENU.cpp" />
+    <ClCompile Include="COBJECT.cpp" />
+    <ClCompile Include="CPLAYING.cpp" />
+    <ClCompile Include="CSCENENODE.cpp" />
     <ClCompile Include="CSETTING.cpp" />
     <ClCompile Include="CSHAPE.cpp" />
+    <ClCompile Include="CSPRITENODE.cpp" />
     <ClCompile Include="GANIMATION.cpp" />
     <ClCompile Include="GBUTTON.cpp" />
     <ClCompile Include="GSTATE.cpp" />
+    <ClCompile Include="GWORLD.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="STATEMACHINE.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Aircraft.h" />
     <ClInclude Include="CASSET.h" />
     <ClInclude Include="CBACKGROUND.h" />
+    <ClInclude Include="CENTITY.h" />
+    <ClInclude Include="CFOREACH.h" />
     <ClInclude Include="CGAME.h" />
     <ClInclude Include="CLAYER.h" />
     <ClInclude Include="CMENU.h" />
     <ClInclude Include="COBJECT.h" />
     <ClInclude Include="Constants.h" />
+    <ClInclude Include="CPLAYING.h" />
+    <ClInclude Include="CRESOURCEHOLDER.h" />
+    <ClInclude Include="CSCENENODE.h" />
     <ClInclude Include="CSETTING.h" />
     <ClInclude Include="CSHAPE.h" />
     <ClInclude Include="CSingleton.h" />
+    <ClInclude Include="CSPRITENODE.h" />
     <ClInclude Include="GANIMATION.h" />
     <ClInclude Include="GBUTTON.h" />
     <ClInclude Include="GSTATE.h" />
+    <ClInclude Include="GWORLD.h" />
+    <ClInclude Include="RESOURCEIDENTIFIER.h" />
     <ClInclude Include="STATEMACHINE.h" />
     <ClInclude Include="WindowConnector.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CRESOURCEHOLDER.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

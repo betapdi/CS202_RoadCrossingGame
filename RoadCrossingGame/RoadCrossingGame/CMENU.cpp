@@ -306,6 +306,31 @@ void CMENU::moveDown() {
 //	moveCursor(choice);
 //}
 
+void CMENU::processEvents() {
+	sf::Event event;
+	while (curWindow->getWindow()->pollEvent(event)) {
+		if (event.type == sf::Event::Closed) {
+			curWindow->getWindow()->close();
+		}
+		if (event.type == sf::Event::Resized) {
+			sf::View view;
+			view.setSize(event.size.width, event.size.height);
+			curWindow->getWindow()->setView(view);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !isEntered) {
+			moveUp();
+		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !isEntered) {
+			moveDown();
+		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+			isEntered = true;
+		}
+	}
+}
+
 void CMENU::update(float deltaTime) {
 	intro.update(deltaTime);
 
@@ -337,7 +362,10 @@ void CMENU::update(float deltaTime) {
 	option[choice].setPosition(originalPos[choice].x, originalPos[choice].y + floatOffset);
 
 	if (isEntered) {
-		if (choice == 1) {
+		if (choice == 0) {
+			STATEMACHINE::getInstance()->changeState(stateTypes::PLAYING);
+		}
+		else if (choice == 1) {
 			STATEMACHINE::getInstance()->changeState(stateTypes::SETTING);
 		}
 		else if (choice == 2) {
@@ -349,6 +377,7 @@ void CMENU::update(float deltaTime) {
 		isEntered = false;
 	}
 }
+
 void CMENU::render(sf::RenderWindow* window) {
 	intro.render(window);
 	window->draw(crossyroad);
@@ -356,29 +385,4 @@ void CMENU::render(sf::RenderWindow* window) {
 		window->draw(option[i]);
 	}
 	window->draw(cursor);
-}
-
-void CMENU::processEvents() {
-	sf::Event event;
-	while (curWindow->getWindow()->pollEvent(event)) {
-		if (event.type == sf::Event::Closed) {
-			curWindow->getWindow()->close();
-		}
-		if (event.type == sf::Event::Resized) {
-			sf::View view;
-			view.setSize(event.size.width, event.size.height);
-			curWindow->getWindow()->setView(view);
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !isEntered) {
-			moveUp();
-		}
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !isEntered) {
-			moveDown();
-		}
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
-			isEntered = true;
-		}
-	}
 }
