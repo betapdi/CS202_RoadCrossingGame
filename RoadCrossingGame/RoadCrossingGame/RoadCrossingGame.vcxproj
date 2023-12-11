@@ -155,6 +155,7 @@
     <ClCompile Include="CSPRITENODE.cpp" />
     <ClCompile Include="GANIMATION.cpp" />
     <ClCompile Include="GBUTTON.cpp" />
+    <ClCompile Include="GMAP.cpp" />
     <ClCompile Include="GSTATE.cpp" />
     <ClCompile Include="GWORLD.cpp" />
     <ClCompile Include="main.cpp" />
@@ -181,6 +182,7 @@
     <ClInclude Include="CSPRITENODE.h" />
     <ClInclude Include="GANIMATION.h" />
     <ClInclude Include="GBUTTON.h" />
+    <ClInclude Include="GMAP.h" />
     <ClInclude Include="GSTATE.h" />
     <ClInclude Include="GWORLD.h" />
     <ClInclude Include="RESOURCEIDENTIFIER.h" />
