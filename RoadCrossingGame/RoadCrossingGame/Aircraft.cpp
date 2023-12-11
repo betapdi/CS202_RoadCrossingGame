@@ -3,13 +3,14 @@
 
 Textures::ID toTextureID(Aircraft::Type type)
 {
-	switch (type)
+	switch (type) 
 	{
 	case Aircraft::Eagle:
 		return Textures::Eagle;
-
 	case Aircraft::Raptor:
 		return Textures::Raptor;
+	case Aircraft::Default_road:
+		return Textures::DEFAULT_ROAD;
 	}
 	return Textures::Eagle;
 }

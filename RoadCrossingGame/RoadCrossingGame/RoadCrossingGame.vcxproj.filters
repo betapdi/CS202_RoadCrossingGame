@@ -35,7 +35,12 @@
     <ClCompile Include="GWORLD.cpp">
       <Filter>WORLD</Filter>
     </ClCompile>
-    <ClCompile Include="Aircraft.cpp" />
+    <ClCompile Include="Aircraft.cpp">
+      <Filter>WORLD</Filter>
+    </ClCompile>
+    <ClCompile Include="CROAD.cpp">
+      <Filter>WORLD</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CASSET.h" />
@@ -83,7 +88,12 @@
     <ClInclude Include="RESOURCEIDENTIFIER.h">
       <Filter>WORLD</Filter>
     </ClInclude>
-    <ClInclude Include="Aircraft.h" />
+    <ClInclude Include="Aircraft.h">
+      <Filter>WORLD</Filter>
+    </ClInclude>
+    <ClInclude Include="CROAD.h">
+      <Filter>WORLD</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GUI">

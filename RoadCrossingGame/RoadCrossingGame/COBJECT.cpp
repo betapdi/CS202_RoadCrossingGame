@@ -1,7 +1,9 @@
 #include "COBJECT.h"
 
-COBJECT::COBJECT(sf::Texture* texture) {
+COBJECT::COBJECT(sf::Texture* texture, sf::Vector2f pos) {
 	sprite.setTexture(*texture);
+	sprite.setScale(Constants::SCALE_OF_ROAD, Constants::SCALE_OF_ROAD);
+	sprite.setPosition(pos);
 }
 
 void COBJECT::createDummyMap(int length) {
@@ -18,7 +20,7 @@ void COBJECT::draw(sf::RenderWindow* window) {
 		int y = 0;
 		for (bool& draw : col) {
 			if (draw) {
-				sprite.setPosition(x * 16, y * 16);
+				sprite.setPosition(sf::Vector2f(x, y) * (float)Constants::ROAD_SIZE);
 				window->draw(sprite);
 			}
 			y++;

@@ -5,8 +5,10 @@
 #include "CSPRITENODE.h"
 #include "RESOURCEIDENTIFIER.h"
 #include "CRESOURCEHOLDER.h"
+#include "CROAD.h"
 #include <array>
 #include "Aircraft.h"
+#include "Constants.h"
 
 namespace sf {
 	class RenderWindow;
@@ -20,12 +22,16 @@ public:
 private:
 	void loadTextures();
 	void buildScene();
-
-
+	void generateRoads();
+	//void adaptPlayerPosition();
+	//void adaptPlayerVelocity();
+	//sf::FloatRect getViewBounds() const;
 private:
 	enum Layer
 	{
 		Background,
+		Road,
+		Obstacle,
 		Air,
 		LayerCount
 	};
@@ -40,6 +46,7 @@ private:
 	std::array<CSCENENODE*, LayerCount>	mSceneLayers;
 
 	sf::FloatRect mWorldBounds;
+	sf::FloatRect mRoadBounds;
 	sf::Vector2f mSpawnPosition;
 	float mScrollSpeed;
 	Aircraft* mPlayerAircraft;

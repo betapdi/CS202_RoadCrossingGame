@@ -60,6 +60,7 @@ void CPLAYING::update(float deltaTime) {
 }
 
 void CPLAYING::render(sf::RenderWindow* window) {
+	window->clear(sf::Color::White);
 	mWorld.draw();
 	window->setView(window->getDefaultView());
 	window->draw(mStatisticsText);

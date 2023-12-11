@@ -1,7 +1,7 @@
 #ifndef RESOURCEIDENTIFIER_H
 #define RESOURCEIDENTIFIER_H
 
-namespace sf
+namespace sf 
 {
 	class Texture;
 }
@@ -13,6 +13,9 @@ namespace Textures
 		Eagle,
 		Raptor,
 		Desert,
+		DEFAULT_ROAD,
+		DOTTED_ROAD,
+		PAVEMENT,
 	};
 }
 template <typename Resource, typename Identifier>

@@ -12,6 +12,7 @@ public:
 	{
 		Eagle,
 		Raptor,
+		Default_road,
 	};
 
 

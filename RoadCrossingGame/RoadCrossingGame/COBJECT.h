@@ -7,11 +7,11 @@
 #include "CASSET.h"
 #include <array>
 
-typedef std::array<bool, Constants::SCREEN_HEIGHT / 16> column;
+typedef std::array<bool, Constants::SCREEN_HEIGHT / Constants::ROAD_SIZE> column;
 
 class COBJECT {
 public:
-	COBJECT(sf::Texture* texture);
+	COBJECT(sf::Texture* texture, sf::Vector2f pos);
 	
 	void createDummyMap(int length);
 	void draw(sf::RenderWindow* window);

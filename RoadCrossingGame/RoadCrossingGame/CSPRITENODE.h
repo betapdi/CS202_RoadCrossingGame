@@ -10,7 +10,6 @@ private:
 	virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 private:
 	sf::Sprite mSprite;
-
 };
 
 #endif // !CSPRITENODE_H

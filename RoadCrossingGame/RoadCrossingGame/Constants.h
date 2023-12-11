@@ -3,10 +3,14 @@
 #include "CASSET.h"
 #include "WindowConnector.h"
 #include "SFML/Graphics.hpp"
+#include <iostream>
+#include <random>
 
 namespace Constants {
 	const int SCREEN_WIDTH			= 1280;
 	const int SCREEN_HEIGHT			= 720;
+	const int SCALE_OF_ROAD			= 3;
+	const int ROAD_SIZE				= 16 * SCALE_OF_ROAD;
 
 	const int maxMenu				= 4;
 	const int maxCharacters			= 5;
@@ -31,6 +35,17 @@ namespace Constants {
 	static sf::Texture* DUCK		=		CASSET::getInstance()->GetTexture("character/duck.png");
 	static sf::Texture* SQUIRREL	=		CASSET::getInstance()->GetTexture("character/squirrel.png");
 
+	static sf::Texture* START_LANE	=		CASSET::getInstance()->GetTexture("objects/statics/start_lane.png");
+	static sf::Texture* TOP_LANE	=		CASSET::getInstance()->GetTexture("objects/statics/top_lane1.png");
+	static sf::Texture* INNER_LANE	=		CASSET::getInstance()->GetTexture("objects/statics/inner_lane.png");
+
 	//static sf::RenderWindow* getCurWindow = WindowConnector::getInstance()->getWindow();
 }
+
+//int randInt(int min, int max) {
+//	std::random_device rd;
+//	std::mt19937 mt(rd());
+//	std::uniform_int_distribution<int> dist(min, max);
+//	return dist(mt);
+//}
 #endif // !CONSTANT_H

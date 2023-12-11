@@ -307,9 +307,6 @@ CASSET::CASSET() {
 	AddTexture("gui/sfx_on.png");
 	AddTexture("gui/quit.png");
 
-
-	AddTexture("character/clown.png");
-
 	ExtractObjectsTexture();
 
 	//Fonts
