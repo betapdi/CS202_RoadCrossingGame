@@ -2,59 +2,58 @@
 
 GWORLD::GWORLD(sf::RenderWindow& window)
 	: mWindow(window)
-	, mWorldView(window.getDefaultView())
 	, mTextures()
-	, mSpawnPosition(mWorldView.getSize().x / 2.f, mWorldView.getSize().y / 2.f)
-	, mScrollSpeed(-100.f)
+	, mSpawnPosition(mWindow.getDefaultView().getSize().x / 2.f, mWindow.getDefaultView().getSize().y / 2.f)
+	, mScrollSpeed(100.f)
 	, mPlayerAircraft(nullptr)
 {
 	loadTextures();
 	buildMaps();
-
-	// Prepare the view
-	mWorldView.setCenter(mSpawnPosition);
 }
 
 void GWORLD::update(float deltaTime)
 {
-	// Scroll the world
-	mWorldView.move(0.f, mScrollSpeed * deltaTime); //view keo len tren
+	//Handle map out of sight
+	if (mMaps.front())
 
-	if (mWorldView.getCenter().y - mWorldView.getSize().y / 2.f > mWorldBounds.top + mWorldBounds.height)
-	{
-		mWorldBounds.left = 0;
-		mWorldBounds.top = 0;
-		mWorldView.setCenter(mSpawnPosition);
-	}
+	//Get current map
+	GMAP& currMap = mMaps.front();
 
-	//Move the player sidewards (plane scouts follow the main aircraft)
-	sf::Vector2f position = mPlayerAircraft->getPosition();
-	sf::Vector2f velocity = mPlayerAircraft->getVelocity();
+	//Handle player touches border
+	currMap.handleTouchBorder(mPlayerAircraft);
 
-	//If player touches borders, flip its X velocity
-	if (position.x <= mWorldBounds.left + 150.f
-		|| position.x >= mWorldBounds.left + mWorldBounds.width - 150.f)
-	{
-		velocity.x = -velocity.x;
-		mPlayerAircraft->setVelocity(velocity);
-	}
-
-	// Apply movements
+	// Apply movements && Scroll the world downward
 	for (auto& it : mMaps) {
-		it.mSceneGraph.update(deltaTime);
+		it.update(deltaTime);
 	}
+}
+
+void GWORLD::buildPlayer() {
+	std::unique_ptr<Aircraft> leader(new Aircraft(Aircraft::Eagle, mTextures));
+	mPlayerAircraft = leader.get();
+	mPlayerAircraft->setPosition(mSpawnPosition);
+	mPlayerAircraft->setVelocity(40.f, mScrollSpeed);
+	mSceneLayers[Air]->attachChild(std::move(leader));
+
+	// Add two escorting aircrafts, placed relatively to the main plane
+	std::unique_ptr<Aircraft> leftEscort(new Aircraft(Aircraft::Raptor, mTextures));
+	leftEscort->setPosition(-80.f, 50.f);
+	mPlayerAircraft->attachChild(std::move(leftEscort));
+
+	std::unique_ptr<Aircraft> rightEscort(new Aircraft(Aircraft::Raptor, mTextures));
+	rightEscort->setPosition(80.f, 50.f);
+	mPlayerAircraft->attachChild(std::move(rightEscort));
 }
 
 void GWORLD::buildMaps() {
 	for (int i = 0; i < 3; ++i) {
-		mMaps.push_front(GMAP());
+		mMaps.push_front(GMAP(mWindow));
 	}
 }
 
 void GWORLD::draw() {
-	mWindow.setView(mWorldView);
 	for (auto& it : mMaps) {
-		mWindow.draw(it.mSceneGraph);
+		it.draw();
 	}
 }
 

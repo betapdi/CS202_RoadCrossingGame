@@ -6,6 +6,7 @@
 #include "RESOURCEIDENTIFIER.h"
 #include "CRESOURCEHOLDER.h"
 #include "CROAD.h"
+#include "GMAP.h"
 #include <array>
 #include <deque>
 #include "Aircraft.h"
@@ -23,16 +24,27 @@ public:
 private:
 	void loadTextures();
 	void buildMaps();
+	void buildPlayer();
 	//void adaptPlayerPosition();
 	//void adaptPlayerVelocity();
 	//sf::FloatRect getViewBounds() const;
 
+private:
+	enum Layer
+	{
+		Background,
+		Road,
+		Obstacle,
+		Air,
+		LayerCount
+	};
 
 private:
 	sf::RenderWindow& mWindow;
-	sf::View mWorldView;
 	TextureHolder mTextures;
 
+	CSCENENODE mSceneGraph;
+	std::array<CSCENENODE*, LayerCount>	mSceneLayers;
 
 	sf::Vector2f mSpawnPosition;
 	float mScrollSpeed;

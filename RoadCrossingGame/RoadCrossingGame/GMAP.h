@@ -42,9 +42,6 @@ private:
 	sf::View mWorldView;
 	TextureHolder mTextures;
 
-	CSCENENODE mSceneGraph;
-	std::array<CSCENENODE*, LayerCount>	mSceneLayers;
-
 	sf::FloatRect mWorldBounds;
 	sf::FloatRect mRoadBounds;
 	sf::Vector2f mSpawnPosition;
