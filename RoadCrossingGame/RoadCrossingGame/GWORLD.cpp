@@ -18,7 +18,7 @@ GWORLD::GWORLD(sf::RenderWindow& window)
 void GWORLD::update(float deltaTime)
 {
 	// Scroll the world
-	mWorldView.move(0.f, mScrollSpeed * deltaTime);
+	mWorldView.move(0.f, mScrollSpeed * deltaTime); //view keo len tren
 
 	if (mWorldView.getCenter().y - mWorldView.getSize().y / 2.f > mWorldBounds.top + mWorldBounds.height)
 	{
