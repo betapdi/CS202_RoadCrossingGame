@@ -1,4 +1,5 @@
 #include "GWORLD.h"
+#include <numeric>
 
 GWORLD::GWORLD(sf::RenderWindow& window)
 	: mWindow(window)
@@ -8,19 +9,24 @@ GWORLD::GWORLD(sf::RenderWindow& window)
 	, mPlayerAircraft(nullptr)
 {
 	loadTextures();
+	buildPlayer();
 	buildMaps();
+}
+
+GMAP* GWORLD::getCurrentMap() {
+	return &mMaps[id.front()];
 }
 
 void GWORLD::update(float deltaTime)
 {
-	//Handle map out of sight
-	if (mMaps.front())
+	//Handle map out of world
+	handleMapOutOfWorld(deltaTime);
 
 	//Get current map
-	GMAP& currMap = mMaps.front();
+	GMAP* currMap = getCurrentMap();
 
 	//Handle player touches border
-	currMap.handleTouchBorder(mPlayerAircraft);
+	currMap->handleTouchBorder(mPlayerAircraft);
 
 	// Apply movements && Scroll the world downward
 	for (auto& it : mMaps) {
@@ -28,7 +34,28 @@ void GWORLD::update(float deltaTime)
 	}
 }
 
+void GWORLD::handleMapOutOfWorld(float deltaTime) {
+	GMAP* currMap = getCurrentMap();
+	int yCoordinate = currMap->getCoordinate().y;
+	int lastYCoordinate = currMap->getCoordinate().y;
+
+	//out of world
+	if (yCoordinate > (int)Constants::SCREEN_HEIGHT * 3) {
+		std::rotate(id.begin(), id.begin() + 1, id.end());
+		GMAP* currMap = getCurrentMap();
+		currMap->rebuild(lastYCoordinate);
+	}
+}
+
 void GWORLD::buildPlayer() {
+	// Initialize the different layers
+	for (std::size_t i = 0; i < LayerCount; ++i)
+	{
+		CSCENENODE::Ptr layer(new CSCENENODE());
+		mSceneLayers.push_back(layer.get());
+		mSceneGraph.attachChild(std::move(layer));
+	}
+
 	std::unique_ptr<Aircraft> leader(new Aircraft(Aircraft::Eagle, mTextures));
 	mPlayerAircraft = leader.get();
 	mPlayerAircraft->setPosition(mSpawnPosition);
@@ -46,15 +73,15 @@ void GWORLD::buildPlayer() {
 }
 
 void GWORLD::buildMaps() {
+	id.resize(3); std::iota(id.begin(), id.end(), 0);
+
 	for (int i = 0; i < 3; ++i) {
-		mMaps.push_front(GMAP(mWindow));
+		mMaps.push_back(GMAP(mWindow, (int)Constants::SCREEN_HEIGHT * (2 - i), &mSceneLayers, &mSceneGraph, &mTextures));
 	}
 }
 
 void GWORLD::draw() {
-	for (auto& it : mMaps) {
-		it.draw();
-	}
+	mWindow.draw(mSceneGraph);
 }
 
 void GWORLD::loadTextures()

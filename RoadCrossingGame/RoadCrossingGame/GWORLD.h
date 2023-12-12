@@ -7,14 +7,15 @@
 #include "CRESOURCEHOLDER.h"
 #include "CROAD.h"
 #include "GMAP.h"
-#include <array>
-#include <deque>
+#include <vector>
 #include "Aircraft.h"
 #include "Constants.h"
 
 namespace sf {
 	class RenderWindow;
 }
+
+using namespace Constants;
 
 class GWORLD {
 public:
@@ -25,32 +26,25 @@ private:
 	void loadTextures();
 	void buildMaps();
 	void buildPlayer();
+	void handleMapOutOfWorld(float deltaTime);
+	GMAP* getCurrentMap();
 	//void adaptPlayerPosition();
 	//void adaptPlayerVelocity();
 	//sf::FloatRect getViewBounds() const;
-
-private:
-	enum Layer
-	{
-		Background,
-		Road,
-		Obstacle,
-		Air,
-		LayerCount
-	};
 
 private:
 	sf::RenderWindow& mWindow;
 	TextureHolder mTextures;
 
 	CSCENENODE mSceneGraph;
-	std::array<CSCENENODE*, LayerCount>	mSceneLayers;
+	std::vector<CSCENENODE*> mSceneLayers;
 
 	sf::Vector2f mSpawnPosition;
 	float mScrollSpeed;
 	Aircraft* mPlayerAircraft;
 
-	std::deque<GMAP> mMaps;
+	std::vector<GMAP> mMaps;
+	std::vector<int> id;
 };
 
 #endif // !GWORLD_H

@@ -6,47 +6,44 @@
 #include "RESOURCEIDENTIFIER.h"
 #include "CRESOURCEHOLDER.h"
 #include "CROAD.h"
-#include <array>
+#include <vector>
 #include "Aircraft.h"
 #include "Constants.h"
+
+using namespace Constants;
 
 namespace sf {
 	class RenderWindow;
 }
 
-class GMAP : private sf::NonCopyable {
+class GMAP {
 public:
-	explicit GMAP(sf::RenderWindow& window);
+	GMAP(sf::RenderWindow& window, const int& yMapCoordinate, std::vector<CSCENENODE*>* mSceneLayers, CSCENENODE* mSceneGraph, TextureHolder* mTextures);
 	void update(float deltaTime);
 	void draw();
+
+	sf::Vector2f getCoordinate();
+	void rebuild(const int& yMapCoordinate);
+	void handleTouchBorder(Aircraft* mPlayerAircraft);
+
 private:
-	void loadTextures();
 	void buildScene();
 	void generateRoads();
 	//void adaptPlayerPosition();
 	//void adaptPlayerVelocity();
 	//sf::FloatRect getViewBounds() const;
-private:
-	enum Layer
-	{
-		Background,
-		Road,
-		Obstacle,
-		Air,
-		LayerCount
-	};
-
 
 private:
 	sf::RenderWindow& mWindow;
-	sf::View mWorldView;
-	TextureHolder mTextures;
+
+	TextureHolder* mTextures;
+	std::vector<CSCENENODE*>* mSceneLayers;
+	CSCENENODE* mSceneGraph;
 
 	sf::FloatRect mWorldBounds;
 	sf::FloatRect mRoadBounds;
 	sf::Vector2f mSpawnPosition;
 	float mScrollSpeed;
-	Aircraft* mPlayerAircraft;
 };
 
 #endif // !GMAP_H
