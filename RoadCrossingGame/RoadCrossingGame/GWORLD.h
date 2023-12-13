@@ -6,6 +6,7 @@
 #include "RESOURCEIDENTIFIER.h"
 #include "CRESOURCEHOLDER.h"
 #include "CROAD.h"
+#include "COBSTACLE.h"
 #include <array>
 #include "Aircraft.h"
 #include "Constants.h"
@@ -23,9 +24,8 @@ private:
 	void loadTextures();
 	void buildScene();
 	void generateRoads();
-	//void adaptPlayerPosition();
-	//void adaptPlayerVelocity();
-	//sf::FloatRect getViewBounds() const;
+	void generateObstacle();
+	void generatePosition(bool isInit);
 private:
 	enum Layer
 	{
@@ -45,8 +45,12 @@ private:
 	CSCENENODE mSceneGraph;
 	std::array<CSCENENODE*, LayerCount>	mSceneLayers;
 
+	bool isInit;
+	std::vector<std::pair<sf::Vector2f, int>> mapPos;
+
 	sf::FloatRect mWorldBounds;
 	sf::FloatRect mRoadBounds;
+	std::vector<sf::FloatRect> mWorlds;
 	sf::Vector2f mSpawnPosition;
 	float mScrollSpeed;
 	Aircraft* mPlayerAircraft;

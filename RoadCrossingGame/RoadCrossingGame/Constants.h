@@ -9,12 +9,13 @@
 namespace Constants {
 	const int SCREEN_WIDTH			= 1280;
 	const int SCREEN_HEIGHT			= 720;
-	const int SCALE_OF_ROAD			= 3;
+	const int SCALE_OF_ROAD			= 4;
 	const int ROAD_SIZE				= 16 * SCALE_OF_ROAD;
 
 	const int maxMenu				= 4;
 	const int maxCharacters			= 5;
 	const int maxCar				= 7;
+	const int maxObstacle			= 4;
 
 	static sf::Font* LUCKIESTGUY	=		CASSET::getInstance()->GetFont("LuckiestGuy-Regular.ttf");
 	static sf::Font* BRUCE_FOREVER	=		CASSET::getInstance()->GetFont("BruceForeverRegular.ttf");

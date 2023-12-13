@@ -15,7 +15,21 @@ namespace Textures
 		Desert,
 		DEFAULT_ROAD,
 		DOTTED_ROAD,
+		RAIL_ROAD,
 		PAVEMENT,
+		FAST_FOOD_STORE,
+		COFFEE_SHOP,
+		GROCERY,
+		SHOP,
+		BARBER_SHOP,
+		BREAD_SHOP,
+		VEGETABLE_SHOP,
+		HOUSE,
+		BLUE_SIGN,
+		GREEN_SIGN,
+		WHITE_SIGN,
+		VENDING_MACHINE,
+		GRASS,
 	};
 }
 template <typename Resource, typename Identifier>

@@ -41,6 +41,9 @@
     <ClCompile Include="CROAD.cpp">
       <Filter>WORLD</Filter>
     </ClCompile>
+    <ClCompile Include="COBSTACLE.cpp">
+      <Filter>WORLD</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CASSET.h" />
@@ -94,6 +97,10 @@
     <ClInclude Include="CROAD.h">
       <Filter>WORLD</Filter>
     </ClInclude>
+    <ClInclude Include="COBSTACLE.h">
+      <Filter>WORLD</Filter>
+    </ClInclude>
+    <ClInclude Include="Others.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GUI">

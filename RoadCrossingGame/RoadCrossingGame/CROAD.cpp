@@ -2,16 +2,15 @@
 #include "CRESOURCEHOLDER.h"
 #include "Constants.h"
 
-//Textures::ID toTextureID(CROAD::Type type) {
-//	switch (type) {
-//	case CROAD::DEFAULT_ROAD:
-//		return Textures::DEFAULT_ROAD;
-//
-//	case CROAD::DOTTED_ROAD:
-//		return Textures::DOTTED_ROAD;
-//	}
-//	return Textures::DEFAULT_ROAD;
-//}
+Textures::ID toTextureID(CROAD::roadTypes type) {
+	switch (type) {
+	case CROAD::DEFAULT_ROAD:
+		return Textures::DEFAULT_ROAD;
+
+	case CROAD::DOTTED_ROAD:
+		return Textures::DOTTED_ROAD;
+	}
+}
 //CROAD::CROAD(Type type, const TextureHolder& textures, float posY) {
 //	mType = type;
 //
@@ -28,6 +27,16 @@
 CROAD::CROAD(const sf::Texture& texture, const sf::IntRect& textureRect)
 {
 	mRect.setTexture(&texture);
+	mRect.setTextureRect(textureRect);
+	mRect.setSize(sf::Vector2f(Constants::SCREEN_WIDTH, Constants::ROAD_SIZE));
+}
+
+CROAD::CROAD(roadTypes type, const TextureHolder& textures, const sf::IntRect& textureRect) {
+	mType = type;
+	sf::Texture getTexture;
+	getTexture = textures.get(toTextureID(type));
+	getTexture.setRepeated(true);
+	mRect.setTexture(&getTexture);
 	mRect.setTextureRect(textureRect);
 	mRect.setSize(sf::Vector2f(Constants::SCREEN_WIDTH, Constants::ROAD_SIZE));
 }
