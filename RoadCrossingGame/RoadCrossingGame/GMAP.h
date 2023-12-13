@@ -18,12 +18,12 @@ namespace sf {
 
 class GMAP {
 public:
-	GMAP(sf::RenderWindow& window, const int& yMapCoordinate, std::vector<CSCENENODE*>* mSceneLayers, CSCENENODE* mSceneGraph, TextureHolder* mTextures);
+	GMAP(sf::RenderWindow& window, const float& yMapCoordinate, std::vector<CSCENENODE*>* mSceneLayers, CSCENENODE* mSceneGraph, TextureHolder* mTextures, float* mScrollSpeed);
 	void update(float deltaTime);
 	void draw();
 
 	sf::Vector2f getCoordinate();
-	void rebuild(const int& yMapCoordinate);
+	void rebuild(const float& yMapCoordinate);
 	void handleTouchBorder(Aircraft* mPlayerAircraft);
 
 private:
@@ -43,7 +43,7 @@ private:
 	sf::FloatRect mWorldBounds;
 	sf::FloatRect mRoadBounds;
 	sf::Vector2f mSpawnPosition;
-	float mScrollSpeed;
+	float* mScrollSpeed;
 };
 
 #endif // !GMAP_H

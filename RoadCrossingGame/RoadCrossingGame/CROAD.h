@@ -4,7 +4,7 @@
 #include "RESOURCEIDENTIFIER.h"
 #include "CENTITY.h"
 
-class CROAD : public CSCENENODE {
+class CROAD : public CENTITY {
 public:
 	CROAD(const sf::Texture& texture, const sf::IntRect& textureRect);
 

@@ -36,8 +36,8 @@ private:
 	sf::RenderWindow& mWindow;
 	TextureHolder mTextures;
 
-	CSCENENODE mSceneGraph;
-	std::vector<CSCENENODE*> mSceneLayers;
+	CSCENENODE worldSceneGraph[3];
+	std::vector<CSCENENODE*> worldSceneLayers[3];
 
 	sf::Vector2f mSpawnPosition;
 	float mScrollSpeed;

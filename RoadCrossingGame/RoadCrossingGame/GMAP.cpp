@@ -1,10 +1,11 @@
 #include "GMAP.h"
+#include <iomanip>
 
-GMAP::GMAP(sf::RenderWindow& window, const int& yMapCoordinate, std::vector<CSCENENODE*>* mSceneLayers, CSCENENODE* mSceneGraph, TextureHolder* mTextures)
+GMAP::GMAP(sf::RenderWindow& window, const float& yMapCoordinate, std::vector<CSCENENODE*>* mSceneLayers, CSCENENODE* mSceneGraph, TextureHolder* mTextures, float* mScrollSpeed)
 	: mWindow(window)
-	, mWorldBounds(0.f, yMapCoordinate, window.getDefaultView().getSize().x, 2000.f)
+	, mWorldBounds(0.f, yMapCoordinate, SCREEN_WIDTH, SCREEN_HEIGHT)
 	, mRoadBounds(0.f, 0.f, window.getDefaultView().getSize().x, Constants::ROAD_SIZE)
-	, mScrollSpeed(-100.f)
+	, mScrollSpeed(mScrollSpeed)
 {
 	this->mSceneGraph = mSceneGraph;
 	this->mSceneLayers = mSceneLayers;
@@ -18,8 +19,13 @@ sf::Vector2f GMAP::getCoordinate() {
 	return sf::Vector2f(mWorldBounds.left, mWorldBounds.top);
 }
 
-void GMAP::rebuild(const int& yMapCoordinate) {
+void GMAP::rebuild(const float& lastYCoordinate) {
+	mWorldBounds.top = lastYCoordinate - SCREEN_HEIGHT;
+	for (std::size_t i = 0; i < LayerCount - 1; ++i) {
+		mSceneLayers->at(i)->clear();
+	}
 
+	buildScene();
 }
 
 void GMAP::handleTouchBorder(Aircraft* mPlayerAircraft) {
@@ -27,21 +33,10 @@ void GMAP::handleTouchBorder(Aircraft* mPlayerAircraft) {
 }
 
 void GMAP::update(float deltaTime)
-{
+{	
+	mWorldBounds.top += deltaTime * *mScrollSpeed;
+	mSceneGraph->update(deltaTime);
 	// Scroll the map
-
-
-	//Move the player sidewards (plane scouts follow the main aircraft)
-	//sf::Vector2f position = mPlayerAircraft->getPosition();
-	//sf::Vector2f velocity = mPlayerAircraft->getVelocity();
-
-	////If player touches borders, flip its X velocity
-	//if (position.x <= mWorldBounds.left + 150.f
-	//	|| position.x >= mWorldBounds.left + mWorldBounds.width - 150.f)
-	//{
-	//	velocity.x = -velocity.x;
-	//	mPlayerAircraft->setVelocity(velocity);
-	//}
 
 }
 
@@ -57,7 +52,9 @@ void GMAP::buildScene()
 	// Add the background sprite to the scene
 	std::unique_ptr<CSPRITENODE> backgroundSprite(new CSPRITENODE(texture, textureRect));
 	backgroundSprite->setPosition(mWorldBounds.left, mWorldBounds.top);
+	backgroundSprite->setVelocity(0, *mScrollSpeed);
 	mSceneLayers->at(Background)->attachChild(std::move(backgroundSprite));
+	std::cout << std::fixed << std::setprecision(5) << "Map position: " << mWorldBounds.left << ", " << mWorldBounds.top << std::endl;
 
 	// --- ROAD ---
 	sf::Texture& texture1 = mTextures->get(Textures::DOTTED_ROAD);
@@ -67,6 +64,7 @@ void GMAP::buildScene()
 
 	std::unique_ptr<CROAD> road1(new CROAD(texture1, textureRect1));
 	road1->setPosition(mWorldBounds.left, mWorldBounds.top + mWorldBounds.height / 2);
+	road1->setVelocity(0, *mScrollSpeed);
 	mSceneLayers->at(Road)->attachChild(std::move(road1));
 
 	sf::Texture& texture2 = mTextures->get(Textures::DEFAULT_ROAD);
@@ -75,10 +73,12 @@ void GMAP::buildScene()
 
 	std::unique_ptr<CROAD> road2(new CROAD(texture2, textureRect1));
 	road2->setPosition(mWorldBounds.left, mWorldBounds.top + mWorldBounds.height / 2 - Constants::ROAD_SIZE);
+	road2->setVelocity(0, *mScrollSpeed);
 	mSceneLayers->at(Road)->attachChild(std::move(road2));
 
 	std::unique_ptr<CROAD> road3(new CROAD(texture2, textureRect1));
 	road3->setPosition(mWorldBounds.left, mWorldBounds.top + mWorldBounds.height / 2 + Constants::ROAD_SIZE);
+	road3->setVelocity(0, *mScrollSpeed);
 	mSceneLayers->at(Road)->attachChild(std::move(road3));
 
 	sf::Texture& texture3 = mTextures->get(Textures::PAVEMENT);
@@ -87,10 +87,12 @@ void GMAP::buildScene()
 
 	std::unique_ptr<CROAD> pave(new CROAD(texture3, textureRect1));
 	pave->setPosition(mWorldBounds.left, mWorldBounds.top + mWorldBounds.height / 2 - 2 * Constants::ROAD_SIZE);
+	pave->setVelocity(0, *mScrollSpeed);
 	mSceneLayers->at(Road)->attachChild(std::move(pave));
 
 	std::unique_ptr<CROAD> pave1(new CROAD(texture3, textureRect1));
 	pave1->setPosition(mWorldBounds.left, mWorldBounds.top + mWorldBounds.height / 2 - 3 * Constants::ROAD_SIZE);
+	pave1->setVelocity(0, *mScrollSpeed);
 	mSceneLayers->at(Road)->attachChild(std::move(pave1));
 }
 

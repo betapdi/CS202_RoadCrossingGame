@@ -4,10 +4,12 @@
 GWORLD::GWORLD(sf::RenderWindow& window)
 	: mWindow(window)
 	, mTextures()
-	, mSpawnPosition(mWindow.getDefaultView().getSize().x / 2.f, mWindow.getDefaultView().getSize().y / 2.f)
 	, mScrollSpeed(100.f)
 	, mPlayerAircraft(nullptr)
 {
+	//mWindow.setView(sf::View(sf::FloatRect(0, SCREEN_HEIGHT * 2, SCREEN_WIDTH, SCREEN_HEIGHT)));
+	//std::cout << "View position: " << mWindow.getView().getCenter().x << ", " << mWindow.getView().getCenter().y << std::endl;
+	mSpawnPosition = sf::Vector2f(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 5 / 2);
 	loadTextures();
 	buildPlayer();
 	buildMaps();
@@ -19,14 +21,29 @@ GMAP* GWORLD::getCurrentMap() {
 
 void GWORLD::update(float deltaTime)
 {
+	if (mWindow.getView().getCenter().y != 1800) {
+		mWindow.setView(sf::View(sf::FloatRect(0, SCREEN_HEIGHT * 2, SCREEN_WIDTH, SCREEN_HEIGHT)));
+		//std::cout << "View position: " << mWindow.getView().getCenter().x << ", " << mWindow.getView().getCenter().y << std::endl;
+	}
+
+	//std::cout << "Player position: " << mPlayerAircraft->getPosition().x << ", " << mPlayerAircraft->getPosition().y << std::endl;
 	//Handle map out of world
 	handleMapOutOfWorld(deltaTime);
 
-	//Get current map
+	//Handle player touches border
 	GMAP* currMap = getCurrentMap();
 
-	//Handle player touches border
-	currMap->handleTouchBorder(mPlayerAircraft);
+	//Move the player sidewards (plane scouts follow the main aircraft)
+	sf::Vector2f position = mPlayerAircraft->getPosition();
+	sf::Vector2f velocity = mPlayerAircraft->getVelocity();
+
+	//If player touches borders, flip its X velocity
+	if (position.x <= 150.f
+		|| position.x >= SCREEN_WIDTH - 150.f)
+	{
+		velocity.x = -velocity.x;
+		mPlayerAircraft->setVelocity(velocity);
+	}
 
 	// Apply movements && Scroll the world downward
 	for (auto& it : mMaps) {
@@ -36,31 +53,33 @@ void GWORLD::update(float deltaTime)
 
 void GWORLD::handleMapOutOfWorld(float deltaTime) {
 	GMAP* currMap = getCurrentMap();
-	int yCoordinate = currMap->getCoordinate().y;
-	int lastYCoordinate = currMap->getCoordinate().y;
+	float yCoordinate = currMap->getCoordinate().y;
+	float lastYCoordinate = mMaps[id.back()].getCoordinate().y;
 
 	//out of world
-	if (yCoordinate > (int)Constants::SCREEN_HEIGHT * 3) {
-		std::rotate(id.begin(), id.begin() + 1, id.end());
+	if (yCoordinate > (float)Constants::SCREEN_HEIGHT * 3) {
+		std::cout << id.front() << std::endl;
 		GMAP* currMap = getCurrentMap();
 		currMap->rebuild(lastYCoordinate);
+		std::rotate(id.begin(), id.begin() + 1, id.end());
 	}
 }
 
 void GWORLD::buildPlayer() {
 	// Initialize the different layers
-	for (std::size_t i = 0; i < LayerCount; ++i)
-	{
-		CSCENENODE::Ptr layer(new CSCENENODE());
-		mSceneLayers.push_back(layer.get());
-		mSceneGraph.attachChild(std::move(layer));
+	for (std::size_t currMap = 0; currMap < 3; ++currMap) {
+		for (std::size_t i = 0; i < LayerCount; ++i) {
+			CSCENENODE::Ptr layer(new CSCENENODE());
+			worldSceneLayers[currMap].push_back(layer.get());
+			worldSceneGraph[currMap].attachChild(std::move(layer));
+		}
 	}
 
 	std::unique_ptr<Aircraft> leader(new Aircraft(Aircraft::Eagle, mTextures));
 	mPlayerAircraft = leader.get();
 	mPlayerAircraft->setPosition(mSpawnPosition);
-	mPlayerAircraft->setVelocity(40.f, mScrollSpeed);
-	mSceneLayers[Air]->attachChild(std::move(leader));
+	mPlayerAircraft->setVelocity(40.f, 0.f);
+	worldSceneLayers[0][Air]->attachChild(std::move(leader));
 
 	// Add two escorting aircrafts, placed relatively to the main plane
 	std::unique_ptr<Aircraft> leftEscort(new Aircraft(Aircraft::Raptor, mTextures));
@@ -75,13 +94,18 @@ void GWORLD::buildPlayer() {
 void GWORLD::buildMaps() {
 	id.resize(3); std::iota(id.begin(), id.end(), 0);
 
-	for (int i = 0; i < 3; ++i) {
-		mMaps.push_back(GMAP(mWindow, (int)Constants::SCREEN_HEIGHT * (2 - i), &mSceneLayers, &mSceneGraph, &mTextures));
+	for (std::size_t i = 0; i < 3; ++i) {
+		mMaps.push_back(GMAP(mWindow, (float)Constants::SCREEN_HEIGHT * (2 - i), &worldSceneLayers[i], &worldSceneGraph[i], &mTextures, &mScrollSpeed));
+		std::cout << SCREEN_HEIGHT * (2 - i) << std::endl;
 	}
 }
 
 void GWORLD::draw() {
-	mWindow.draw(mSceneGraph);
+	for (std::size_t i = 0; i < LayerCount; ++i) {
+		for (std::size_t currMap = 0; currMap < 3; ++currMap) {
+			mWindow.draw(*worldSceneLayers[currMap][i]);
+		}
+	}
 }
 
 void GWORLD::loadTextures()

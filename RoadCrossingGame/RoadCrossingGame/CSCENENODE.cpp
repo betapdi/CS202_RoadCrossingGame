@@ -32,6 +32,15 @@ void CSCENENODE::update(float deltaTime)
 	updateChildren(deltaTime);
 }
 
+void CSCENENODE::clear() {
+	FOREACH(Ptr & child, mChildren) {
+		child->clear();
+	}
+
+	mChildren.clear();
+	mParent = nullptr;
+}
+
 void CSCENENODE::updateCurrent(float deltaTime)
 {
 	// Do nothing by default
