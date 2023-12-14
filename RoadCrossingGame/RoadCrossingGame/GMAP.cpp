@@ -34,10 +34,7 @@ void GMAP::handleTouchBorder(Aircraft* mPlayerAircraft) {
 
 void GMAP::update(float deltaTime)
 {	
-	mWorldBounds.top += deltaTime * *mScrollSpeed;
 	mSceneGraph->update(deltaTime);
-	// Scroll the map
-
 }
 
 void GMAP::draw() {}
@@ -52,7 +49,6 @@ void GMAP::buildScene()
 	// Add the background sprite to the scene
 	std::unique_ptr<CSPRITENODE> backgroundSprite(new CSPRITENODE(texture, textureRect));
 	backgroundSprite->setPosition(mWorldBounds.left, mWorldBounds.top);
-	backgroundSprite->setVelocity(0, *mScrollSpeed);
 	mSceneLayers->at(Background)->attachChild(std::move(backgroundSprite));
 	std::cout << std::fixed << std::setprecision(5) << "Map position: " << mWorldBounds.left << ", " << mWorldBounds.top << std::endl;
 
@@ -64,7 +60,6 @@ void GMAP::buildScene()
 
 	std::unique_ptr<CROAD> road1(new CROAD(texture1, textureRect1));
 	road1->setPosition(mWorldBounds.left, mWorldBounds.top + mWorldBounds.height / 2);
-	road1->setVelocity(0, *mScrollSpeed);
 	mSceneLayers->at(Road)->attachChild(std::move(road1));
 
 	sf::Texture& texture2 = mTextures->get(Textures::DEFAULT_ROAD);
@@ -73,12 +68,10 @@ void GMAP::buildScene()
 
 	std::unique_ptr<CROAD> road2(new CROAD(texture2, textureRect1));
 	road2->setPosition(mWorldBounds.left, mWorldBounds.top + mWorldBounds.height / 2 - Constants::ROAD_SIZE);
-	road2->setVelocity(0, *mScrollSpeed);
 	mSceneLayers->at(Road)->attachChild(std::move(road2));
 
 	std::unique_ptr<CROAD> road3(new CROAD(texture2, textureRect1));
 	road3->setPosition(mWorldBounds.left, mWorldBounds.top + mWorldBounds.height / 2 + Constants::ROAD_SIZE);
-	road3->setVelocity(0, *mScrollSpeed);
 	mSceneLayers->at(Road)->attachChild(std::move(road3));
 
 	sf::Texture& texture3 = mTextures->get(Textures::PAVEMENT);
@@ -87,12 +80,10 @@ void GMAP::buildScene()
 
 	std::unique_ptr<CROAD> pave(new CROAD(texture3, textureRect1));
 	pave->setPosition(mWorldBounds.left, mWorldBounds.top + mWorldBounds.height / 2 - 2 * Constants::ROAD_SIZE);
-	pave->setVelocity(0, *mScrollSpeed);
 	mSceneLayers->at(Road)->attachChild(std::move(pave));
 
 	std::unique_ptr<CROAD> pave1(new CROAD(texture3, textureRect1));
 	pave1->setPosition(mWorldBounds.left, mWorldBounds.top + mWorldBounds.height / 2 - 3 * Constants::ROAD_SIZE);
-	pave1->setVelocity(0, *mScrollSpeed);
 	mSceneLayers->at(Road)->attachChild(std::move(pave1));
 }
 

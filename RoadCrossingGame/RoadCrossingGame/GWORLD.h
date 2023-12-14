@@ -35,6 +35,7 @@ private:
 private:
 	sf::RenderWindow& mWindow;
 	TextureHolder mTextures;
+	sf::View mWorldView;
 
 	CSCENENODE worldSceneGraph[3];
 	std::vector<CSCENENODE*> worldSceneLayers[3];
