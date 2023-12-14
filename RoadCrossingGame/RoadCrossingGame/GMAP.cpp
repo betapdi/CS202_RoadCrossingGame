@@ -50,7 +50,7 @@ void GMAP::buildScene()
 	std::unique_ptr<CSPRITENODE> backgroundSprite(new CSPRITENODE(texture, textureRect));
 	backgroundSprite->setPosition(mWorldBounds.left, mWorldBounds.top);
 	mSceneLayers->at(Background)->attachChild(std::move(backgroundSprite));
-	std::cout << std::fixed << std::setprecision(5) << "Map position: " << mWorldBounds.left << ", " << mWorldBounds.top << std::endl;
+	//std::cout << std::fixed << std::setprecision(5) << "Map position: " << mWorldBounds.left << ", " << mWorldBounds.top << std::endl;
 
 	// --- ROAD ---
 	sf::Texture& texture1 = mTextures->get(Textures::DOTTED_ROAD);

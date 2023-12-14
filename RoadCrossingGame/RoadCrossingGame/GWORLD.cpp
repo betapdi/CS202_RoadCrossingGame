@@ -61,7 +61,7 @@ void GWORLD::handleMapOutOfWorld(float deltaTime) {
 
 	//out of world
 	if (viewYCoordinate < currMap->getCoordinate().y) {
-		std::cout << id.front() << std::endl;
+		//std::cout << id.front() << std::endl;
 		GMAP* currMap = getCurrentMap();
 		currMap->rebuild(lastYCoordinate);
 		std::rotate(id.begin(), id.begin() + 1, id.end());
@@ -99,7 +99,7 @@ void GWORLD::buildMaps() {
 
 	for (int i = 0; i < 3; ++i) {
 		mMaps.push_back(GMAP(mWindow, (float)Constants::SCREEN_HEIGHT * (-i), &worldSceneLayers[i], &worldSceneGraph[i], &mTextures, &mScrollSpeed));
-		std::cout << SCREEN_HEIGHT * (-i) << std::endl;
+		//std::cout << SCREEN_HEIGHT * (-i) << std::endl;
 	}
 }
 
