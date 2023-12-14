@@ -6,12 +6,11 @@
 
 class GANIMATION : public sf::Sprite{
 public:
-	GANIMATION(sf::Texture texture, sf::Vector2i frameNum, float frameTime);
-	//void calculateRectSize();
-	//void calculateRectUV();
-	//void applyRect();
-	//void update(float deltaTime);
-	void update(int row, float deltaTime);
+	GANIMATION(sf::Texture &texture, sf::Vector2i frameNum, float frameTime);
+	void calculateRectSize();
+	void calculateRectUV();
+	void applyRect();
+	void update(float deltaTime);
 
 public:
 	sf::IntRect uvRect;
