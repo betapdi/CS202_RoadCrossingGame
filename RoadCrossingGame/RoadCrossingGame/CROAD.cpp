@@ -6,39 +6,61 @@ Textures::ID toTextureID(CROAD::roadTypes type) {
 	switch (type) {
 	case CROAD::DEFAULT_ROAD:
 		return Textures::DEFAULT_ROAD;
-
+		break;
 	case CROAD::DOTTED_ROAD:
 		return Textures::DOTTED_ROAD;
+		break;
+	case CROAD::PAVEMENT:
+		return Textures::PAVEMENT;
+		break;
+	case CROAD::RAIL_ROAD:
+		return Textures::RAIL_ROAD;
+		break;
+	case CROAD::WATER:
+		return Textures::WATER;
+		break;
+	case CROAD::GROUND:
+		return Textures::GROUND;
+		break;
 	}
 }
-//CROAD::CROAD(Type type, const TextureHolder& textures, float posY) {
-//	mType = type;
-//
-//	rectText = textures.get(toTextureID(type));
-//	rectText.setRepeated(true);
-//
-//	mRect.setTexture(&rectText);
-//	mRect.setTextureRect({ 0, 0, Constants::SCREEN_WIDTH, Constants::ROAD_SIZE / 2 });
-//	mRect.setSize(sf::Vector2f(Constants::SCREEN_WIDTH, Constants::ROAD_SIZE));
-//	mRect.setScale(sf::Vector2f(Constants::SCALE_OF_ROAD, 1.0f));
-//	mRect.setPosition(sf::Vector2f(0, posY));
-//}
 
-CROAD::CROAD(const sf::Texture& texture, const sf::IntRect& textureRect)
-{
+CROAD::roadTypes fromIntToType(int type) {
+	switch (type) {
+	case 0:
+		return CROAD::DEFAULT_ROAD;
+		break;
+	case 1:
+		return CROAD::DOTTED_ROAD;
+		break;
+	case 2:
+		return CROAD::PAVEMENT;
+		break;
+	case 3:
+		return CROAD::RAIL_ROAD;
+		break;
+	case 4:
+		return CROAD::WATER;
+		break;
+	case 5:
+		return CROAD::GROUND;
+		break;
+	}
+}
+
+CROAD::CROAD(const sf::Texture& texture, const sf::IntRect& textureRect) {
 	mRect.setTexture(&texture);
 	mRect.setTextureRect(textureRect);
 	mRect.setSize(sf::Vector2f(Constants::SCREEN_WIDTH, Constants::ROAD_SIZE));
+	//mRect.setOutlineThickness(3);
+	//mRect.setOutlineColor(sf::Color::White);
 }
 
-CROAD::CROAD(roadTypes type, const TextureHolder& textures, const sf::IntRect& textureRect) {
-	mType = type;
-	sf::Texture getTexture;
-	getTexture = textures.get(toTextureID(type));
-	getTexture.setRepeated(true);
-	mRect.setTexture(&getTexture);
-	mRect.setTextureRect(textureRect);
+CROAD::CROAD(int type, const TextureHolder& textures, const sf::IntRect& textureRect) {
+	mType = fromIntToType(type);
 	mRect.setSize(sf::Vector2f(Constants::SCREEN_WIDTH, Constants::ROAD_SIZE));
+	mRect.setTexture(&textures.get(toTextureID(mType)));
+	mRect.setTextureRect(textureRect);
 }
 
 void CROAD::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const

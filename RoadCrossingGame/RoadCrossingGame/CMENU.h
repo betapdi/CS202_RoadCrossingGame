@@ -8,6 +8,7 @@
 #include "WindowConnector.h"
 #include "Constants.h"
 #include "CSHAPE.h"
+#include "GBUTTON.h"
 
 class CMENU : public GSTATE{
 public:
@@ -40,11 +41,11 @@ private:
 	CBACKGROUND intro;
 	int prevChoice;
 	int choice;
-
+	std::vector<GBUTTON*> buttonList;
 	sf::Sprite cursor;
 	sf::Text crossyroad;
 	sf::Text option[Constants::maxMenu];
-	sf::Vector2f originalPos[4];
+	sf::Vector2f originalPos[5];
 	bool isEntered = false;
 	float currentTime;
 

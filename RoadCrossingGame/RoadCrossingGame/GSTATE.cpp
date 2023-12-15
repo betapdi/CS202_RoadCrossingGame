@@ -2,6 +2,9 @@
 #include "CMENU.h"
 #include "CSETTING.h"
 #include "CPLAYING.h"
+#include "CCREDIT.h"
+#include "CRATING.h"
+#include "CGAMEOVER.h"
 
 GSTATE* GSTATE::createGState(stateTypes state) {
 	GSTATE* gState;
@@ -15,11 +18,17 @@ GSTATE* GSTATE::createGState(stateTypes state) {
 	case SETTING:
 		gState = new CSETTING();
 		break;
+	case CREDIT:
+		gState = new CCREDIT();
+		break;
+	case RANKING:
+		gState = new CRATING();
+		break;
 	case PLAYING:
 		gState = new CPLAYING(curWindow->getWindow());
 		break;
 	case GAMEOVER:
-		gState = nullptr;
+		gState = new CGAMEOVER();
 		break;
 	default:
 		gState = nullptr;

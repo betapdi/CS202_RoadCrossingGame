@@ -9,11 +9,14 @@ public:
 	enum roadTypes {
 		DEFAULT_ROAD,
 		DOTTED_ROAD,
+		PAVEMENT,
 		RAIL_ROAD,
+		WATER,
+		GROUND,
 	};
 public:
 	CROAD(const sf::Texture& texture, const sf::IntRect& textureRect);
-	CROAD(roadTypes type, const TextureHolder& textures, const sf::IntRect& textureRect);
+	CROAD(int type, const TextureHolder& textures, const sf::IntRect& textureRect);
 private:
 	virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 

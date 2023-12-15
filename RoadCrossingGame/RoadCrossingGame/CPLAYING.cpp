@@ -8,10 +8,11 @@ CPLAYING::CPLAYING(sf::RenderWindow* window)
 	, mStatisticsNumFrames(0)
 {
 	curWindow->setWindow(window);
-	mFont.loadFromFile("Assets/Font/LuckiestGuy-Regular.ttf");
-	mStatisticsText.setFont(mFont);
-	mStatisticsText.setPosition(5.f, 5.f);
-	mStatisticsText.setCharacterSize(10);
+	//mFont.loadFromFile("Assets/Font/LuckiestGuy-Regular.ttf");
+	//mStatisticsText.setFont(mFont);
+	//mStatisticsText.setPosition(5.f, 5.f);
+	//mStatisticsText.setCharacterSize(10);
+	isPause = false;
 }
 
 CPLAYING::~CPLAYING()
@@ -41,6 +42,10 @@ void CPLAYING::processEvents() {
 		switch (event.type)
 		{
 		case sf::Event::KeyPressed:
+			if (!sf::Keyboard::isKeyPressed(sf::Keyboard::A) || !sf::Keyboard::isKeyPressed(sf::Keyboard::W) ||
+				!sf::Keyboard::isKeyPressed(sf::Keyboard::S) || !sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+				isPause = true;
+			}
 			handlePlayerInput(event.key.code, true);
 			break;
 
@@ -56,6 +61,10 @@ void CPLAYING::processEvents() {
 }
 
 void CPLAYING::update(float deltaTime) {
+	if (isPause) {
+		STATEMACHINE::getInstance()->changeState(stateTypes::GAMEOVER);
+		isPause = !isPause;
+	}
 	mWorld.update(deltaTime);
 }
 
@@ -63,7 +72,7 @@ void CPLAYING::render(sf::RenderWindow* window) {
 	window->clear(sf::Color::White);
 	mWorld.draw();
 	window->setView(window->getDefaultView());
-	window->draw(mStatisticsText);
+	//window->draw(mStatisticsText);
 }
 
 void CPLAYING::updateStatistics(float elapsedTime) {

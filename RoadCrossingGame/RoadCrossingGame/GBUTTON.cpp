@@ -44,14 +44,14 @@ void GBUTTON::handleTouchEvent() {
 	isHandling = false;
 	sf::Event event;
 	while (curWindow->getWindow()->pollEvent(event)) {
-		if (event.type == sf::Event::MouseMoved) {
+		//if (event.type == sf::Event::MouseMoved) {
 			if (this->getGlobalBounds().contains((sf::Vector2f)sf::Mouse::getPosition(*curWindow->getWindow()))) {
 				isFocus = true;
 			}
 			else {
 				isFocus = false;
 			}
-		}
+		//}
 	}
 
 	if (this->getGlobalBounds().contains((sf::Vector2f)sf::Mouse::getPosition(*curWindow->getWindow()))) {

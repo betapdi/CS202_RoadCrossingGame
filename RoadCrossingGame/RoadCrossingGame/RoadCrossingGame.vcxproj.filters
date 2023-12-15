@@ -44,6 +44,9 @@
     <ClCompile Include="COBSTACLE.cpp">
       <Filter>WORLD</Filter>
     </ClCompile>
+    <ClCompile Include="CCREDIT.cpp" />
+    <ClCompile Include="CRATING.cpp" />
+    <ClCompile Include="CGAMEOVER.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CASSET.h" />
@@ -101,6 +104,9 @@
       <Filter>WORLD</Filter>
     </ClInclude>
     <ClInclude Include="Others.h" />
+    <ClInclude Include="CCREDIT.h" />
+    <ClInclude Include="CRATING.h" />
+    <ClInclude Include="CGAMEOVER.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GUI">

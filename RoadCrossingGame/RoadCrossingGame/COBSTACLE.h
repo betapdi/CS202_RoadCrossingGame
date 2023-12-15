@@ -7,25 +7,26 @@
 class COBSTACLE : public CSCENENODE {
 public:
 	enum obstacleType {
-		FAST_FOOD_STORE,
-		COFFEE_SHOP,
-		GROCERY,
-		SHOP,
-		BARBER_SHOP,
-		BREAD_SHOP,
-		VEGETABLE_SHOP,
-		HOUSE,
+		SMALL_TREE,
+		BIG_TREE,
+		BENCH,
+		//GRASS,
+		VENDING_MACHINE,
 		BLUE_SIGN,
 		GREEN_SIGN,
 		WHITE_SIGN,
-		VENDING_MACHINE,
-		GRASS,
+		HOTDOG,
+		LIGHT,
+		GROCERY,
+		SHOP,
+		HOUSE,
 	};
 
 public:
 	//COBSTACLE(const TextureHolder& textures);
 	COBSTACLE(int type, const TextureHolder& textures);
 	COBSTACLE(obstacleType type, const TextureHolder& textures);
+	float getWidthObstacle();
 private:
 	virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 private:

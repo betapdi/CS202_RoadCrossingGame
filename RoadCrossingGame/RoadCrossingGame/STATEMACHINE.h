@@ -10,6 +10,8 @@ enum stateTypes {
 	INVALID = 0,
 	MENU,
 	SETTING,
+	CREDIT,
+	RANKING,
 	PLAYING,
 	GAMEOVER,
 };

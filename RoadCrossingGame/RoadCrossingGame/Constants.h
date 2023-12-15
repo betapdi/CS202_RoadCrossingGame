@@ -12,10 +12,10 @@ namespace Constants {
 	const int SCALE_OF_ROAD			= 4;
 	const int ROAD_SIZE				= 16 * SCALE_OF_ROAD;
 
-	const int maxMenu				= 4;
+	const int maxMenu				= 5;
 	const int maxCharacters			= 5;
 	const int maxCar				= 7;
-	const int maxObstacle			= 4;
+	const int maxObstacle			= 10;
 
 	const enum Layer
 	{
@@ -28,6 +28,8 @@ namespace Constants {
 
 	static sf::Font* LUCKIESTGUY	=		CASSET::getInstance()->GetFont("LuckiestGuy-Regular.ttf");
 	static sf::Font* BRUCE_FOREVER	=		CASSET::getInstance()->GetFont("BruceForeverRegular.ttf");
+	static sf::Font* INCONSOLATA	=		CASSET::getInstance()->GetFont("Inconsolata-ExtraBold.ttf");
+
 	static sf::Texture* CURSOR		=		CASSET::getInstance()->GetTexture("gui/cursor.png");
 
 	static sf::Texture* MUSIC_ON	=		CASSET::getInstance()->GetTexture("gui/music_on.png");
@@ -38,6 +40,13 @@ namespace Constants {
 	static sf::Texture* MOVE_RIGHT	=		CASSET::getInstance()->GetTexture("gui/move_right.png");
 	static sf::Texture* RESET		=		CASSET::getInstance()->GetTexture("gui/back.png");
 	static sf::Texture* QUIT		=		CASSET::getInstance()->GetTexture("gui/quit.png");
+	static sf::Texture* MEDAL		=		CASSET::getInstance()->GetTexture("gui/medal.png");
+	static sf::Texture* RANK1		=		CASSET::getInstance()->GetTexture("gui/rank1.png");
+	static sf::Texture* RANK2		=		CASSET::getInstance()->GetTexture("gui/rank2.png");
+	static sf::Texture* RANK3		=		CASSET::getInstance()->GetTexture("gui/rank3.png");
+	static sf::Texture* RANK_STAR	=		CASSET::getInstance()->GetTexture("gui/ranking_star.png");
+	static sf::Texture* STAR		=		CASSET::getInstance()->GetTexture("gui/star.png");
+
 
 	static sf::Texture* CLOWN		=		CASSET::getInstance()->GetTexture("character/clown.png");
 	static sf::Texture* PENGUIN		=		CASSET::getInstance()->GetTexture("character/penguin.png");

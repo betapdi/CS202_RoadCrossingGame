@@ -1,6 +1,7 @@
 #ifndef OTHERS_H
 #define OTHERS_H
 #include <random>
+#include "COBSTACLE.h"
 
 int randInt(int min, int max) {
 	std::random_device rd;
@@ -21,6 +22,23 @@ int randBiasedInt(int minValue, int maxValue, double probabilityOfZeroToOne) {
     }
     else {
         std::uniform_int_distribution<int> intDistribution(minValue, maxValue);
+        return intDistribution(gen);
+    }
+}
+
+int randObject(int minValue, int maxValue, double probabilityOfZeroToOne) {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+
+    std::uniform_real_distribution<double> distribution(0.0, 1.0);
+    double randomValue = distribution(gen);
+
+    if (randomValue < probabilityOfZeroToOne) {
+        std::uniform_int_distribution<int> intDistribution(minValue, COBSTACLE::BENCH);
+        return intDistribution(gen);
+    }
+    else {
+        std::uniform_int_distribution<int> intDistribution(COBSTACLE::VENDING_MACHINE, maxValue);
         return intDistribution(gen);
     }
 }

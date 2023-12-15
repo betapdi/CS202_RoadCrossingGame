@@ -246,6 +246,19 @@ void CMENU::init() {
 	intro.init();
 	choice = 0;
 
+	GBUTTON* button;
+
+	//Quit
+	button = new GBUTTON();
+	button->init(Constants::QUIT);
+	button->setRotation(-20.f);
+	button->setSize(sf::Vector2f(50, 50));
+	button->setPosition(Constants::SCREEN_WIDTH - 1.5 * button->getSize().x, button->getSize().y / 2);
+	button->setClickFunction([]() {
+		STATEMACHINE::getInstance()->popState();
+		});
+	buttonList.push_back(button);
+
 	//TITLE: CROSSY ROAD
 	crossyroad.setString("CROSSY ROAD");
 	crossyroad.setFont(*Constants::LUCKIESTGUY);
@@ -262,7 +275,8 @@ void CMENU::init() {
 	option[0].setString("PLAY");
 	option[1].setString("SETTING");
 	option[2].setString("LOAD GAME");
-	option[3].setString("EXIT");
+	option[3].setString("CREDITS");
+	option[4].setString("RANKING");
 	centerY = (curWindow->getWindow()->getSize().y - option[0].getGlobalBounds().height) / 2.0f;
 	for (int i = 0; i < Constants::maxMenu; ++i) {
 		option[i].setFont(*Constants::BRUCE_FOREVER);
@@ -325,7 +339,7 @@ void CMENU::processEvents() {
 			moveDown();
 		}
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			isEntered = true;
 		}
 	}
@@ -370,11 +384,15 @@ void CMENU::update(float deltaTime) {
 		}
 		else if (choice == 2) {
 			// LOAD GAME
+			STATEMACHINE::getInstance()->changeState(stateTypes::GAMEOVER);
 		}
 		else if (choice == 3) {
-			curWindow->getWindow()->close();
+			STATEMACHINE::getInstance()->changeState(stateTypes::CREDIT);
 		}
-		isEntered = false;
+		else if (choice == 4) {
+			STATEMACHINE::getInstance()->changeState(stateTypes::RANKING);
+		}
+		isEntered = !isEntered;
 	}
 }
 

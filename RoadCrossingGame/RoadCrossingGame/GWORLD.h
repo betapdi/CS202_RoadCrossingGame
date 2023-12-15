@@ -28,13 +28,10 @@ private:
 	void buildPlayer();
 	void handleMapOutOfWorld(float deltaTime);
 	GMAP* getCurrentMap();
-	//void adaptPlayerPosition();
-	//void adaptPlayerVelocity();
-	//sf::FloatRect getViewBounds() const;
-	void buildScene();
-	void generateRoads();
-	void generateObstacle();
-	void generatePosition(bool isInit);
+
+	//void generateRoads();
+	//void generateObstacle();
+	//void generatePosition(bool isInit);
 private:
 	enum Layer
 	{
@@ -54,12 +51,6 @@ private:
 	CSCENENODE worldSceneGraph[3];
 	std::vector<CSCENENODE*> worldSceneLayers[3];
 
-	bool isInit;
-	std::vector<std::pair<sf::Vector2f, int>> mapPos;
-
-	sf::FloatRect mWorldBounds;
-	sf::FloatRect mRoadBounds;
-	std::vector<sf::FloatRect> mWorlds;
 	sf::Vector2f mSpawnPosition;
 	float mScrollSpeed;
 	Aircraft* mPlayerAircraft;

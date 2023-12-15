@@ -41,7 +41,7 @@ void CSETTING::init() {
 	button->init(Constants::QUIT);
 	button->setRotation(-20.f);
 	button->setSize(sf::Vector2f(50, 50));
-	button->setPosition(1210, 25);
+	button->setPosition(Constants::SCREEN_WIDTH - 1.5 * button->getSize().x, button->getSize().y / 2);
 	button->setClickFunction([]() {
 		STATEMACHINE::getInstance()->popState();
 		});

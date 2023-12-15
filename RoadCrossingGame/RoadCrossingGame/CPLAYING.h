@@ -29,6 +29,7 @@ private:
 	sf::Text				mStatisticsText;
 	float					mStatisticsUpdateTime;
 	std::size_t				mStatisticsNumFrames;
+	bool isPause;
 };
 
 #endif // !CPLAYING_H
