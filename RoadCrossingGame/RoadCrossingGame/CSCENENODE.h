@@ -16,6 +16,7 @@ public:
 	Ptr detachChild(const CSCENENODE& node);
 
 	void update(float deltaTime);
+	void clear();
 
 	sf::Vector2f getWorldPosition() const;
 	sf::Transform getWorldTransform() const;

@@ -1,4 +1,6 @@
 #include "GWORLD.h"
+#include <numeric>
+
 #include "Others.h"
 GWORLD::GWORLD(sf::RenderWindow& window)
 	: mWindow(window)
@@ -10,23 +12,38 @@ GWORLD::GWORLD(sf::RenderWindow& window)
 	, mRoadBounds(0.f, 0.f, mWorldView.getSize().x, Constants::ROAD_SIZE)
 	, mSpawnPosition(mWorldView.getSize().x / 2.f, mWorldBounds.height - mWorldView.getSize().y / 2.f)
 	, mScrollSpeed(-50.f)
+	, mScrollSpeed(-100.f)
 	, mPlayerAircraft(nullptr)
 {
+	//mWindow.setView(sf::View(sf::FloatRect(0, SCREEN_HEIGHT * 2, SCREEN_WIDTH, SCREEN_HEIGHT)));
+	//std::cout << "View position: " << mWindow.getView().getCenter().x << ", " << mWindow.getView().getCenter().y << std::endl;
+	mSpawnPosition = sf::Vector2f(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 	isInit = true;
 	loadTextures();
-	buildScene();
-
-	// Prepare the view
-	mWorldView.setCenter(mSpawnPosition);
+	buildPlayer();
+	buildMaps();
 }
 
-void GWORLD::update(float deltaTime)
-{
-	// Scroll the world
+GMAP* GWORLD::getCurrentMap() {
+	return &mMaps[id.front()];
+}
+
+void GWORLD::update(float deltaTime) {
+	//scroll the view
 	mWorldView.move(0.f, mScrollSpeed * deltaTime);
 
-	sf::Vector2f curView = mWorldView.getCenter();
-	sf::Vector2f viewSize = mWorldView.getSize();
+	//std::cout << "View position: " << mWindow.getView().getCenter().x << ", " << mWindow.getView().getCenter().y << std::endl;
+		mWorldBounds.left = 0;
+		mWorldBounds.top = 0;
+		mWorldView.setCenter(mSpawnPosition);
+	}
+
+	//std::cout << "Player position: " << mPlayerAircraft->getPosition().x << ", " << mPlayerAircraft->getPosition().y << std::endl;
+	//Handle map out of world
+	handleMapOutOfWorld(deltaTime);
+
+	//Handle player touches border
+	GMAP* currMap = getCurrentMap();
 
 	//Move the player sidewards (plane scouts follow the main aircraft)
 	sf::Vector2f position = mPlayerAircraft->getPosition();
@@ -39,23 +56,31 @@ void GWORLD::update(float deltaTime)
 	}
 
 	//If player touches borders, flip its X velocity
-	if (position.x <= mWorldBounds.left + 150.f
-		|| position.x >= mWorldBounds.left + mWorldBounds.width - 150.f)
+	if (position.x <= 150.f
+		|| position.x >= SCREEN_WIDTH - 150.f)
 	{
 		velocity.x = -velocity.x;
 		mPlayerAircraft->setVelocity(velocity);
 	}
 
-	// Apply movements
-	mSceneGraph.update(deltaTime);
-}
+	// Apply movements && Scroll the world downward
+	for (auto& it : mMaps) {
+void GWORLD::handleMapOutOfWorld(float deltaTime) {
+	GMAP* currMap = getCurrentMap();
+	sf::Vector2f viewCenter = mWorldView.getCenter();
+	float viewYCoordinate = mWorldView.getCenter().y + mWorldView.getSize().y / 2.0f;
+	float lastYCoordinate = mMaps[id.back()].getCoordinate().y;
 
-void GWORLD::draw()
-{
-	mWindow.setView(mWorldView);
-	mWindow.draw(mSceneGraph);
-}
+	//std::cout << viewYCoordinate << std::endl;
 
+	//out of world
+	if (viewYCoordinate < currMap->getCoordinate().y) {
+		//std::cout << id.front() << std::endl;
+		GMAP* currMap = getCurrentMap();
+		currMap->rebuild(lastYCoordinate);
+		std::rotate(id.begin(), id.begin() + 1, id.end());
+	}
+}
 void GWORLD::loadTextures()
 {
 	mTextures.load(Textures::Eagle, "Media/Textures/Eagle.png");
@@ -86,35 +111,17 @@ void GWORLD::loadTextures()
 	mTextures.load(Textures::VENDING_MACHINE,	"Media/Textures/vending_machine.png");
 	mTextures.load(Textures::GRASS,				"Media/Textures/grass.png");
 }
+	mTextures.load(Textures::DOTTED_ROAD, "Media/Textures/white_dotted_road.png");
+void GWORLD::buildPlayer() {
+}
 
 void GWORLD::buildScene()
 {
-	//Randomly generate road and pavement
-	generatePosition(isInit);
-
-	//std::cout << mapPos.size() << std::endl;
-	//for (int i = 0; i < mapPos.size(); ++i) {
-	//	std::cout << mapPos[i].first.x << " - " << mapPos[i].first.y << std::endl;
-	//	std::cout << mapPos[i].second << std::endl;
-	//}
-
 	// Initialize the different layers
-	for (std::size_t i = 0; i < LayerCount; ++i)
-	{
-		CSCENENODE::Ptr layer(new CSCENENODE());
-		mSceneLayers[i] = layer.get();
-		mSceneGraph.attachChild(std::move(layer));
-	}
-
-	// Prepare the tiled background
-	sf::Texture& texture = mTextures.get(Textures::Desert);
-	sf::IntRect textureRect(mWorldBounds);
-	texture.setRepeated(true);
-
-	// Add the background sprite to the scene
-	std::unique_ptr<CSPRITENODE> backgroundSprite(new CSPRITENODE(texture, textureRect));
-	backgroundSprite->setPosition(mWorldBounds.left, mWorldBounds.top);
-	//mSceneLayers[Background]->attachChild(std::move(backgroundSprite));
+	for (std::size_t currMap = 0; currMap < 3; ++currMap) {
+		for (std::size_t i = 0; i < LayerCount; ++i) {
+			CSCENENODE::Ptr layer(new CSCENENODE());
+			worldSceneLayers[currMap].push_back(layer.get());
 
 
 	//	--- PLAYER ---
@@ -123,15 +130,16 @@ void GWORLD::buildScene()
 	mPlayerAircraft = leader.get();
 	mPlayerAircraft->setPosition(mSpawnPosition);
 	mPlayerAircraft->setVelocity(40.f, mScrollSpeed);
-	mSceneLayers[Air]->attachChild(std::move(leader));
+	worldSceneLayers[0][Air]->attachChild(std::move(leader));
 
 	// Add two escorting aircrafts, placed relatively to the main plane
 	std::unique_ptr<Aircraft> leftEscort(new Aircraft(Aircraft::Raptor, mTextures));
 	leftEscort->setPosition(-80.f, 50.f);
-	mPlayerAircraft->attachChild(std::move(leftEscort));
+	mPlayerAircraft->attachChild(std::move(rightEscort));
+}
 
-	std::unique_ptr<Aircraft> rightEscort(new Aircraft(Aircraft::Raptor, mTextures));
-	rightEscort->setPosition(80.f, 50.f);
+void GWORLD::buildMaps() {
+	id.resize(3); std::iota(id.begin(), id.end(), 0);
 	mPlayerAircraft->attachChild(std::move(rightEscort));	
 
 	// --- ROAD ---
@@ -157,7 +165,12 @@ void GWORLD::generatePosition(bool isInit) {
 		}
 	}
 }
-
+	
+	for (int i = 0; i < 3; ++i) {
+		mMaps.push_back(GMAP(mWindow, (float)Constants::SCREEN_HEIGHT * (-i), &worldSceneLayers[i], &worldSceneGraph[i], &mTextures, &mScrollSpeed));
+		//std::cout << SCREEN_HEIGHT * (-i) << std::endl;
+	}
+}
 void GWORLD::generateRoads() {
 	for (int i = 0; i < mapPos.size(); ++i) {
 		sf::IntRect textureRect1(mRoadBounds);
@@ -196,4 +209,27 @@ void GWORLD::generateObstacle() {
 			}
 		}
 	}
+void GWORLD::draw() {
+	mWindow.setView(mWorldView);
+
+	for (std::size_t i = 0; i < LayerCount; ++i) {
+		for (std::size_t currMap = 0; currMap < 3; ++currMap) {
+			mWindow.draw(*worldSceneLayers[currMap][i]);
+		}
+	}
+}
+
+void GWORLD::loadTextures()
+{
+	mTextures.load(Textures::Eagle, "Media/Textures/Eagle.png");
+	mTextures.load(Textures::Raptor, "Media/Textures/Raptor.png");
+	mTextures.load(Textures::Desert, "Media/Textures/Desert.png");
+	mTextures.load(Textures::DEFAULT_ROAD, "Media/Textures/default_road_resize.png");
+	mTextures.load(Textures::DOTTED_ROAD, "Media/Textures/white_dotted_road.png");
+	mTextures.load(Textures::PAVEMENT, "Media/Textures/pavement.png");
+	//mTextures.load(Textures::DOTTED_ROAD, "Media/Textures/Objects.png");
+
+void GWORLD::generateRoads() {
+	//::vector<CROAD::Type> roadTypes = { CROAD::DEFAULT_ROAD,CROAD::DOTTED_ROAD };
+	//mSceneLayers[Road]
 }

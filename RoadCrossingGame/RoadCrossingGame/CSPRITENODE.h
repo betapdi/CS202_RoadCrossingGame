@@ -1,8 +1,8 @@
 #ifndef CSPRITENODE_H
 #define CSPRITENODE_H
 
-#include "CSCENENODE.h"
-class CSPRITENODE : public CSCENENODE {
+#include "CENTITY.h"
+class CSPRITENODE : public CENTITY {
 public:
 	explicit CSPRITENODE(const sf::Texture& texture);
 	CSPRITENODE(const sf::Texture& texture, const sf::IntRect& textureRect);

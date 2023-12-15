@@ -17,6 +17,15 @@ namespace Constants {
 	const int maxCar				= 7;
 	const int maxObstacle			= 4;
 
+	const enum Layer
+	{
+		Background,
+		Road,
+		Obstacle,
+		Air,
+		LayerCount
+	};
+
 	static sf::Font* LUCKIESTGUY	=		CASSET::getInstance()->GetFont("LuckiestGuy-Regular.ttf");
 	static sf::Font* BRUCE_FOREVER	=		CASSET::getInstance()->GetFont("BruceForeverRegular.ttf");
 	static sf::Texture* CURSOR		=		CASSET::getInstance()->GetTexture("gui/cursor.png");

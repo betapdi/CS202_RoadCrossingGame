@@ -6,8 +6,8 @@
 #include "RESOURCEIDENTIFIER.h"
 #include "CRESOURCEHOLDER.h"
 #include "CROAD.h"
-#include "COBSTACLE.h"
-#include <array>
+#include "GMAP.h"
+#include <vector>
 #include "Aircraft.h"
 #include "Constants.h"
 
@@ -15,13 +15,22 @@ namespace sf {
 	class RenderWindow;
 }
 
-class GWORLD : private sf::NonCopyable {
+using namespace Constants;
+
+class GWORLD {
 public:
 	explicit GWORLD(sf::RenderWindow& window);
 	void update(float deltaTime);
 	void draw();
 private:
 	void loadTextures();
+	void buildMaps();
+	void buildPlayer();
+	void handleMapOutOfWorld(float deltaTime);
+	GMAP* getCurrentMap();
+	//void adaptPlayerPosition();
+	//void adaptPlayerVelocity();
+	//sf::FloatRect getViewBounds() const;
 	void buildScene();
 	void generateRoads();
 	void generateObstacle();
@@ -39,11 +48,11 @@ private:
 
 private:
 	sf::RenderWindow& mWindow;
-	sf::View mWorldView;
 	TextureHolder mTextures;
+	sf::View mWorldView;
 
-	CSCENENODE mSceneGraph;
-	std::array<CSCENENODE*, LayerCount>	mSceneLayers;
+	CSCENENODE worldSceneGraph[3];
+	std::vector<CSCENENODE*> worldSceneLayers[3];
 
 	bool isInit;
 	std::vector<std::pair<sf::Vector2f, int>> mapPos;
@@ -54,6 +63,9 @@ private:
 	sf::Vector2f mSpawnPosition;
 	float mScrollSpeed;
 	Aircraft* mPlayerAircraft;
+
+	std::vector<GMAP> mMaps;
+	std::vector<int> id;
 };
 
 #endif // !GWORLD_H
