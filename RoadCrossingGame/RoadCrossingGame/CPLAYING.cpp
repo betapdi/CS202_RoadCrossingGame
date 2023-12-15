@@ -42,10 +42,10 @@ void CPLAYING::processEvents() {
 		switch (event.type)
 		{
 		case sf::Event::KeyPressed:
-			if (!sf::Keyboard::isKeyPressed(sf::Keyboard::A) || !sf::Keyboard::isKeyPressed(sf::Keyboard::W) ||
+			/*if (!sf::Keyboard::isKeyPressed(sf::Keyboard::A) || !sf::Keyboard::isKeyPressed(sf::Keyboard::W) ||
 				!sf::Keyboard::isKeyPressed(sf::Keyboard::S) || !sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 				isPause = true;
-			}
+			}*/
 			handlePlayerInput(event.key.code, true);
 			break;
 

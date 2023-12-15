@@ -58,9 +58,9 @@ CROAD::CROAD(const sf::Texture& texture, const sf::IntRect& textureRect) {
 
 CROAD::CROAD(int type, const TextureHolder& textures, const sf::IntRect& textureRect) {
 	mType = fromIntToType(type);
-	mRect.setSize(sf::Vector2f(Constants::SCREEN_WIDTH, Constants::ROAD_SIZE));
 	mRect.setTexture(&textures.get(toTextureID(mType)));
 	mRect.setTextureRect(textureRect);
+	mRect.setSize(sf::Vector2f(Constants::SCREEN_WIDTH, Constants::ROAD_SIZE));
 }
 
 void CROAD::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const

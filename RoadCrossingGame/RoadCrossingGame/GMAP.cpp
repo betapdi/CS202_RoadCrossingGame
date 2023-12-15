@@ -1,17 +1,19 @@
 #include "GMAP.h"
 #include <iomanip>
+#include "Others.h"
 
 GMAP::GMAP(sf::RenderWindow& window, const float& yMapCoordinate, std::vector<CSCENENODE*>* mSceneLayers, CSCENENODE* mSceneGraph, TextureHolder* mTextures, float* mScrollSpeed)
 	: mWindow(window)
 	, mWorldBounds(0.f, yMapCoordinate, SCREEN_WIDTH, SCREEN_HEIGHT)
 	, mRoadBounds(0.f, 0.f, window.getDefaultView().getSize().x, Constants::ROAD_SIZE)
 	, mScrollSpeed(mScrollSpeed)
+	, yCoor(yMapCoordinate)
 {
 	this->mSceneGraph = mSceneGraph;
 	this->mSceneLayers = mSceneLayers;
 	this->mTextures = mTextures;
 
-	//std::cout << this->mSceneLayers->size() << std::endl;
+	std::cout << this->mSceneLayers->size() << std::endl;
 	buildScene();
 }
 
@@ -41,53 +43,80 @@ void GMAP::draw() {}
 
 void GMAP::buildScene()
 {
-	// Prepare the tiled background
-	sf::Texture& texture = mTextures->get(Textures::Desert);
-	sf::IntRect textureRect(mWorldBounds);
-	texture.setRepeated(true);
+	generatePosition(isInit);
+	generateRoads();
+	generateObstacle();
+}
 
-	// Add the background sprite to the scene
-	std::unique_ptr<CSPRITENODE> backgroundSprite(new CSPRITENODE(texture, textureRect));
-	backgroundSprite->setPosition(mWorldBounds.left, mWorldBounds.top);
-	mSceneLayers->at(Background)->attachChild(std::move(backgroundSprite));
-	//std::cout << std::fixed << std::setprecision(5) << "Map position: " << mWorldBounds.left << ", " << mWorldBounds.top << std::endl;
-
-	// --- ROAD ---
-	sf::Texture& texture1 = mTextures->get(Textures::DOTTED_ROAD);
-	sf::IntRect textureRect1(mRoadBounds);
-	texture1.setRepeated(true);
-	texture1.setSmooth(true);
-
-	std::unique_ptr<CROAD> road1(new CROAD(texture1, textureRect1));
-	road1->setPosition(mWorldBounds.left, mWorldBounds.top + mWorldBounds.height / 2);
-	mSceneLayers->at(Road)->attachChild(std::move(road1));
-
-	sf::Texture& texture2 = mTextures->get(Textures::DEFAULT_ROAD);
-	texture2.setRepeated(true);
-	texture2.setSmooth(true);
-
-	std::unique_ptr<CROAD> road2(new CROAD(texture2, textureRect1));
-	road2->setPosition(mWorldBounds.left, mWorldBounds.top + mWorldBounds.height / 2 - Constants::ROAD_SIZE);
-	mSceneLayers->at(Road)->attachChild(std::move(road2));
-
-	std::unique_ptr<CROAD> road3(new CROAD(texture2, textureRect1));
-	road3->setPosition(mWorldBounds.left, mWorldBounds.top + mWorldBounds.height / 2 + Constants::ROAD_SIZE);
-	mSceneLayers->at(Road)->attachChild(std::move(road3));
-
-	sf::Texture& texture3 = mTextures->get(Textures::PAVEMENT);
-	texture3.setRepeated(true);
-	texture3.setSmooth(true);
-
-	std::unique_ptr<CROAD> pave(new CROAD(texture3, textureRect1));
-	pave->setPosition(mWorldBounds.left, mWorldBounds.top + mWorldBounds.height / 2 - 2 * Constants::ROAD_SIZE);
-	mSceneLayers->at(Road)->attachChild(std::move(pave));
-
-	std::unique_ptr<CROAD> pave1(new CROAD(texture3, textureRect1));
-	pave1->setPosition(mWorldBounds.left, mWorldBounds.top + mWorldBounds.height / 2 - 3 * Constants::ROAD_SIZE);
-	mSceneLayers->at(Road)->attachChild(std::move(pave1));
+void GMAP::generatePosition(bool isInit) {
+	if (isInit) {
+		for (int i = 0; i < 3; ++i) {
+			mapPos.push_back(std::pair<sf::Vector2f, int>(sf::Vector2f(mWorldBounds.left, mWorldBounds.top + mWorldBounds.height - i * Constants::ROAD_SIZE), 3));
+		}
+		for (int i = mWorldBounds.top + mWorldBounds.height - 3 * Constants::ROAD_SIZE; i >= mWorldBounds.top; i -= Constants::ROAD_SIZE) {
+			int isRoad = randBiasedInt(0, 3, 0.5);
+			mapPos.push_back(std::pair<sf::Vector2f, int>(sf::Vector2f(mWorldBounds.left, i), isRoad));
+		}
+		isInit = !isInit;
+	}
+	else {
+		for (int i = mWorldBounds.top + mWorldBounds.height; i >= mWorldBounds.top; i -= Constants::ROAD_SIZE) {
+			int isRoad = randBiasedInt(0, 3, 0.5);
+			mapPos.push_back(std::pair<sf::Vector2f, int>(sf::Vector2f(mWorldBounds.left, i), isRoad));
+		}
+	}
+	std::cout << "Position:" << std::endl;
+	for (int i = 0; i < mapPos.size(); ++i) {
+		std::cout << mapPos[i].first.x << " - " << mapPos[i].first.y << std::endl;
+	}
 }
 
 void GMAP::generateRoads() {
-	//::vector<CROAD::Type> roadTypes = { CROAD::DEFAULT_ROAD,CROAD::DOTTED_ROAD };
-	//mSceneLayers[Road]
+	for (int i = 0; i < mapPos.size(); ++i) {
+		sf::IntRect textureRect1(mRoadBounds);
+		sf::Texture* mText = nullptr;
+		switch (mapPos[i].second) {
+		case 0:
+			mText = &mTextures->get(Textures::DEFAULT_ROAD);
+			break;
+		case 1:
+			mText = &mTextures->get(Textures::GROUND);
+			break;
+		case 2:
+			mText = &mTextures->get(Textures::RAIL_ROAD);
+			break;
+		case 3:
+			mText = &mTextures->get(Textures::PAVEMENT);
+			break;
+		case 4:
+			mText = &mTextures->get(Textures::WATER);
+			break;
+		}
+		mText->setRepeated(true);
+		if (mText) {
+			std::unique_ptr<CROAD> road(new CROAD(*mText, textureRect1));
+			road->setPosition(mapPos[i].first);
+			mSceneLayers->at(Road)->attachChild(std::move(road));
+		}
+	}
+}
+
+void GMAP::generateObstacle() {
+	for (int i = mapPos.size() - 1; i >= 0; --i) {
+		if (mapPos[i].second == 3) {
+			int numOfObstacle = randBiasedInt(4, Constants::maxObstacle, 0.4f);
+			for (int j = 0; j < numOfObstacle; ++j) {
+				int startPos = j * (mWorldBounds.width / numOfObstacle);
+				int endPos = startPos + mWorldBounds.width / numOfObstacle;
+				std::cout << startPos << std::endl;
+				std::cout << endPos << std::endl;
+				int type = randObject(0, Constants::maxObstacle, 0.5f);
+
+				std::unique_ptr<COBSTACLE> obstacle(new COBSTACLE(type, *mTextures));
+				obstacle->setPosition(randInt(startPos, endPos) + 50, mapPos[i].first.y + 54);
+				//std::cout << "Pos: " << obstacle->getPosition().x << " - " << obstacle->getPosition().y << std::endl;
+				mSceneLayers->at(Obstacle)->attachChild(std::move(obstacle));
+			}
+		}
+	}
 }

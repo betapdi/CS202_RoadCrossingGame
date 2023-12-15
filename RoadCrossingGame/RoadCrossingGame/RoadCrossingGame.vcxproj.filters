@@ -47,6 +47,9 @@
     <ClCompile Include="CCREDIT.cpp" />
     <ClCompile Include="CRATING.cpp" />
     <ClCompile Include="CGAMEOVER.cpp" />
+    <ClCompile Include="GMAP.cpp">
+      <Filter>WORLD</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CASSET.h" />
@@ -107,6 +110,9 @@
     <ClInclude Include="CCREDIT.h" />
     <ClInclude Include="CRATING.h" />
     <ClInclude Include="CGAMEOVER.h" />
+    <ClInclude Include="GMAP.h">
+      <Filter>WORLD</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GUI">

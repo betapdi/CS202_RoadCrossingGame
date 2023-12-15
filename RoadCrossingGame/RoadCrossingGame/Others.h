@@ -10,6 +10,13 @@ int randInt(int min, int max) {
 	return dist(mt);
 }
 
+float randPos(float min, float max) {
+	static std::random_device rd;
+    static std::default_random_engine engine(rd());
+	std::uniform_real_distribution<float> dist(min, max);
+	return dist(engine);
+}
+
 int randBiasedInt(int minValue, int maxValue, double probabilityOfZeroToOne) {
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -18,7 +25,7 @@ int randBiasedInt(int minValue, int maxValue, double probabilityOfZeroToOne) {
     double randomValue = distribution(gen);
 
     if (randomValue < probabilityOfZeroToOne) {
-        return 0;
+        return minValue;
     }
     else {
         std::uniform_int_distribution<int> intDistribution(minValue, maxValue);
@@ -34,11 +41,10 @@ int randObject(int minValue, int maxValue, double probabilityOfZeroToOne) {
     double randomValue = distribution(gen);
 
     if (randomValue < probabilityOfZeroToOne) {
-        std::uniform_int_distribution<int> intDistribution(minValue, COBSTACLE::BENCH);
-        return intDistribution(gen);
+        return 0;
     }
     else {
-        std::uniform_int_distribution<int> intDistribution(COBSTACLE::VENDING_MACHINE, maxValue);
+        std::uniform_int_distribution<int> intDistribution(minValue, maxValue);
         return intDistribution(gen);
     }
 }

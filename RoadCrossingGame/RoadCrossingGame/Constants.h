@@ -10,12 +10,12 @@ namespace Constants {
 	const int SCREEN_WIDTH			= 1280;
 	const int SCREEN_HEIGHT			= 720;
 	const int SCALE_OF_ROAD			= 4;
-	const int ROAD_SIZE				= 16 * SCALE_OF_ROAD;
+	const int ROAD_SIZE				= 60;
 
 	const int maxMenu				= 5;
 	const int maxCharacters			= 5;
 	const int maxCar				= 7;
-	const int maxObstacle			= 10;
+	const int maxObstacle			= 12;
 
 	const enum Layer
 	{

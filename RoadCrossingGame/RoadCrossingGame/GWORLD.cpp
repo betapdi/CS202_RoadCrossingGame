@@ -118,8 +118,31 @@ void GWORLD::loadTextures()
 	mTextures.load(Textures::Eagle, "Media/Textures/Eagle.png");
 	mTextures.load(Textures::Raptor, "Media/Textures/Raptor.png");
 	mTextures.load(Textures::Desert, "Media/Textures/Desert.png");
-	mTextures.load(Textures::DEFAULT_ROAD, "Media/Textures/default_road_resize.png");
-	mTextures.load(Textures::DOTTED_ROAD, "Media/Textures/white_dotted_road.png");
-	mTextures.load(Textures::PAVEMENT, "Media/Textures/pavement.png");
-	//mTextures.load(Textures::DOTTED_ROAD, "Media/Textures/Objects.png");
+
+	// --- ROAD TEXTURES ---
+	mTextures.load(Textures::DEFAULT_ROAD,			"Media/Textures/default_road_resize.png");
+	//mTextures.load(Textures::DEFAULT_ROAD,		"Media/Textures/streettile.png");
+	mTextures.load(Textures::DOTTED_ROAD,			"Media/Textures/white_dotted_road_resize.png");
+	mTextures.load(Textures::RAIL_ROAD,				"Media/Textures/railroad_tile.png");
+	mTextures.load(Textures::GROUND,				"Media/Textures/ground.png");
+	mTextures.load(Textures::WATER,					"Media/Textures/water.png");
+
+
+	// --- PAVEMET TEXTURES ---
+	mTextures.load(Textures::PAVEMENT,				"Media/Textures/pavement.png");
+
+	// --- OBSTACLES ---
+	mTextures.load(Textures::SMALL_TREE,			"Media/Textures/small_tree.png");
+	mTextures.load(Textures::BIG_TREE,				"Media/Textures/small_tree_resize.png");
+	mTextures.load(Textures::BENCH,					"Media/Textures/bench.png");
+	//mTextures.load(Textures::GRASS,				"Media/Textures/grass.png");
+	mTextures.load(Textures::VENDING_MACHINE,		"Media/Textures/vending_machine.png");
+	mTextures.load(Textures::BLUE_SIGN,				"Media/Textures/blue_sign.png");
+	mTextures.load(Textures::GREEN_SIGN,			"Media/Textures/green_sign.png");
+	mTextures.load(Textures::WHITE_SIGN,			"Media/Textures/white_sign.png");
+	mTextures.load(Textures::HOTDOG,				"Media/Textures/hotdog.png");
+	mTextures.load(Textures::LIGHT,					"Media/Textures/light.png");
+	mTextures.load(Textures::GROCERY,				"Media/Textures/grocery.png");
+	mTextures.load(Textures::SHOP,					"Media/Textures/shop_1.png");
+	mTextures.load(Textures::HOUSE,					"Media/Textures/house.png");
 }

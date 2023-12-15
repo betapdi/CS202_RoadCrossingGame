@@ -32,18 +32,20 @@ private:
 	//void adaptPlayerPosition();
 	//void adaptPlayerVelocity();
 	//sf::FloatRect getViewBounds() const;
-
+	void generateObstacle();
+	void generatePosition(bool isInit);
 private:
 	sf::RenderWindow& mWindow;
-
 	TextureHolder* mTextures;
 	std::vector<CSCENENODE*>* mSceneLayers;
 	CSCENENODE* mSceneGraph;
-
+	bool isInit;
+	std::vector<std::pair<sf::Vector2f, int>> mapPos;
 	sf::FloatRect mWorldBounds;
 	sf::FloatRect mRoadBounds;
 	sf::Vector2f mSpawnPosition;
 	float* mScrollSpeed;
+	float yCoor;
 };
 
 #endif // !GMAP_H
