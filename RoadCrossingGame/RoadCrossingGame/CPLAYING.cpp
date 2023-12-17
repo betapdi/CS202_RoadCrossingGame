@@ -1,5 +1,7 @@
 #include "CPLAYING.h"
 #include "WindowConnector.h"
+
+
 CPLAYING::CPLAYING(sf::RenderWindow* window)
 	: mWorld(*window)
 	, mFont()
@@ -33,31 +35,11 @@ void CPLAYING::resume()
 
 void CPLAYING::init()
 {
+	player.ini();
 }
 
 void CPLAYING::processEvents() {
-	sf::Event event;
-	while (curWindow->getWindow()->pollEvent(event))
-	{
-		switch (event.type)
-		{
-		case sf::Event::KeyPressed:
-			/*if (!sf::Keyboard::isKeyPressed(sf::Keyboard::A) || !sf::Keyboard::isKeyPressed(sf::Keyboard::W) ||
-				!sf::Keyboard::isKeyPressed(sf::Keyboard::S) || !sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-				isPause = true;
-			}*/
-			handlePlayerInput(event.key.code, true);
-			break;
-
-		case sf::Event::KeyReleased:
-			handlePlayerInput(event.key.code, false);
-			break;
-
-		case sf::Event::Closed:
-			curWindow->getWindow()->close();
-			break;
-		}
-	}
+	player.process();
 }
 
 void CPLAYING::update(float deltaTime) {
@@ -68,11 +50,16 @@ void CPLAYING::update(float deltaTime) {
 	mWorld.update(deltaTime);
 }
 
+
 void CPLAYING::render(sf::RenderWindow* window) {
 	window->clear(sf::Color::White);
-	mWorld.draw();
+	mWorld.draw();	
+	//sf::View Camera;
+	player.render(window);
+
 	window->setView(window->getDefaultView());
 	//window->draw(mStatisticsText);
+
 }
 
 void CPLAYING::updateStatistics(float elapsedTime) {

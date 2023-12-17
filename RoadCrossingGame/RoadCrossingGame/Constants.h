@@ -53,6 +53,8 @@ namespace Constants {
 	static sf::Texture* CHICKEN		=		CASSET::getInstance()->GetTexture("character/chicken.png");
 	static sf::Texture* DUCK		=		CASSET::getInstance()->GetTexture("character/duck.png");
 	static sf::Texture* SQUIRREL	=		CASSET::getInstance()->GetTexture("character/squirrel.png");
+	static sf::Texture* BUNNY		=		CASSET::getInstance()->GetTexture("character/bunny.png");
+
 
 	static sf::Texture* START_LANE	=		CASSET::getInstance()->GetTexture("objects/statics/start_lane.png");
 	static sf::Texture* TOP_LANE	=		CASSET::getInstance()->GetTexture("objects/statics/top_lane1.png");
