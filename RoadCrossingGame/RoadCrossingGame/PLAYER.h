@@ -27,44 +27,59 @@ public:
 		switch (dir) {
 		case sf::Keyboard::Up:
 			_sprite.move(velocity.x * deltaTime, velocity.y * deltaTime);
-			if (source.y != DIRECTION_Y_UP_INITAL) {
-				source.x = DIRECTION_X_UP_INITAL;
-				source.y = DIRECTION_Y_UP_INITAL;
+			curTime += deltaTime;
+			if (curTime >= deltaTime * 4) {
+				if (source.y != DIRECTION_Y_UP_INITAL) {
+					source.x = DIRECTION_X_UP_INITAL;
+					source.y = DIRECTION_Y_UP_INITAL;
+				}
+				if (source.x >= 2)
+					source.x = DIRECTION_X_UP_INITAL;
+				else source.x++;
+				curTime -= deltaTime * 4;
 			}
-			if (source.x >= 2)
-				source.x = DIRECTION_X_UP_INITAL;
-			else source.x++;
 			break;
 		case sf::Keyboard::Down:
 			_sprite.move(velocity.x * deltaTime, velocity.y * deltaTime);
-			if (source.y != DIRECTION_Y_DOWN_INITAL) {
-				source.x = DIRECTION_X_DOWN_INITAL;
-				source.y = DIRECTION_Y_DOWN_INITAL;
+			curTime += deltaTime;
+			if (curTime >= deltaTime * 4) {
+				if (source.y != DIRECTION_Y_DOWN_INITAL) {
+					source.x = DIRECTION_X_DOWN_INITAL;
+					source.y = DIRECTION_Y_DOWN_INITAL;
+				}
+				if (source.x >= 2)
+					source.x = DIRECTION_X_DOWN_INITAL;
+				else source.x++;
+				curTime -= deltaTime * 4;
 			}
-			if (source.x >= 2)
-				source.x = DIRECTION_X_DOWN_INITAL;
-			else source.x++;
-
 			break;
 		case sf::Keyboard::Right:
 			_sprite.move(velocity.x * deltaTime, velocity.y * deltaTime);
-			if (source.y != DIRECTION_Y_RIGHT_INITAL) {
-				source.x = DIRECTION_X_RIGHT_INITAL;
-				source.y = DIRECTION_Y_RIGHT_INITAL;
+			curTime += deltaTime;
+			if (curTime >= deltaTime * 4) {
+				if (source.y != DIRECTION_Y_RIGHT_INITAL) {
+					source.x = DIRECTION_X_RIGHT_INITAL;
+					source.y = DIRECTION_Y_RIGHT_INITAL;
+				}
+				if (source.x >= 2)
+					source.x = DIRECTION_X_RIGHT_INITAL;
+				else source.x++;
+				curTime -= deltaTime * 4;
 			}
-			if (source.x >= 2)
-				source.x = DIRECTION_X_RIGHT_INITAL;
-			else source.x++;
 			break;
 		case sf::Keyboard::Left:
 			_sprite.move(velocity.x * deltaTime, velocity.y * deltaTime);
-			if (source.y != DIRETION_Y_LEFT_INITAL) {
-				source.x = DIRECTION_X_LEFT_INITAL;
-				source.y = DIRETION_Y_LEFT_INITAL;
+			curTime += deltaTime;
+			if (curTime >= deltaTime * 4) {
+				if (source.y != DIRETION_Y_LEFT_INITAL) {
+					source.x = DIRECTION_X_LEFT_INITAL;
+					source.y = DIRETION_Y_LEFT_INITAL;
+				}
+				if (source.x >= 2)
+					source.x = DIRECTION_X_LEFT_INITAL;
+				else source.x++;
+				curTime -= deltaTime * 4;
 			}
-			if (source.x >= 2)
-				source.x = DIRECTION_X_LEFT_INITAL;
-			else source.x++;
 			break;
 		}
 	}
@@ -117,6 +132,7 @@ public:
 		return Camera;
 	}
 private:
+	float curTime = 0.0f, frameTime;
 	sf::Vector2f velocity = { 0.0f, 0.0f };
 	float speed = 200.0f;
 	sf::Keyboard::Key dir;
