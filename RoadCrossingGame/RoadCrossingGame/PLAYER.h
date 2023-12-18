@@ -19,21 +19,52 @@ class Player {
 public:
 	void ini() {
 		_sprite.setTexture(*Constants::BUNNY);
+		_sprite.setPosition(640, 200);
 	}
-	void Mouvment(const int& dir)
+
+	void Mouvment(float deltaTime)
 	{
 		switch (dir) {
-		case 0:
-			_sprite.move(sf::Vector2f(0, -8));
+		case sf::Keyboard::Up:
+			_sprite.move(velocity.x * deltaTime, velocity.y * deltaTime);
+			if (source.y != DIRECTION_Y_UP_INITAL) {
+				source.x = DIRECTION_X_UP_INITAL;
+				source.y = DIRECTION_Y_UP_INITAL;
+			}
+			if (source.x >= 2)
+				source.x = DIRECTION_X_UP_INITAL;
+			else source.x++;
 			break;
-		case 1:
-			_sprite.move(sf::Vector2f(0, 8));
+		case sf::Keyboard::Down:
+			_sprite.move(velocity.x * deltaTime, velocity.y * deltaTime);
+			if (source.y != DIRECTION_Y_DOWN_INITAL) {
+				source.x = DIRECTION_X_DOWN_INITAL;
+				source.y = DIRECTION_Y_DOWN_INITAL;
+			}
+			if (source.x >= 2)
+				source.x = DIRECTION_X_DOWN_INITAL;
+			else source.x++;
+
 			break;
-		case 2:
-			_sprite.move(sf::Vector2f(8, 0));
+		case sf::Keyboard::Right:
+			_sprite.move(velocity.x * deltaTime, velocity.y * deltaTime);
+			if (source.y != DIRECTION_Y_RIGHT_INITAL) {
+				source.x = DIRECTION_X_RIGHT_INITAL;
+				source.y = DIRECTION_Y_RIGHT_INITAL;
+			}
+			if (source.x >= 2)
+				source.x = DIRECTION_X_RIGHT_INITAL;
+			else source.x++;
 			break;
-		case 3:
-			_sprite.move(sf::Vector2f(-8, 0));
+		case sf::Keyboard::Left:
+			_sprite.move(velocity.x * deltaTime, velocity.y * deltaTime);
+			if (source.y != DIRETION_Y_LEFT_INITAL) {
+				source.x = DIRECTION_X_LEFT_INITAL;
+				source.y = DIRETION_Y_LEFT_INITAL;
+			}
+			if (source.x >= 2)
+				source.x = DIRECTION_X_LEFT_INITAL;
+			else source.x++;
 			break;
 		}
 	}
@@ -51,52 +82,26 @@ public:
 				switch (_event.key.code)
 				{
 				case sf::Keyboard::Right:
-					Mouvment(2);
-					if (source.y != DIRECTION_Y_RIGHT_INITAL) {
-						source.x = DIRECTION_X_RIGHT_INITAL;
-						source.y = DIRECTION_Y_RIGHT_INITAL;
-					}
-					if (source.x >= 2)
-						source.x = DIRECTION_X_RIGHT_INITAL;
-					else source.x++;
-
+					dir = sf::Keyboard::Right;
+					velocity.x = speed;
 					break;
 				case sf::Keyboard::Left:
-					Mouvment(3);
-					if (source.y != DIRETION_Y_LEFT_INITAL) {
-						source.x = DIRECTION_X_LEFT_INITAL;
-						source.y = DIRETION_Y_LEFT_INITAL;
-					}
-					if (source.x >= 2)
-						source.x = DIRECTION_X_LEFT_INITAL;
-					else source.x++;
-
+					dir = sf::Keyboard::Left;
+					velocity.x = -speed;
 					break;
 				case sf::Keyboard::Up:
-					Mouvment(0);
-					if (source.y != DIRECTION_Y_UP_INITAL) {
-						source.x = DIRECTION_X_UP_INITAL;
-						source.y = DIRECTION_Y_UP_INITAL;
-					}
-					if (source.x >= 2)
-						source.x = DIRECTION_X_UP_INITAL;
-					else source.x++;
-
+					dir = sf::Keyboard::Up;
+					velocity.y = -speed;
 					break;
 				case sf::Keyboard::Down:
-					Mouvment(1);
-					if (source.y != DIRECTION_Y_DOWN_INITAL) {
-						source.x = DIRECTION_X_DOWN_INITAL;
-						source.y = DIRECTION_Y_DOWN_INITAL;
-					}
-					if (source.x >= 2)
-						source.x = DIRECTION_X_DOWN_INITAL;
-					else source.x++;
-
-					break;
+					dir = sf::Keyboard::Down;
+					velocity.y = speed;
 					break;
 				}
 				break;
+			case sf::Event::KeyReleased:
+				velocity = { 0.0f, 0.0f };
+				dir = sf::Keyboard::Unknown;
 			}
 		}
 	}
@@ -104,9 +109,17 @@ public:
 		_sprite.setTextureRect(sf::IntRect(source.x * SPRITE_WIDTH, source.y * SPRITE_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT));
 		window->draw(_sprite);
 	}
+
+	sf::View followView(sf::View Camera) {
+		
+       if(_sprite.getPosition().y<600)
+		Camera.move(0.f, float(_sprite.getPosition().y-600));
+		return Camera;
+	}
 private:
-
-
+	sf::Vector2f velocity = { 0.0f, 0.0f };
+	float speed = 200.0f;
+	sf::Keyboard::Key dir;
 	sf::Sprite _sprite;
 	sf::Vector2i source = { 0,0 };
 };

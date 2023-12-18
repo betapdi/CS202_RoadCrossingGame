@@ -104,7 +104,7 @@ void GWORLD::buildMaps() {
 }
 
 void GWORLD::draw() {
-	mWindow.setView(mWorldView);
+	//mWindow.setView(mWorldView);
 
 	for (std::size_t i = 0; i < LayerCount; ++i) {
 		for (std::size_t currMap = 0; currMap < 3; ++currMap) {

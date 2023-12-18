@@ -43,6 +43,7 @@ void CPLAYING::processEvents() {
 }
 
 void CPLAYING::update(float deltaTime) {
+	player.Mouvment(deltaTime);
 	if (isPause) {
 		STATEMACHINE::getInstance()->changeState(stateTypes::GAMEOVER);
 		isPause = !isPause;
@@ -52,13 +53,15 @@ void CPLAYING::update(float deltaTime) {
 
 
 void CPLAYING::render(sf::RenderWindow* window) {
+	sf::View Camera;
+	Camera = window->getDefaultView();
+	window->setView(player.followView(Camera));
 	window->clear(sf::Color::White);
 	mWorld.draw();	
-	//sf::View Camera;
 	player.render(window);
-
-	window->setView(window->getDefaultView());
-	//window->draw(mStatisticsText);
+	
+	
+//	window->draw(mStatisticsText);
 
 }
 
