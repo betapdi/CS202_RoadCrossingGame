@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Aircraft.cpp" />
+    <ClCompile Include="CANIMAL.cpp" />
     <ClCompile Include="CASSET.cpp" />
     <ClCompile Include="CBACKGROUND.cpp" />
     <ClCompile Include="CCREDIT.cpp" />
@@ -157,6 +158,7 @@
     <ClCompile Include="CSETTING.cpp" />
     <ClCompile Include="CSHAPE.cpp" />
     <ClCompile Include="CSPRITENODE.cpp" />
+    <ClCompile Include="CVEHICLE.cpp" />
     <ClCompile Include="GANIMATION.cpp" />
     <ClCompile Include="GBUTTON.cpp" />
     <ClCompile Include="GMAP.cpp" />
@@ -167,6 +169,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Aircraft.h" />
+    <ClInclude Include="CANIMAL.h" />
     <ClInclude Include="CASSET.h" />
     <ClInclude Include="CBACKGROUND.h" />
     <ClInclude Include="CCREDIT.h" />
@@ -188,6 +191,7 @@
     <ClInclude Include="CSHAPE.h" />
     <ClInclude Include="CSingleton.h" />
     <ClInclude Include="CSPRITENODE.h" />
+    <ClInclude Include="CVEHICLE.h" />
     <ClInclude Include="GANIMATION.h" />
     <ClInclude Include="GBUTTON.h" />
     <ClInclude Include="GMAP.h" />

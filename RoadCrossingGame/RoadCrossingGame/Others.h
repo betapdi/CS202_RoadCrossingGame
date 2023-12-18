@@ -41,30 +41,12 @@ int randObject(int minValue, int maxValue, double probabilityOfZeroToOne) {
     double randomValue = distribution(gen);
 
     if (randomValue < probabilityOfZeroToOne) {
-        return 0;
+        std::uniform_int_distribution<int> intDistribution1(minValue, minValue + 2);
+        return intDistribution1(gen);
     }
     else {
-        std::uniform_int_distribution<int> intDistribution(minValue, maxValue);
-        return intDistribution(gen);
+        std::uniform_int_distribution<int> intDistribution2(minValue, maxValue);
+        return intDistribution2(gen);
     }
 }
-
-
-//void GWORLD::generateObstacle() {
-//	for (int i = mWorldBounds.top + mWorldBounds.height; i <= mWorldBounds.height; i -= Constants::ROAD_SIZE) {
-//		int isPrint = randInt(0, 1);
-//		if (isPrint) {
-//			int numOfObstacle = randInt(0, Constants::maxObstacle);
-//			for (int j = 0; j < numOfObstacle; ++j) {
-//				int startPos = j * (mWorldBounds.width / numOfObstacle);
-//				int endPos = startPos + mWorldBounds.width / numOfObstacle;
-//				int type = randInt(0, COBSTACLE::SHOP_2);
-//
-//				std::unique_ptr<COBSTACLE> obstacle(new COBSTACLE(type, mTextures));
-//				obstacle->setPosition(randInt(startPos, endPos), i);
-//				mSceneLayers[Obstacle]->attachChild(std::move(obstacle));
-//			}
-//		}
-//	}
-//}
 #endif // !OTHERS_H

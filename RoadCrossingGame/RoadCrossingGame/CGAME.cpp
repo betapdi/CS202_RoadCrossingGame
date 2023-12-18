@@ -109,7 +109,7 @@ CGAME::CGAME() {
 	window = new sf::RenderWindow(this->videoMode, "Crossy Road", sf::Style::Titlebar | sf::Style::Close);
 	window->setFramerateLimit(60);
 	window->setVerticalSyncEnabled(false);
-	curWindow->getInstance()->setWindow(window);
+	curWindow->setWindow(window);
 }
 CGAME::~CGAME() {
 	if (window != nullptr) delete window;

@@ -32,6 +32,16 @@ namespace Textures
 		SHOP,
 		HOUSE,
 		MONEY,
+		BEAR_LEFT,
+		BEAR_RIGHT,
+		DEER_L,
+		DEER_R,
+		REINDEER_L,
+		REINDEER_R,
+		FOX_L,
+		FOX_R,
+		WOLF_L,
+		WOLF_R,
 	};
 }
 template <typename Resource, typename Identifier>

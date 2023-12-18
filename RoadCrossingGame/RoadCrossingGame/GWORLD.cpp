@@ -145,4 +145,16 @@ void GWORLD::loadTextures()
 	mTextures.load(Textures::GROCERY,				"Media/Textures/grocery.png");
 	mTextures.load(Textures::SHOP,					"Media/Textures/shop_1.png");
 	mTextures.load(Textures::HOUSE,					"Media/Textures/house.png");
+
+	// --- ANIMALS ---
+	mTextures.load(Textures::BEAR_LEFT,				"Media/Textures/bear_left.png");
+	mTextures.load(Textures::BEAR_RIGHT,			"Media/Textures/bear_right.png");
+	mTextures.load(Textures::DEER_L,				"Media/Textures/deer_left.png");
+	mTextures.load(Textures::DEER_R,				"Media/Textures/deer_right.png");
+	mTextures.load(Textures::REINDEER_L,			"Media/Textures/reindeer_left.png");
+	mTextures.load(Textures::REINDEER_R,			"Media/Textures/reindeer_right.png");
+	mTextures.load(Textures::FOX_L,					"Media/Textures/fox_left.png");
+	mTextures.load(Textures::FOX_R,					"Media/Textures/fox_right.png");
+	mTextures.load(Textures::WOLF_L,				"Media/Textures/wolf_left.png");
+	mTextures.load(Textures::WOLF_R,				"Media/Textures/wolf_right.png");
 }

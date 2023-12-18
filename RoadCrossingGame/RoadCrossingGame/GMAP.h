@@ -6,9 +6,12 @@
 #include "RESOURCEIDENTIFIER.h"
 #include "CRESOURCEHOLDER.h"
 #include "CROAD.h"
+#include "CANIMAL.h"
 #include <vector>
 #include "Aircraft.h"
+#include <algorithm>
 #include "Constants.h"
+#include <queue>
 
 using namespace Constants;
 
@@ -25,20 +28,21 @@ public:
 	sf::Vector2f getCoordinate();
 	void rebuild(const float& yMapCoordinate);
 	void handleTouchBorder(Aircraft* mPlayerAircraft);
-
 private:
 	void buildScene();
 	void generateRoads();
 	//void adaptPlayerPosition();
 	//void adaptPlayerVelocity();
 	//sf::FloatRect getViewBounds() const;
-	void generateObstacle();
+	void generateObstacle(bool isInit);
 	void generatePosition(bool isInit);
+	void generateAnimals();
 private:
 	sf::RenderWindow& mWindow;
 	TextureHolder* mTextures;
 	std::vector<CSCENENODE*>* mSceneLayers;
 	CSCENENODE* mSceneGraph;
+	std::vector<CANIMAL*> mAnimal;
 	bool isInit;
 	std::vector<std::pair<sf::Vector2f, int>> mapPos;
 	sf::FloatRect mWorldBounds;

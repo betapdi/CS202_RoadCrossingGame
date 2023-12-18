@@ -6,7 +6,8 @@
 
 class GANIMATION : public sf::Sprite{
 public:
-	GANIMATION(sf::Texture &texture, sf::Vector2i frameNum, float frameTime);
+	GANIMATION();
+	GANIMATION(const sf::Texture &texture, sf::Vector2i frameNum, float frameTime);
 	void calculateRectSize();
 	void calculateRectUV();
 	void applyRect();

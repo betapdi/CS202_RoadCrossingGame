@@ -52,7 +52,7 @@ CROAD::CROAD(const sf::Texture& texture, const sf::IntRect& textureRect) {
 	mRect.setTexture(&texture);
 	mRect.setTextureRect(textureRect);
 	mRect.setSize(sf::Vector2f(Constants::SCREEN_WIDTH, Constants::ROAD_SIZE));
-	//mRect.setOutlineThickness(3);
+	//mRect.setOutlineThickness(0.5f);
 	//mRect.setOutlineColor(sf::Color::White);
 }
 

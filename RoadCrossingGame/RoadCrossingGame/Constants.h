@@ -15,12 +15,14 @@ namespace Constants {
 	const int maxMenu				= 5;
 	const int maxCharacters			= 5;
 	const int maxCar				= 7;
-	const int maxObstacle			= 12;
+	const int maxObstacle			= 10;
+	const int maxAnimal				= 7;
 
 	const enum Layer
 	{
 		Background,
 		Road,
+		Animal,
 		Obstacle,
 		Air,
 		LayerCount
@@ -58,13 +60,7 @@ namespace Constants {
 	static sf::Texture* TOP_LANE	=		CASSET::getInstance()->GetTexture("objects/statics/top_lane1.png");
 	static sf::Texture* INNER_LANE	=		CASSET::getInstance()->GetTexture("objects/statics/inner_lane.png");
 
+	static sf::Music* ROUND_N_ROUND = CASSET::getInstance()->GetMusic("roundnround.wav");
 	//static sf::RenderWindow* getCurWindow = WindowConnector::getInstance()->getWindow();
 }
-
-//int randInt(int min, int max) {
-//	std::random_device rd;
-//	std::mt19937 mt(rd());
-//	std::uniform_int_distribution<int> dist(min, max);
-//	return dist(mt);
-//}
 #endif // !CONSTANT_H

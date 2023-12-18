@@ -90,41 +90,6 @@ COBSTACLE::obstacleType fromIntToType(int type) {
 	}
 }
 
-//Textures::ID fromIntToTextureID(int type) {
-//	switch (type) {
-//	case COBSTACLE::BLUE_BUILDING:
-//		return Textures::BLUE_BUILDING;
-//		break;
-//	case COBSTACLE::RED_BUILDING:
-//		return Textures::RED_BUILDING;
-//		break;
-//	case COBSTACLE::GLASS_BUILDING:
-//		return Textures::GLASS_BUILDING;
-//		break;
-//	case COBSTACLE::GLASS_BUILDING_1:
-//		return Textures::GLASS_BUILDING_1;
-//		break;
-//	case COBSTACLE::COMPLEX_BUILDING:
-//		return Textures::COMPLEX_BUILDING;
-//		break;
-//	case COBSTACLE::GROCERY:
-//		return Textures::GROCERY;
-//		break;
-//	case COBSTACLE::SHOP:
-//		return Textures::SHOP;
-//		break;
-//	case COBSTACLE::SHOP_1:
-//		return Textures::SHOP_1;
-//		break;
-//	case COBSTACLE::BREAD_SHOP:
-//		return Textures::BREAD_SHOP;
-//		break;
-//	}
-//}
-
-//COBSTACLE::COBSTACLE(const TextureHolder& textures) {
-//	//
-//}
 
 COBSTACLE::COBSTACLE(int type, const TextureHolder& textures)
 	: mType(fromIntToType(type))

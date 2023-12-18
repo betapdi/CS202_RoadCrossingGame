@@ -41,7 +41,8 @@ private:
 		Air,
 		LayerCount
 	};
-
+public:
+	std::vector<std::pair<sf::Vector2f, int>> mapPos;
 
 private:
 	sf::RenderWindow& mWindow;
@@ -57,6 +58,10 @@ private:
 
 	std::vector<GMAP> mMaps;
 	std::vector<int> id;
+
+	//
+	bool isInit;
+	void generatePosition(bool isInit);
 };
 
 #endif // !GWORLD_H

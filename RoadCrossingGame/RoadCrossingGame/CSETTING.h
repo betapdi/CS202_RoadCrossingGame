@@ -37,19 +37,25 @@ private:
 	int cur;
 	int curChoice;
 	int prevChoice;
+
 	int direction;
 	sf::Sprite* selectedCharacter;
 	sf::Sprite* prevCharacter;
-	bool changeCharacter;
-	bool fromLeft;
-	bool fromRight;
-	float moveSpeed;
-	float characterScale;
-	float erasedScale;
+	//bool changeCharacter;
+	//bool fromLeft;
+	//bool fromRight;
+	//float moveSpeed;
+	//float characterScale;
+	//float erasedScale;
 	
 	bool musicPressed;
 	bool sfxPressed;
 	bool resetPressed;
+
+	bool isFocus;
+	bool isSelected;
+	bool chooseFocus;
+	bool chooseSelected;
 };
 
 #endif // !CSETTING_H

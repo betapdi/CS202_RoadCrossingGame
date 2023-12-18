@@ -1,22 +1,14 @@
 #include "CSETTING.h"
 
-CSETTING::CSETTING() {
-	cursor.loadFromSystem(sf::Cursor::Arrow);
-	changeCharacter = false;
-	fromLeft = false;
-	fromRight = false;
-	moveSpeed = 100;
-
+CSETTING::CSETTING()
+	: musicPressed(0), sfxPressed(0), resetPressed(0), isFocus(0), isSelected(0)
+	, chooseFocus(0), chooseSelected(0)
+{
 	prevChoice = -1;
 	curChoice = 0;
-	direction = 0;
-	selectedCharacter = nullptr;
-	prevCharacter = nullptr;
 	cur = 0;
-
-	musicPressed = false;
-	sfxPressed = false;
-	resetPressed = false;
+	prevCharacter = nullptr;
+	selectedCharacter = nullptr;
 }
 
 CSETTING::~CSETTING() {
@@ -69,7 +61,6 @@ void CSETTING::init() {
 	button->init(Constants::MUSIC_ON);
 	button->setPosition(350, 604);
 	button->setClickFunction([]() {
-		// do something
 		});
 	buttonList.push_back(button);	
 	
@@ -183,6 +174,20 @@ void CSETTING::processEvents() {
 			curWindow->getWindow()->close();
 		}
 
+		if (event.type == sf::Event::MouseMoved) {
+			chooseFocus = (rrect[2].getGlobalBounds().contains((sf::Vector2f)sf::Mouse::getPosition(*curWindow->getWindow())) ? 1 : 0);
+		}
+
+		if (event.type == sf::Event::MouseMoved) {
+			for (int i = 0; i < 6; ++i) {
+				if (buttonList[i]->getGlobalBounds().contains((sf::Vector2f)sf::Mouse::getPosition(*curWindow->getWindow()))) {
+					isFocus = true;
+					break;
+				}
+			}
+			isFocus = false;
+		}
+
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			//Music
 			if (buttonList[3]->getGlobalBounds().contains((sf::Vector2f)sf::Mouse::getPosition(*curWindow->getWindow()))) {
@@ -225,17 +230,8 @@ void CSETTING::processEvents() {
 				direction = 1;
 			}
 
-			if (event.type == sf::Event::MouseMoved) {
-				if (text[0].getGlobalBounds().contains((sf::Vector2f)sf::Mouse::getPosition(*curWindow->getWindow()))) {
-					cursor.loadFromSystem(sf::Cursor::Hand);
-					
-				}
-				else {
-					cursor.loadFromSystem(sf::Cursor::Arrow);
-				}
-			}
+			chooseSelected = (chooseFocus ? 1 : 0);
 		}
-	
 		selectedCharacter = characters[cur];
 		//if (prevCharacter) {
 		//	selectedCharacter->setPosition(Constants::SCREEN_WIDTH, Constants::SCREEN_HEIGHT);
@@ -248,9 +244,22 @@ void CSETTING::processEvents() {
 
 void CSETTING::update(float deltaTime) {
 	background.update(deltaTime);
-	clock.restart();
-	//moveCharacter(direction, deltaTime);
-	curWindow->getWindow()->setMouseCursor(cursor);
+	if (chooseFocus) {
+		cursor.loadFromSystem(sf::Cursor::Hand);
+		curWindow->getWindow()->setMouseCursor(cursor);
+	}
+	(chooseFocus ? rrect[2].setFillColor(sf::Color(119, 52, 59, 200)) : rrect[2].setFillColor(sf::Color(119, 52, 59, 225)));
+	if (isFocus) {
+		cursor.loadFromSystem(sf::Cursor::Hand);
+		curWindow->getWindow()->setMouseCursor(cursor);
+	}
+	else {
+		cursor.loadFromSystem(sf::Cursor::Arrow);
+		curWindow->getWindow()->setMouseCursor(cursor);
+	}
+	if (chooseSelected) {
+		// Set character
+	}
 	for (auto button : buttonList) {
 		button->update(deltaTime);
 	}

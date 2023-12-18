@@ -50,12 +50,15 @@
     <ClCompile Include="GMAP.cpp">
       <Filter>WORLD</Filter>
     </ClCompile>
+    <ClCompile Include="CANIMAL.cpp">
+      <Filter>WORLD</Filter>
+    </ClCompile>
+    <ClCompile Include="CVEHICLE.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CASSET.h" />
     <ClInclude Include="CGAME.h" />
     <ClInclude Include="CMENU.h" />
-    <ClInclude Include="COBJECT.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="CSETTING.h" />
     <ClInclude Include="CSingleton.h" />
@@ -111,6 +114,13 @@
     <ClInclude Include="CRATING.h" />
     <ClInclude Include="CGAMEOVER.h" />
     <ClInclude Include="GMAP.h">
+      <Filter>WORLD</Filter>
+    </ClInclude>
+    <ClInclude Include="CANIMAL.h">
+      <Filter>WORLD</Filter>
+    </ClInclude>
+    <ClInclude Include="CVEHICLE.h" />
+    <ClInclude Include="COBJECT.h">
       <Filter>WORLD</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,6 +1,11 @@
 #include "GANIMATION.h"
 
-GANIMATION::GANIMATION(sf::Texture& texture, sf::Vector2i frameNum, float frameTime) {
+GANIMATION::GANIMATION()
+	: frameNum(0, 0), curFrame(0, 0), frameTime(0), curTime(0), rectUV(0, 0), rectSize(0, 0)
+{
+}
+
+GANIMATION::GANIMATION(const sf::Texture& texture, sf::Vector2i frameNum, float frameTime) {
 	this->frameNum = frameNum;
 	this->frameTime = frameTime;
 	this->setTexture(texture);

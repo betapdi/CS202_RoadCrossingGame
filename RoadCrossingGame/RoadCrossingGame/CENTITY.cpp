@@ -11,6 +11,10 @@ void CENTITY::setVelocity(float vx, float vy)
 	mVelocity.y = vy;
 }
 
+void CENTITY::setInitialPosition(sf::Vector2f pos) {
+	mPosition = pos;
+}
+
 sf::Vector2f CENTITY::getVelocity() const
 {
 	return mVelocity;
