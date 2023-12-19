@@ -32,15 +32,7 @@ private:
 	//void generateRoads();
 	//void generateObstacle();
 	//void generatePosition(bool isInit);
-private:
-	enum Layer
-	{
-		Background,
-		Road,
-		Obstacle,
-		Air,
-		LayerCount
-	};
+
 public:
 	std::vector<std::pair<sf::Vector2f, int>> mapPos;
 
