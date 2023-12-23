@@ -151,6 +151,7 @@
     <ClCompile Include="CMENU.cpp" />
     <ClCompile Include="COBJECT.cpp" />
     <ClCompile Include="COBSTACLE.cpp" />
+    <ClCompile Include="CPAUSE.cpp" />
     <ClCompile Include="CPLAYING.cpp" />
     <ClCompile Include="CRATING.cpp" />
     <ClCompile Include="CROAD.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="COBJECT.h" />
     <ClInclude Include="COBSTACLE.h" />
     <ClInclude Include="Constants.h" />
+    <ClInclude Include="CPAUSE.h" />
     <ClInclude Include="CPLAYING.h" />
     <ClInclude Include="CRATING.h" />
     <ClInclude Include="CRESOURCEHOLDER.h" />

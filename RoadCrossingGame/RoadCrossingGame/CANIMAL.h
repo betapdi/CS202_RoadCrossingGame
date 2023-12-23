@@ -23,7 +23,7 @@ public:
 	CANIMAL(int type, sf::FloatRect mWorldBound, const TextureHolder& textures, float speedMove, float frameTime);
 	sf::Vector2i getFrameNum(int type);
 	void saveOrgPos(const sf::Vector2f& position);
-	void updateCurrent(float deltaTime);
+	virtual void updateCurrent(float deltaTime);
 	int getDirection();
 private:
 	void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;

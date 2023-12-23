@@ -120,7 +120,8 @@ void GWORLD::loadTextures()
 	mTextures.load(Textures::Desert, "Media/Textures/Desert.png");
 
 	// --- ROAD TEXTURES ---
-	mTextures.load(Textures::DEFAULT_ROAD,			"Media/Textures/default_road_resize.png");
+	//mTextures.load(Textures::DEFAULT_ROAD,			"Media/Textures/default_road_resize.png");
+	mTextures.load(Textures::DEFAULT_ROAD,			"Media/Textures/default_street_edit.png");
 	//mTextures.load(Textures::DEFAULT_ROAD,		"Media/Textures/streettile.png");
 	mTextures.load(Textures::DOTTED_ROAD,			"Media/Textures/white_dotted_road_resize.png");
 	mTextures.load(Textures::RAIL_ROAD,				"Media/Textures/railroad_tile.png");
@@ -129,7 +130,8 @@ void GWORLD::loadTextures()
 
 
 	// --- PAVEMET TEXTURES ---
-	mTextures.load(Textures::PAVEMENT,				"Media/Textures/pavement.png");
+	//mTextures.load(Textures::PAVEMENT,				"Media/Textures/pavement.png");
+	mTextures.load(Textures::PAVEMENT,				"Media/Textures/pavement_edit.png");
 
 	// --- OBSTACLES ---
 	mTextures.load(Textures::SMALL_TREE,			"Media/Textures/small_tree.png");
@@ -145,6 +147,8 @@ void GWORLD::loadTextures()
 	mTextures.load(Textures::GROCERY,				"Media/Textures/grocery.png");
 	mTextures.load(Textures::SHOP,					"Media/Textures/shop_1.png");
 	mTextures.load(Textures::HOUSE,					"Media/Textures/house.png");
+	//mTextures.load(Textures::TRAFFIC_LIGHT,			"Media/Textures/traffic_light.png");
+	mTextures.load(Textures::TRAFFIC_LIGHT,			"Media/Textures/traffic_light_edit.png");
 
 	// --- ANIMALS ---
 	mTextures.load(Textures::BEAR_LEFT,				"Media/Textures/bear_left.png");

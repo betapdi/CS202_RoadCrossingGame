@@ -7,6 +7,7 @@
 #include "CRESOURCEHOLDER.h"
 #include "CROAD.h"
 #include "CANIMAL.h"
+#include "COBJECT.h"
 #include <vector>
 #include "Aircraft.h"
 #include <algorithm>
@@ -37,12 +38,14 @@ private:
 	void generateObstacle(bool isInit);
 	void generatePosition(bool isInit);
 	void generateAnimals();
+	void generateTrafficLight();
 private:
 	sf::RenderWindow& mWindow;
 	TextureHolder* mTextures;
 	std::vector<CSCENENODE*>* mSceneLayers;
 	CSCENENODE* mSceneGraph;
 	std::vector<CANIMAL*> mAnimal;
+	std::vector<COBJECT*> mTrafficLight;
 	bool isInit;
 	std::vector<std::pair<sf::Vector2f, int>> mapPos;
 	sf::FloatRect mWorldBounds;

@@ -115,6 +115,10 @@ CGAME::~CGAME() {
 	if (window != nullptr) delete window;
 }
 void CGAME::init() {
+	Constants::ROUND_N_ROUND->play();
+	Constants::ROUND_N_ROUND->setVolume(30);
+	Constants::ROUND_N_ROUND->setLoop(true);
+
 	STATEMACHINE::getInstance()->pushState(stateTypes::MENU);
 	//STATEMACHINE::getInstance()->changeState(stateTypes::MENU);
 	STATEMACHINE::getInstance()->performStateChange();

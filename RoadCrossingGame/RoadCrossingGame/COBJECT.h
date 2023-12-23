@@ -1,23 +1,36 @@
 #ifndef COBJECT_H
 #define COBJECT_H
 
-#include "SFML/Graphics.hpp"
-#include "WindowConnector.h"
-#include "Constants.h"
-#include "CASSET.h"
-#include <array>
+#include "GANIMATION.h"
+#include "RESOURCEIDENTIFIER.h"
+#include "CENTITY.h"
 
-typedef std::array<bool, Constants::SCREEN_HEIGHT / Constants::ROAD_SIZE> column;
-
-class COBJECT {
+class COBJECT : public CENTITY {
 public:
-	COBJECT(sf::Texture* texture, sf::Vector2f pos);
-	
-	void createDummyMap(int length);
-	void draw(sf::RenderWindow* window);
+	enum Type {
+		INVALID,
+		RED_LIGHT,
+		GREEN_LIGHT,
+		YELLOW_LIGHT,
+	};
+public:
+	COBJECT(int type, const TextureHolder& textures, sf::Vector2f position);
+	void normal();
+	void turnRed();
+	void turnGreen();
+	void turnYellow();
+	int lightStatus();
+	void updateCurrent(float deltaTime);
+	void updateTrafficLight();
 private:
-	std::vector<column> map;
+	const sf::IntRect getTexture(int type);
+	virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
+private:
+	const int SIZE = 96;
 	sf::Sprite sprite;
+	sf::Clock clock;
+	float deltaTime;
+	int status;
 };
 
 #endif // !COBJECT_H

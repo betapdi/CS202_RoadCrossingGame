@@ -48,13 +48,19 @@ namespace Constants {
 	static sf::Texture* RANK3		=		CASSET::getInstance()->GetTexture("gui/rank3.png");
 	static sf::Texture* RANK_STAR	=		CASSET::getInstance()->GetTexture("gui/ranking_star.png");
 	static sf::Texture* STAR		=		CASSET::getInstance()->GetTexture("gui/star.png");
+	static sf::Texture* STAMP		=		CASSET::getInstance()->GetTexture("gui/selected_stamp.png");
 
 
-	static sf::Texture* CLOWN		=		CASSET::getInstance()->GetTexture("character/clown.png");
-	static sf::Texture* PENGUIN		=		CASSET::getInstance()->GetTexture("character/penguin.png");
-	static sf::Texture* CHICKEN		=		CASSET::getInstance()->GetTexture("character/chicken.png");
-	static sf::Texture* DUCK		=		CASSET::getInstance()->GetTexture("character/duck.png");
-	static sf::Texture* SQUIRREL	=		CASSET::getInstance()->GetTexture("character/squirrel.png");
+	//static sf::Texture* CLOWN		=		CASSET::getInstance()->GetTexture("character/clown.png");
+	//static sf::Texture* PENGUIN		=		CASSET::getInstance()->GetTexture("character/penguin.png");
+	//static sf::Texture* CHICKEN		=		CASSET::getInstance()->GetTexture("character/chicken.png");
+	//static sf::Texture* DUCK		=		CASSET::getInstance()->GetTexture("character/duck.png");
+	//static sf::Texture* SQUIRREL	=		CASSET::getInstance()->GetTexture("character/squirrel.png");
+	static sf::Texture* BUNNY		=		CASSET::getInstance()->GetTexture("character/bunny.png");
+	static sf::Texture* CAT			=		CASSET::getInstance()->GetTexture("character/cat.png");
+	static sf::Texture* PANDA		=		CASSET::getInstance()->GetTexture("character/panda.png");
+	static sf::Texture* PANDA1		=		CASSET::getInstance()->GetTexture("character/panda1.png");
+	static sf::Texture* PANDA2		=		CASSET::getInstance()->GetTexture("character/panda2.png");
 
 	static sf::Texture* START_LANE	=		CASSET::getInstance()->GetTexture("objects/statics/start_lane.png");
 	static sf::Texture* TOP_LANE	=		CASSET::getInstance()->GetTexture("objects/statics/top_lane1.png");

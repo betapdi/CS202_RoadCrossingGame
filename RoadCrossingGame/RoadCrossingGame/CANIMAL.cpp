@@ -86,7 +86,6 @@ CANIMAL::CANIMAL(int type, sf::FloatRect mWorldBound, const TextureHolder& textu
 	, mDirection(fromIntToDir(type))
 	, mAnimation(textures.get(toTextureID(mType)), getFrameNum(type), frameTime)
 {
-	std::cout << "Direction: " << this->mDirection << std::endl;
 	mAnimation.setScale(2, 2);
 	/*sf::FloatRect bounds = mAnimation.getLocalBounds();
 	mAnimation.setOrigin(bounds.width / 2, 0);*/
@@ -105,13 +104,7 @@ void CANIMAL::saveOrgPos(const sf::Vector2f& position) {
 
 void CANIMAL::updateCurrent(float deltaTime) {
 	mAnimation.update(deltaTime);
-	//if (mWorldBound.intersects(mAnimation.getGlobalBounds())) {
-	//sf::Vector2f getPos = mAnimation.getPosition();
-	//if (getPos.x >= Constants::SCREEN_WIDTH || getPos.x <= 0) {
-	//	mAnimation.setPosition(orgPos);
-	//}
 	mAnimation.move(mDirection * mSpeed * deltaTime, 0);
-	//}
 }
 
 int CANIMAL::getDirection() {

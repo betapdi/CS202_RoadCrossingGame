@@ -31,8 +31,14 @@ void CPLAYING::resume()
 {
 }
 
-void CPLAYING::init()
-{
+void CPLAYING::init() {
+	rrect.setSize(sf::Vector2f(228, 60));
+	rrect.setCornersRadius(30);
+	rrect.setCornerPointCount(50);
+	sf::FloatRect bound = rrect.getGlobalBounds();
+	rrect.setOrigin(bound.width / 2, bound.height / 2);
+	rrect.setPosition(Constants::SCREEN_WIDTH - bound.width / 1.8f, bound.height / 1.5f);
+	rrect.setFillColor(sf::Color(217, 217, 217, 200));
 }
 
 void CPLAYING::processEvents() {
@@ -46,6 +52,7 @@ void CPLAYING::processEvents() {
 				!sf::Keyboard::isKeyPressed(sf::Keyboard::S) || !sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 				isPause = true;
 			}*/
+			STATEMACHINE::getInstance()->changeState(stateTypes::PAUSE);
 			handlePlayerInput(event.key.code, true);
 			break;
 
@@ -71,7 +78,9 @@ void CPLAYING::update(float deltaTime) {
 void CPLAYING::render(sf::RenderWindow* window) {
 	window->clear(sf::Color::White);
 	mWorld.draw();
+	window->draw(point);
 	window->setView(window->getDefaultView());
+	window->draw(rrect);
 	//window->draw(mStatisticsText);
 }
 

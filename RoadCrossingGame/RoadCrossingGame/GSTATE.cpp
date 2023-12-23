@@ -5,6 +5,7 @@
 #include "CCREDIT.h"
 #include "CRATING.h"
 #include "CGAMEOVER.h"
+#include "CPAUSE.h"
 
 GSTATE* GSTATE::createGState(stateTypes state) {
 	GSTATE* gState;
@@ -29,6 +30,9 @@ GSTATE* GSTATE::createGState(stateTypes state) {
 		break;
 	case GAMEOVER:
 		gState = new CGAMEOVER();
+		break;
+	case PAUSE:
+		gState = new CPAUSE();
 		break;
 	default:
 		gState = nullptr;

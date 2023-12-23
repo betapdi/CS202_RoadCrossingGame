@@ -46,19 +46,20 @@ void GMAP::draw() {}
 void GMAP::buildScene()
 {
 	generatePosition(isInit);
-	std::cout << "After generate position: " << std::endl;
-	std::cout << "Position:" << std::endl;
-	for (int i = 0; i < mapPos.size(); ++i) {
-		std::cout << mapPos[i].first.x << " - " << mapPos[i].first.y;
-		std::cout << ": " << mapPos[i].second << std::endl;
-	}
+	//std::cout << "After generate position: " << std::endl;
+	//std::cout << "Position:" << std::endl;
+	//for (int i = 0; i < mapPos.size(); ++i) {
+	//	std::cout << mapPos[i].first.x << " - " << mapPos[i].first.y;
+	//	std::cout << ": " << mapPos[i].second << std::endl;
+	//}
 	generateRoads();
-	generateAnimals();
 	generateObstacle(isInit);
+	generateAnimals();
+	generateTrafficLight();
 }
 
 void GMAP::generatePosition(bool isInit) {
-	std::cout << "Get coordinte: " << mWorldBounds.top << " and " << getCoordinate().y << std::endl;
+	std::cout << "Get coordinate: " << mWorldBounds.left << " and " << getCoordinate().y << std::endl;
 	int isRoad;
 	if (isInit) {
 		for (int i = mWorldBounds.top; i < getCoordinate().y + SCREEN_HEIGHT; i += ROAD_SIZE) {
@@ -119,9 +120,6 @@ void GMAP::generateObstacle(bool isInit) {
 				int startPos = j * (mWorldBounds.width / numOfObstacle);
 				int endPos = startPos + mWorldBounds.width / numOfObstacle;
 
-				std::cout << startPos << std::endl;
-				std::cout << endPos << std::endl;
-
 				int type = randObject(0, Constants::maxObstacle, 0.7f);
 
 				std::unique_ptr<COBSTACLE> obstacle(new COBSTACLE(type, *mTextures));
@@ -152,6 +150,20 @@ void GMAP::generateAnimals() {
 				animal->setPosition(pos);
 				animal->saveOrgPos(pos);
 				mSceneLayers->at(Animal)->attachChild(std::move(animal));
+			}
+		}
+	}
+}
+
+void GMAP::generateTrafficLight() {
+	for (int i = 0; i < mapPos.size(); ++i) {
+		if (mapPos[i].second == 0 || mapPos[i].second == 2) {
+			int hasTrafficLight = randBiasedInt(0, 1, 0.7f);
+			if (hasTrafficLight) {
+				int randPos = randInt(20, SCREEN_WIDTH - 50);
+				std::unique_ptr<COBJECT> trafficLight(new COBJECT(0, *mTextures, sf::Vector2f(randPos, mapPos[i].first.y + 5.f)));
+				mTrafficLight.push_back(trafficLight.get());
+				mSceneLayers->at(Obstacle)->attachChild(std::move(trafficLight));
 			}
 		}
 	}

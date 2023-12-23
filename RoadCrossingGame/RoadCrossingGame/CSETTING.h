@@ -8,6 +8,8 @@
 #include "CSHAPE.h"
 #include "GSTATE.h"
 #include "GBUTTON.h"
+#include "GANIMATION.h"
+#include "RESOURCEIDENTIFIER.h"
 #include <list>
 #include <algorithm>
 
@@ -30,17 +32,20 @@ private:
 	sf::Clock clock;
 	std::vector<GBUTTON*> buttonList;
 	std::vector<sf::Sprite*> characters;
+	std::vector<GANIMATION*> mCharacters;
 	sf::RoundedRectangleShape rrect[3];
 	sf::Text text[4];
 	sf::Cursor cursor;
 
+	bool isInit;
 	int cur;
 	int curChoice;
 	int prevChoice;
-
+	int chooseID;
 	int direction;
-	sf::Sprite* selectedCharacter;
-	sf::Sprite* prevCharacter;
+	GANIMATION* selectedCharacter;
+	GANIMATION* prevCharacter;
+	sf::Sprite selectedStamp;
 	//bool changeCharacter;
 	//bool fromLeft;
 	//bool fromRight;

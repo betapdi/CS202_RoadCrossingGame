@@ -20,8 +20,6 @@ void STATEMACHINE::changeState(GSTATE* state) {
 
 void STATEMACHINE::changeState(stateTypes state) {
 	GSTATE* gstate = GSTATE::createGState(state);
-	if (state == 1) std::cout << "State is MENU.\n";
-	else if (state == 2) std::cout << "State is SETTING.\n";
 	changeState(gstate);
 }
 

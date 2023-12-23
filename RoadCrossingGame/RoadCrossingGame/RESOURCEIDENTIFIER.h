@@ -42,6 +42,7 @@ namespace Textures
 		FOX_R,
 		WOLF_L,
 		WOLF_R,
+		TRAFFIC_LIGHT,
 	};
 }
 template <typename Resource, typename Identifier>

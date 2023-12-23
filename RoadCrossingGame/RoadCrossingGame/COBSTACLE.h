@@ -2,6 +2,7 @@
 #define COBSTACLE_H
 
 #include "RESOURCEIDENTIFIER.h"
+#include "GANIMATION.h"
 #include "CENTITY.h"
 
 class COBSTACLE : public CSCENENODE {
@@ -19,6 +20,7 @@ public:
 		GROCERY,
 		SHOP,
 		HOUSE,
+		TRAFFIC_LIGHT,
 	};
 
 public:

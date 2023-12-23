@@ -10,7 +10,6 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="STATEMACHINE.cpp" />
     <ClCompile Include="CPLAYING.cpp" />
-    <ClCompile Include="COBJECT.cpp" />
     <ClCompile Include="CBACKGROUND.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
@@ -54,6 +53,10 @@
       <Filter>WORLD</Filter>
     </ClCompile>
     <ClCompile Include="CVEHICLE.cpp" />
+    <ClCompile Include="COBJECT.cpp">
+      <Filter>WORLD</Filter>
+    </ClCompile>
+    <ClCompile Include="CPAUSE.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CASSET.h" />
@@ -123,6 +126,7 @@
     <ClInclude Include="COBJECT.h">
       <Filter>WORLD</Filter>
     </ClInclude>
+    <ClInclude Include="CPAUSE.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GUI">

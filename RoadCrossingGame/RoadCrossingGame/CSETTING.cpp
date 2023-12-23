@@ -9,6 +9,8 @@ CSETTING::CSETTING()
 	cur = 0;
 	prevCharacter = nullptr;
 	selectedCharacter = nullptr;
+	isInit = true;
+	chooseID = 0; //default
 }
 
 CSETTING::~CSETTING() {
@@ -120,51 +122,68 @@ void CSETTING::init() {
 	rrect[2].setPosition(452, 493);
 	rrect[2].setFillColor(sf::Color(119, 52, 59, 225));
 
-	sf::Sprite* player;
-	sf::Vector2u sizeCharacter;
+	//sf::Sprite* player;
+	//sf::Vector2u sizeCharacter;
+	//player = new sf::Sprite;
+	//player->setTexture(*Constants::CHICKEN);
+	//player->setScale(0.58f, 0.58f);
+	//sizeCharacter = Constants::CHICKEN->getSize();
+	//player->setOrigin((sf::Vector2f)sizeCharacter * 0.5f);
+	//player->setPosition(Constants::SCREEN_WIDTH / 2, Constants::SCREEN_HEIGHT - Constants::SCREEN_HEIGHT / 1.8);
+	//characters.push_back(player);
+	//player = new sf::Sprite;
+	//player->setTexture(*Constants::DUCK);
+	//player->setScale(0.65, 0.65);
+	//sizeCharacter = Constants::DUCK->getSize();
+	//player->setOrigin((sf::Vector2f)sizeCharacter * 0.5f);
+	//player->setPosition(Constants::SCREEN_WIDTH / 2, Constants::SCREEN_HEIGHT - Constants::SCREEN_HEIGHT / 1.8);
+	////player->setPosition(Constants::SCREEN_WIDTH + 30, Constants::SCREEN_HEIGHT / 2);
+	//characters.push_back(player);	
+	//
+	//player = new sf::Sprite;
+	//player->setTexture(*Constants::SQUIRREL);
+	//player->setScale(0.55, 0.55);
+	//sizeCharacter = Constants::SQUIRREL->getSize();
+	//player->setOrigin((sf::Vector2f)sizeCharacter * 0.5f);
+	//player->setPosition(Constants::SCREEN_WIDTH / 2, Constants::SCREEN_HEIGHT - Constants::SCREEN_HEIGHT / 1.8);
+	//characters.push_back(player);	
+	//
+	//player = new sf::Sprite;
+	//player->setTexture(*Constants::PENGUIN);
+	//player->setScale(0.35, 0.35);
+	//sizeCharacter = Constants::PENGUIN->getSize();
+	//player->setOrigin((sf::Vector2f)sizeCharacter * 0.5f);
+	//player->setPosition(Constants::SCREEN_WIDTH / 2, Constants::SCREEN_HEIGHT - Constants::SCREEN_HEIGHT / 1.8);
+	//characters.push_back(player);	
+	//
+	//player = new sf::Sprite;
+	//player->setTexture(*Constants::CLOWN);
+	//player->setScale(1.2, 1.2);
+	//sizeCharacter = Constants::CLOWN->getSize();
+	//player->setOrigin((sf::Vector2f)sizeCharacter * 0.5f);
+	//player->setPosition(Constants::SCREEN_WIDTH / 2, Constants::SCREEN_HEIGHT - Constants::SCREEN_HEIGHT / 1.7);
+	//characters.push_back(player);
 
-	player = new sf::Sprite;
-	player->setTexture(*Constants::CHICKEN);
-	player->setScale(0.58f, 0.58f);
-	sizeCharacter = Constants::CHICKEN->getSize();
-	player->setOrigin((sf::Vector2f)sizeCharacter * 0.5f);
-	player->setPosition(Constants::SCREEN_WIDTH / 2, Constants::SCREEN_HEIGHT - Constants::SCREEN_HEIGHT / 1.8);
-	characters.push_back(player);
+	mCharacters.push_back(new GANIMATION(*Constants::BUNNY,	sf::Vector2i(3, 4), 0.2f));
+	mCharacters.push_back(new GANIMATION(*Constants::CAT,	sf::Vector2i(3, 4), 0.2f));
+	mCharacters.push_back(new GANIMATION(*Constants::PANDA,	sf::Vector2i(3, 4), 0.2f));
+	mCharacters.push_back(new GANIMATION(*Constants::PANDA1,sf::Vector2i(3, 4), 0.2f));
+	mCharacters.push_back(new GANIMATION(*Constants::PANDA2,sf::Vector2i(3, 4), 0.2f));
 
-	player = new sf::Sprite;
-	player->setTexture(*Constants::DUCK);
-	player->setScale(0.65, 0.65);
-	sizeCharacter = Constants::DUCK->getSize();
-	player->setOrigin((sf::Vector2f)sizeCharacter * 0.5f);
-	player->setPosition(Constants::SCREEN_WIDTH / 2, Constants::SCREEN_HEIGHT - Constants::SCREEN_HEIGHT / 1.8);
-	//player->setPosition(Constants::SCREEN_WIDTH + 30, Constants::SCREEN_HEIGHT / 2);
-	characters.push_back(player);	
-	
-	player = new sf::Sprite;
-	player->setTexture(*Constants::SQUIRREL);
-	player->setScale(0.55, 0.55);
-	sizeCharacter = Constants::SQUIRREL->getSize();
-	player->setOrigin((sf::Vector2f)sizeCharacter * 0.5f);
-	player->setPosition(Constants::SCREEN_WIDTH / 2, Constants::SCREEN_HEIGHT - Constants::SCREEN_HEIGHT / 1.8);
-	characters.push_back(player);	
-	
-	player = new sf::Sprite;
-	player->setTexture(*Constants::PENGUIN);
-	player->setScale(0.35, 0.35);
-	sizeCharacter = Constants::PENGUIN->getSize();
-	player->setOrigin((sf::Vector2f)sizeCharacter * 0.5f);
-	player->setPosition(Constants::SCREEN_WIDTH / 2, Constants::SCREEN_HEIGHT - Constants::SCREEN_HEIGHT / 1.8);
-	characters.push_back(player);	
-	
-	player = new sf::Sprite;
-	player->setTexture(*Constants::CLOWN);
-	player->setScale(1.2, 1.2);
-	sizeCharacter = Constants::CLOWN->getSize();
-	player->setOrigin((sf::Vector2f)sizeCharacter * 0.5f);
-	player->setPosition(Constants::SCREEN_WIDTH / 2, Constants::SCREEN_HEIGHT - Constants::SCREEN_HEIGHT / 1.7);
-	characters.push_back(player);
+	sf::FloatRect characterBound;
+	for (int i = 0; i < 5; ++i) {
+		characterBound = mCharacters[i]->getGlobalBounds();
+		mCharacters[i]->setOrigin(characterBound.width / 2.0f, characterBound.height / 2.0f);
+		mCharacters[i]->setScale(5, 5);
+		mCharacters[i]->setPosition(Constants::SCREEN_WIDTH / 2.0f, Constants::SCREEN_HEIGHT - Constants::SCREEN_HEIGHT / 1.8f);
+	}
 
-	selectedCharacter = characters[cur];
+	selectedStamp.setTexture(*Constants::STAMP);
+	characterBound = selectedStamp.getGlobalBounds();
+	selectedStamp.setOrigin(characterBound.width / 2.0f, characterBound.height / 2.0f);
+	selectedStamp.setScale(sf::Vector2f(0.3f, 0.3f));
+	selectedStamp.setPosition(Constants::SCREEN_WIDTH / 2.0f, Constants::SCREEN_HEIGHT - Constants::SCREEN_HEIGHT / 2.0f);
+	if (isInit) selectedCharacter = mCharacters[cur];
 }
 
 void CSETTING::processEvents() {
@@ -175,7 +194,7 @@ void CSETTING::processEvents() {
 		}
 
 		if (event.type == sf::Event::MouseMoved) {
-			chooseFocus = (rrect[2].getGlobalBounds().contains((sf::Vector2f)sf::Mouse::getPosition(*curWindow->getWindow())) ? 1 : 0);
+			chooseFocus = (text[0].getGlobalBounds().contains((sf::Vector2f)sf::Mouse::getPosition(*curWindow->getWindow())) ? 1 : 0);
 		}
 
 		if (event.type == sf::Event::MouseMoved) {
@@ -191,10 +210,14 @@ void CSETTING::processEvents() {
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 			//Music
 			if (buttonList[3]->getGlobalBounds().contains((sf::Vector2f)sf::Mouse::getPosition(*curWindow->getWindow()))) {
-				if (!musicPressed) 
+				if (!musicPressed) {
 					buttonList[3]->setTexture(Constants::MUSIC_OFF);
-				else if (musicPressed)
+					Constants::ROUND_N_ROUND->stop();
+				}
+				else if (musicPressed) {
 					buttonList[3]->setTexture(Constants::MUSIC_ON);
+					Constants::ROUND_N_ROUND->play();
+				}
 				musicPressed = !musicPressed;
 			}			
 			
@@ -213,18 +236,19 @@ void CSETTING::processEvents() {
 				sfxPressed = false;
 				buttonList[3]->setTexture(Constants::MUSIC_ON);
 				buttonList[4]->setTexture(Constants::SFX_ON);
+				Constants::ROUND_N_ROUND->play();
 				cur = 0;
 			}
 
 			//MOVE_LEFT
-			if (buttonList[1]->getGlobalBounds().contains((sf::Vector2f)sf::Mouse::getPosition(*curWindow->getWindow()))) {
+			if (buttonList[1]->getGlobalBounds().contains((sf::Vector2f)sf::Mouse::getPosition(*curWindow->getWindow())) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 				prevChoice = cur;
 				cur = (++cur) % (Constants::maxCharacters);
 				direction = -1;
 			}
 
 			//MOVE_RIGHT
-			if (buttonList[2]->getGlobalBounds().contains((sf::Vector2f)sf::Mouse::getPosition(*curWindow->getWindow()))) {
+			if (buttonList[2]->getGlobalBounds().contains((sf::Vector2f)sf::Mouse::getPosition(*curWindow->getWindow())) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
 				prevChoice = cur;
 				cur = (--cur + Constants::maxCharacters) % (Constants::maxCharacters);
 				direction = 1;
@@ -232,7 +256,11 @@ void CSETTING::processEvents() {
 
 			chooseSelected = (chooseFocus ? 1 : 0);
 		}
-		selectedCharacter = characters[cur];
+
+		selectedCharacter = mCharacters[cur];
+		if (chooseSelected) {
+			isInit = false;
+		}
 		//if (prevCharacter) {
 		//	selectedCharacter->setPosition(Constants::SCREEN_WIDTH, Constants::SCREEN_HEIGHT);
 
@@ -244,21 +272,25 @@ void CSETTING::processEvents() {
 
 void CSETTING::update(float deltaTime) {
 	background.update(deltaTime);
+	mCharacters[cur]->update(deltaTime);
 	if (chooseFocus) {
 		cursor.loadFromSystem(sf::Cursor::Hand);
 		curWindow->getWindow()->setMouseCursor(cursor);
 	}
 	(chooseFocus ? rrect[2].setFillColor(sf::Color(119, 52, 59, 200)) : rrect[2].setFillColor(sf::Color(119, 52, 59, 225)));
-	if (isFocus) {
-		cursor.loadFromSystem(sf::Cursor::Hand);
-		curWindow->getWindow()->setMouseCursor(cursor);
-	}
-	else {
-		cursor.loadFromSystem(sf::Cursor::Arrow);
-		curWindow->getWindow()->setMouseCursor(cursor);
-	}
+	//if (isFocus) {
+	//	cursor.loadFromSystem(sf::Cursor::Hand);
+	//	curWindow->getWindow()->setMouseCursor(cursor);
+	//}
+	//else {
+	//	cursor.loadFromSystem(sf::Cursor::Arrow);
+	//	curWindow->getWindow()->setMouseCursor(cursor);
+	//}
 	if (chooseSelected) {
 		// Set character
+		isInit = false;
+		chooseID = cur;
+		chooseSelected = !chooseSelected;
 	}
 	for (auto button : buttonList) {
 		button->update(deltaTime);
@@ -275,6 +307,9 @@ void CSETTING::render(sf::RenderWindow* window) {
 	}
 	//if (prevCharacter) window->draw(*prevCharacter);
 	window->draw(*selectedCharacter);
+	if (chooseID == cur) {
+		window->draw(selectedStamp);
+	}
 	if (prevCharacter) window->draw(*prevCharacter);
 	for (int i = 0; i < 4; ++i) {
 		window->draw(text[i]);

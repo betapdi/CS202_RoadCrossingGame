@@ -13,9 +13,6 @@ Textures::ID toTextureID(COBSTACLE::obstacleType type) {
 	case COBSTACLE::BENCH:
 		return Textures::BENCH;
 		break;
-	/*case COBSTACLE::GRASS:
-		return Textures::GRASS;
-		break;*/
 	case COBSTACLE::VENDING_MACHINE:
 		return Textures::VENDING_MACHINE;
 		break;
@@ -43,6 +40,9 @@ Textures::ID toTextureID(COBSTACLE::obstacleType type) {
 	case COBSTACLE::HOUSE:
 		return Textures::HOUSE;
 		break;
+	case COBSTACLE::TRAFFIC_LIGHT:
+		return Textures::TRAFFIC_LIGHT;
+		break;
 	}
 }
 
@@ -57,9 +57,6 @@ COBSTACLE::obstacleType fromIntToType(int type) {
 	case 2:
 		return COBSTACLE::BENCH;
 		break;
-	/*case 3:
-		return COBSTACLE::GRASS;
-		break;*/
 	case 3:
 		return COBSTACLE::VENDING_MACHINE;
 		break;
@@ -87,6 +84,9 @@ COBSTACLE::obstacleType fromIntToType(int type) {
 	case 11:
 		return COBSTACLE::HOUSE;
 		break;
+	case 12:
+		return COBSTACLE::TRAFFIC_LIGHT;
+		break;
 	}
 }
 
@@ -108,6 +108,7 @@ COBSTACLE::COBSTACLE(obstacleType type, const TextureHolder& textures)
 	sf::FloatRect bounds = mSprite.getLocalBounds();
 	mSprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
 }
+
 
 float COBSTACLE::getWidthObstacle() {
 	sf::FloatRect sizeOfObj = mSprite.getLocalBounds();

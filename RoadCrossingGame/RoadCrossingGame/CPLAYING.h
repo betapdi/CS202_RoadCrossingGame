@@ -2,6 +2,7 @@
 #define CPLAYING_H
 #include "GSTATE.h"
 #include "GWORLD.h"
+#include "CSHAPE.h"
 
 class CPLAYING : public GSTATE{
 public:
@@ -23,12 +24,13 @@ private:
 	static const sf::Time	TimePerFrame;
 
 	//sf::RenderWindow		mWindow;
-	GWORLD					mWorld;
-
-	sf::Font				mFont;
-	sf::Text				mStatisticsText;
-	float					mStatisticsUpdateTime;
-	std::size_t				mStatisticsNumFrames;
+	GWORLD						mWorld;
+	sf::RoundedRectangleShape	rrect;
+	sf::Text					point;
+	sf::Font					mFont;
+	sf::Text					mStatisticsText;
+	float						mStatisticsUpdateTime;
+	std::size_t					mStatisticsNumFrames;
 	bool isPause;
 };
 

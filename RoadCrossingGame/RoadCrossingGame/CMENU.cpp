@@ -295,10 +295,6 @@ void CMENU::init() {
 	cursor.setOrigin(textureSize.x * 0.5f, textureSize.y * 0.5f);
 	cursor.setPosition(option[2].getPosition().x - 60, centerY + 20);
 	//updatePosCursor = cursor.getPosition();
-
-	Constants::ROUND_N_ROUND->play();
-	Constants::ROUND_N_ROUND->setVolume(30);
-	Constants::ROUND_N_ROUND->setLoop(true);
 }
 void CMENU::moveUp() {
 	prevChoice = choice;

@@ -1,30 +1,86 @@
 #include "COBJECT.h"
+#include "CRESOURCEHOLDER.h"
+#include <iostream>
 
-COBJECT::COBJECT(sf::Texture* texture, sf::Vector2f pos) {
-	sprite.setTexture(*texture);
-	sprite.setScale(Constants::SCALE_OF_ROAD, Constants::SCALE_OF_ROAD);
-	sprite.setPosition(pos);
+const sf::IntRect COBJECT::getTexture(int type) {
+	return sf::IntRect(SIZE * type, 0, SIZE, SIZE);
 }
 
-void COBJECT::createDummyMap(int length) {
-	for (int i = 0; i < length; i++) {
-		column c = column();
-		c[c.size() - 1] = true;
-		map.push_back(c);
+Textures::ID fromIntToType(int type) {
+	switch (type) {
+	case 0:
+		return Textures::TRAFFIC_LIGHT;
+		break;
+	default:
+		return Textures::TRAFFIC_LIGHT;
+		break;
 	}
 }
 
-void COBJECT::draw(sf::RenderWindow* window) {
-	int x = 0;
-	for (column& col : map) {
-		int y = 0;
-		for (bool& draw : col) {
-			if (draw) {
-				sprite.setPosition(sf::Vector2f(x, y) * (float)Constants::ROAD_SIZE);
-				window->draw(sprite);
-			}
-			y++;
-		}
-		x++;
+COBJECT::COBJECT(int type, const TextureHolder& textures, sf::Vector2f position) {
+	sprite.setTexture(textures.get(fromIntToType(type)));
+	sprite.setPosition(position);
+	sprite.setOrigin(SIZE / 2.0f, SIZE);
+	//deltaTime = randInt(1, 5);
+	deltaTime = rand() % 6 - 1;
+	normal();
+}
+
+void COBJECT::normal() {
+	status = 0;
+	sprite.setTextureRect(getTexture(status));
+	clock.restart();
+}
+
+void COBJECT::turnRed() {
+	status = 1;
+	sprite.setTextureRect(getTexture(status));
+	clock.restart();
+}
+
+void COBJECT::turnYellow() {
+	status = 2;
+	sprite.setTextureRect(getTexture(status));
+	clock.restart();
+}
+
+void COBJECT::turnGreen() {
+	status = 3;
+	sprite.setTextureRect(getTexture(status));
+	clock.restart();
+}
+
+int COBJECT::lightStatus() {
+	return status;
+}
+
+void COBJECT::updateTrafficLight() {
+	switch (status) {
+	case 0:
+		if (clock.getElapsedTime().asSeconds() >= 3 + deltaTime)
+			turnRed();
+		break;
+	case 1:
+		if (clock.getElapsedTime().asSeconds() >= 3 + deltaTime)
+			turnGreen();
+		break;
+	case 2:
+		if (clock.getElapsedTime().asSeconds() >= 2 + deltaTime)
+			turnRed();
+		break;
+	case 3:
+		if (clock.getElapsedTime().asSeconds() >= 4 + deltaTime)
+			turnYellow();
+		break;
+	default:
+		break;
 	}
+}
+
+void COBJECT::updateCurrent(float deltaTime) {
+	updateTrafficLight();
+}
+
+void COBJECT::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const {
+	target.draw(sprite, states);
 }

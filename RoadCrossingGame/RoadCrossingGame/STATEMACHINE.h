@@ -14,6 +14,7 @@ enum stateTypes {
 	RANKING,
 	PLAYING,
 	GAMEOVER,
+	PAUSE,
 };
 
 class STATEMACHINE : public CSingleton<STATEMACHINE>{
