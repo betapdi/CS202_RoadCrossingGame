@@ -200,6 +200,7 @@
     <ClInclude Include="GSTATE.h" />
     <ClInclude Include="GWORLD.h" />
     <ClInclude Include="Others.h" />
+    <ClInclude Include="PLAYER.h" />
     <ClInclude Include="RESOURCEIDENTIFIER.h" />
     <ClInclude Include="STATEMACHINE.h" />
     <ClInclude Include="WindowConnector.h" />

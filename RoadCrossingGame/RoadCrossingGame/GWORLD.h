@@ -10,6 +10,7 @@
 #include <vector>
 #include "Aircraft.h"
 #include "Constants.h"
+#include"PLAYER.h"
 
 namespace sf {
 	class RenderWindow;
@@ -22,6 +23,7 @@ public:
 	explicit GWORLD(sf::RenderWindow& window);
 	void update(float deltaTime);
 	void draw();
+	void processEvents(sf::Event& event);
 private:
 	void loadTextures();
 	void buildMaps();
@@ -41,6 +43,8 @@ private:
 	TextureHolder mTextures;
 	sf::View mWorldView;
 
+	Player player;
+
 	CSCENENODE worldSceneGraph[3];
 	std::vector<CSCENENODE*> worldSceneLayers[3];
 
@@ -53,7 +57,6 @@ private:
 
 	//
 	bool isInit;
-	void generatePosition(bool isInit);
 };
 
 #endif // !GWORLD_H

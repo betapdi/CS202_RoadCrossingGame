@@ -127,6 +127,7 @@
       <Filter>WORLD</Filter>
     </ClInclude>
     <ClInclude Include="CPAUSE.h" />
+    <ClInclude Include="PLAYER.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GUI">

@@ -16,6 +16,10 @@ GWORLD::GWORLD(sf::RenderWindow& window)
 	buildMaps();
 }
 
+void GWORLD::processEvents(sf::Event &event) {
+	player.process(event);
+}
+
 GMAP* GWORLD::getCurrentMap() {
 	return &mMaps[id.front()];
 }
@@ -23,6 +27,8 @@ GMAP* GWORLD::getCurrentMap() {
 void GWORLD::update(float deltaTime) {
 	//scroll the view
 	mWorldView.move(0.f, mScrollSpeed * deltaTime);
+
+	player.Movement(deltaTime);
 
 	//std::cout << "View position: " << mWindow.getView().getCenter().x << ", " << mWindow.getView().getCenter().y << std::endl;
 
@@ -78,6 +84,8 @@ void GWORLD::buildPlayer() {
 		}
 	}
 
+	player.ini();
+
 	std::unique_ptr<Aircraft> leader(new Aircraft(Aircraft::Eagle, mTextures));
 	mPlayerAircraft = leader.get();
 	mPlayerAircraft->setPosition(mSpawnPosition);
@@ -104,13 +112,15 @@ void GWORLD::buildMaps() {
 }
 
 void GWORLD::draw() {
-	//mWindow.setView(mWorldView);
+	mWindow.setView(mWorldView);
 
 	for (std::size_t i = 0; i < LayerCount; ++i) {
 		for (std::size_t currMap = 0; currMap < 3; ++currMap) {
 			mWindow.draw(*worldSceneLayers[currMap][i]);
 		}
 	}
+
+	player.render(&mWindow);
 }
 
 void GWORLD::loadTextures()

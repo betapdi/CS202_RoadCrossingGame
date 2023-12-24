@@ -22,7 +22,7 @@ public:
 		_sprite.setPosition(640, 200);
 	}
 
-	void Mouvment(float deltaTime)
+	void Movement(float deltaTime)
 	{
 		switch (dir) {
 		case sf::Keyboard::Up:
@@ -84,43 +84,40 @@ public:
 		}
 	}
 
-	void process() {
-		sf::Event _event;
-		while (curWindow->getWindow()->pollEvent(_event))
+	void process(sf::Event &_event) {
+		switch (_event.type)
 		{
-			switch (_event.type)
+		case sf::Event::Closed:
+			curWindow->getWindow()->close();
+			exit(1);
+		case sf::Event::KeyPressed:
+			switch (_event.key.code)
 			{
-			case sf::Event::Closed:
-				curWindow->getWindow()->close();
-				exit(1);
-			case sf::Event::KeyPressed:
-				switch (_event.key.code)
-				{
-				case sf::Keyboard::Right:
-					dir = sf::Keyboard::Right;
-					velocity.x = speed;
-					break;
-				case sf::Keyboard::Left:
-					dir = sf::Keyboard::Left;
-					velocity.x = -speed;
-					break;
-				case sf::Keyboard::Up:
-					dir = sf::Keyboard::Up;
-					velocity.y = -speed;
-					break;
-				case sf::Keyboard::Down:
-					dir = sf::Keyboard::Down;
-					velocity.y = speed;
-					break;
-				}
+			case sf::Keyboard::Right:
+				dir = sf::Keyboard::Right;
+				velocity.x = speed;
 				break;
-			case sf::Event::KeyReleased:
-				velocity = { 0.0f, 0.0f };
-				dir = sf::Keyboard::Unknown;
+			case sf::Keyboard::Left:
+				dir = sf::Keyboard::Left;
+				velocity.x = -speed;
+				break;
+			case sf::Keyboard::Up:
+				dir = sf::Keyboard::Up;
+				velocity.y = -speed;
+				break;
+			case sf::Keyboard::Down:
+				dir = sf::Keyboard::Down;
+				velocity.y = speed;
+				break;
 			}
+			break;
+		case sf::Event::KeyReleased:
+			velocity = { 0.0f, 0.0f };
+			dir = sf::Keyboard::Unknown;
 		}
 	}
 	void render(sf::RenderWindow* window) {
+		//std::cout << "Render player called!!" << std::endl;
 		_sprite.setTextureRect(sf::IntRect(source.x * SPRITE_WIDTH, source.y * SPRITE_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT));
 		window->draw(_sprite);
 	}
