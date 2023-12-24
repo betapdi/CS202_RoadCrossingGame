@@ -2,6 +2,7 @@
 #define CPLAYING_H
 #include "GSTATE.h"
 #include "GWORLD.h"
+#include"PLAYER.h"
 #include "CSHAPE.h"
 
 class CPLAYING : public GSTATE{
@@ -22,6 +23,7 @@ public:
 	void handlePlayerInput(sf::Keyboard::Key key, bool isPressed);
 private:
 	static const sf::Time	TimePerFrame;
+	Player player;
 
 	//sf::RenderWindow		mWindow;
 	GWORLD						mWorld;

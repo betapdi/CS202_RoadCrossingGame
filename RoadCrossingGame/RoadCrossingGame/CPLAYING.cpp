@@ -1,5 +1,7 @@
 #include "CPLAYING.h"
 #include "WindowConnector.h"
+
+
 CPLAYING::CPLAYING(sf::RenderWindow* window)
 	: mWorld(*window)
 	, mFont()
@@ -39,35 +41,16 @@ void CPLAYING::init() {
 	rrect.setOrigin(bound.width / 2, bound.height / 2);
 	rrect.setPosition(Constants::SCREEN_WIDTH - bound.width / 1.8f, bound.height / 1.5f);
 	rrect.setFillColor(sf::Color(217, 217, 217, 200));
+
+	player.ini();
 }
 
 void CPLAYING::processEvents() {
-	sf::Event event;
-	while (curWindow->getWindow()->pollEvent(event))
-	{
-		switch (event.type)
-		{
-		case sf::Event::KeyPressed:
-			/*if (!sf::Keyboard::isKeyPressed(sf::Keyboard::A) || !sf::Keyboard::isKeyPressed(sf::Keyboard::W) ||
-				!sf::Keyboard::isKeyPressed(sf::Keyboard::S) || !sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-				isPause = true;
-			}*/
-			STATEMACHINE::getInstance()->changeState(stateTypes::PAUSE);
-			handlePlayerInput(event.key.code, true);
-			break;
-
-		case sf::Event::KeyReleased:
-			handlePlayerInput(event.key.code, false);
-			break;
-
-		case sf::Event::Closed:
-			curWindow->getWindow()->close();
-			break;
-		}
-	}
+	player.process();
 }
 
 void CPLAYING::update(float deltaTime) {
+	player.Mouvment(deltaTime);
 	if (isPause) {
 		STATEMACHINE::getInstance()->changeState(stateTypes::GAMEOVER);
 		isPause = !isPause;
@@ -75,13 +58,18 @@ void CPLAYING::update(float deltaTime) {
 	mWorld.update(deltaTime);
 }
 
+
 void CPLAYING::render(sf::RenderWindow* window) {
+	sf::View Camera;
+	Camera = window->getDefaultView();
+	window->setView(player.followView(Camera));
 	window->clear(sf::Color::White);
-	mWorld.draw();
-	window->draw(point);
-	window->setView(window->getDefaultView());
-	window->draw(rrect);
-	//window->draw(mStatisticsText);
+	mWorld.draw();	
+	player.render(window);
+	
+	
+//	window->draw(mStatisticsText);
+
 }
 
 void CPLAYING::updateStatistics(float elapsedTime) {
