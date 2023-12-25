@@ -55,6 +55,7 @@ void GMAP::buildScene()
 	generateRoads();
 	generateObstacle(isInit);
 	generateAnimals();
+	generateVehicles();
 	generateTrafficLight();
 }
 
@@ -152,6 +153,51 @@ void GMAP::generateAnimals() {
 				mSceneLayers->at(Animal)->attachChild(std::move(animal));
 			}
 		}
+	}
+}
+
+void GMAP::generateVehicles()
+{
+	//srand(time(NULL));
+	int type = randEvenOdd(0, 9, false);
+	float speed;
+	for (int i = 0; i < mapPos.size(); i++) {
+		if (mapPos[i].second == 0) {
+			//int type = randInt(0, 7);
+			//sf::Vector2f position(Constants::SCREEN_WIDTH, mapPos[i].first.y);
+			sf::Vector2f position;
+			if (type % 2 == 0) {
+				position = sf::Vector2f(Constants::SCREEN_WIDTH, mapPos[i].first.y - 10);
+				if (type == 8) {
+					position.y -= 15;
+				}
+			}
+			else {
+				position = sf::Vector2f(mapPos[i].first.x - 400, mapPos[i].first.y - 10);
+				if (type == 9) {
+					position.y -= 15;
+				}
+			}
+			speed = static_cast<float>(rand() % 5 + 4);
+			//position.y -= 10;
+			//sf::Vector2f position(Constants::SCREEN_WIDTH, mapPos[i].first.y);
+			for (int i = 0; i < Constants::maxCar; i++) {
+				//position.y = position.y - randInt(100, 150);
+				position.x = position.x + randInt(500, 1000);
+				//speed = static_cast<float>(rand() % 4 + 2);
+				std::unique_ptr<CVEHICLE> vehicle(new CVEHICLE(type, *mTextures, position, speed));
+				mVehicle.push_back(vehicle.get());
+				mSceneLayers->at(Vehicle)->attachChild(std::move(vehicle));
+			}
+			if (type % 2 == 0) {
+				type = randEvenOdd(0, 9, true);
+			}
+			else {
+				type = randEvenOdd(0, 9, false);
+
+			}
+		}
+
 	}
 }
 

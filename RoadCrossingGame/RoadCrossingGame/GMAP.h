@@ -8,11 +8,13 @@
 #include "CROAD.h"
 #include "CANIMAL.h"
 #include "COBJECT.h"
+#include "CVEHICLE.h"
 #include <vector>
 #include "Aircraft.h"
 #include <algorithm>
 #include "Constants.h"
 #include <queue>
+#include <time.h>
 
 using namespace Constants;
 
@@ -38,6 +40,7 @@ private:
 	void generateObstacle(bool isInit);
 	void generatePosition(bool isInit);
 	void generateAnimals();
+	void generateVehicles();
 	void generateTrafficLight();
 private:
 	sf::RenderWindow& mWindow;
@@ -46,6 +49,7 @@ private:
 	CSCENENODE* mSceneGraph;
 	std::vector<CANIMAL*> mAnimal;
 	std::vector<COBJECT*> mTrafficLight;
+	std::vector<CVEHICLE*> mVehicle;
 	bool isInit;
 	std::vector<std::pair<sf::Vector2f, int>> mapPos;
 	sf::FloatRect mWorldBounds;

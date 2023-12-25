@@ -171,4 +171,20 @@ void GWORLD::loadTextures()
 	mTextures.load(Textures::FOX_R,					"Media/Textures/fox_right.png");
 	mTextures.load(Textures::WOLF_L,				"Media/Textures/wolf_left.png");
 	mTextures.load(Textures::WOLF_R,				"Media/Textures/wolf_right.png");
+
+	// --- VEHICLES ---
+	mTextures.load(Textures::BLUE_CAR_L, "Media/Textures/vehicles/blue_car_left.png");
+	mTextures.load(Textures::BLUE_CAR_R, "Media/Textures/vehicles/blue_car_right.png");
+	mTextures.load(Textures::GREEN_CAR_L, "Media/Textures/vehicles/green_car_left.png");
+	mTextures.load(Textures::GREEN_CAR_R, "Media/Textures/vehicles/green_car_right.png");
+	//mTextures.load(Textures::ORANGE_CAR_L, "Media/Textures/vehicles/orange_car_left.png");
+	//mTextures.load(Textures::ORANGE_CAR_R, "Media/Textures/vehicles/orange_car_right.png");
+	mTextures.load(Textures::RED_CAR_L, "Media/Textures/vehicles/red_car_left.png");
+	mTextures.load(Textures::RED_CAR_R, "Media/Textures/vehicles/red_car_right.png");
+	mTextures.load(Textures::TRUCK_L, "Media/Textures/vehicles/truck_left.png");
+	mTextures.load(Textures::TRUCK_R, "Media/Textures/vehicles/truck_right.png");
+	mTextures.load(Textures::BLUE_TRUCK_L, "Media/Textures/vehicles/blue_truck_left.png");
+	mTextures.load(Textures::BLUE_TRUCK_R, "Media/Textures/vehicles/blue_truck_right.png");
+	mTextures.load(Textures::BUS_L, "Media/Textures/vehicles/bus_left.png");
+	mTextures.load(Textures::BUS_R, "Media/Textures/vehicles/bus_right.png");
 }

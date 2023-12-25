@@ -24,6 +24,7 @@ namespace Constants {
 		Road,
 		Animal,
 		Obstacle,
+		Vehicle,
 		Air,
 		LayerCount
 	};

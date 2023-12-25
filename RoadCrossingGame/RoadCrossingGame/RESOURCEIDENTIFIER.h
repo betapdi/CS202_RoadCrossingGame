@@ -43,6 +43,22 @@ namespace Textures
 		WOLF_L,
 		WOLF_R,
 		TRAFFIC_LIGHT,
+		BLUE_CAR_L,
+		BLUE_CAR_R,
+		GREEN_CAR_L,
+		GREEN_CAR_R,
+		//ORANGE_CAR_L,
+		//ORANGE_CAR_R,
+		RED_CAR_L,
+		RED_CAR_R,
+		POLICE_CAR_L,
+		POLICE_CAR_R,
+		BLUE_TRUCK_L,
+		BLUE_TRUCK_R,
+		TRUCK_L,
+		TRUCK_R,
+		BUS_L,
+		BUS_R,
 	};
 }
 template <typename Resource, typename Identifier>
