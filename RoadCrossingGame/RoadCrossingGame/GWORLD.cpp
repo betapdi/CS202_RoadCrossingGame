@@ -37,6 +37,9 @@ void GWORLD::update(float deltaTime) {
 	//std::cout << "Player position: " << mPlayerAircraft->getPosition().x << ", " << mPlayerAircraft->getPosition().y << std::endl;
 	//Handle map out of world
 	handleMapOutOfWorld(deltaTime);
+	
+	//Handle player out of world
+	handlePlayerOutOfWorld(deltaTime);
 
 	//Handle player touches border
 	GMAP* currMap = getCurrentMap();
@@ -61,6 +64,14 @@ void GWORLD::update(float deltaTime) {
 	//std::cout << player.getBorder().left << " " << player.getBorder().top << std::endl;
 
 	if (isLoss) STATEMACHINE::getInstance()->popState();
+}
+
+void GWORLD::handlePlayerOutOfWorld(float deltaTime) {
+	float viewYCoordinate = mWorldView.getCenter().y + mWorldView.getSize().y / 2.0f;
+	if (viewYCoordinate < player.getBorder().top + player.getBorder().height - 1) {
+		isLoss = true;
+		return;
+	}
 }
 
 void GWORLD::handleMapOutOfWorld(float deltaTime) {

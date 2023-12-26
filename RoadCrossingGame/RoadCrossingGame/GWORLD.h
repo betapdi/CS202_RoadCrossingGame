@@ -29,6 +29,7 @@ private:
 	void buildMaps();
 	void buildPlayer();
 	void handleMapOutOfWorld(float deltaTime);
+	void handlePlayerOutOfWorld(float deltaTime);
 	GMAP* getCurrentMap();
 
 	//void generateRoads();
