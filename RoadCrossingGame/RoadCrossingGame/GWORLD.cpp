@@ -30,7 +30,7 @@ void GWORLD::update(float deltaTime) {
 	//scroll the view
 	mWorldView.move(0.f, mScrollSpeed * deltaTime);
 
-	player.Movement(deltaTime);
+	playerMovement(deltaTime);
 
 	//std::cout << "View position: " << mWindow.getView().getCenter().x << ", " << mWindow.getView().getCenter().y << std::endl;
 
@@ -138,6 +138,79 @@ void GWORLD::draw() {
 	}
 
 	player.render(&mWindow);
+}
+
+void GWORLD::playerMovement(float deltaTime)
+{
+	if (!isCollided(player._sprite, deltaTime)) player._sprite.move(player.velocity.x * deltaTime, player.velocity.y * deltaTime);
+
+	switch (player.dir) {
+	case sf::Keyboard::Up:
+		player.curTime += deltaTime;
+		if (player.curTime >= deltaTime * 4) {
+			if (player.source.y != DIRECTION_Y_UP_INITAL) {
+				player.source.x = DIRECTION_X_UP_INITAL;
+				player.source.y = DIRECTION_Y_UP_INITAL;
+			}
+			if (player.source.x >= 2)
+				player.source.x = DIRECTION_X_UP_INITAL;
+			else player.source.x++;
+			player.curTime -= deltaTime * 4;
+		}
+		break;
+	case sf::Keyboard::Down:
+		player.curTime += deltaTime;
+		if (player.curTime >= deltaTime * 4) {
+			if (player.source.y != DIRECTION_Y_DOWN_INITAL) {
+				player.source.x = DIRECTION_X_DOWN_INITAL;
+				player.source.y = DIRECTION_Y_DOWN_INITAL;
+			}
+			if (player.source.x >= 2)
+				player.source.x = DIRECTION_X_DOWN_INITAL;
+			else player.source.x++;
+			player.curTime -= deltaTime * 4;
+		}
+		break;
+	case sf::Keyboard::Right:
+		player.curTime += deltaTime;
+		if (player.curTime >= deltaTime * 4) {
+			if (player.source.y != DIRECTION_Y_RIGHT_INITAL) {
+				player.source.x = DIRECTION_X_RIGHT_INITAL;
+				player.source.y = DIRECTION_Y_RIGHT_INITAL;
+			}
+			if (player.source.x >= 2)
+				player.source.x = DIRECTION_X_RIGHT_INITAL;
+			else player.source.x++;
+			player.curTime -= deltaTime * 4;
+		}
+		break;
+	case sf::Keyboard::Left:
+		player.curTime += deltaTime;
+		if (player.curTime >= deltaTime * 4) {
+			if (player.source.y != DIRETION_Y_LEFT_INITAL) {
+				player.source.x = DIRECTION_X_LEFT_INITAL;
+				player.source.y = DIRETION_Y_LEFT_INITAL;
+			}
+			if (player.source.x >= 2)
+				player.source.x = DIRECTION_X_LEFT_INITAL;
+			else player.source.x++;
+			player.curTime -= deltaTime * 4;
+		}
+		break;
+	}
+}
+
+bool GWORLD::isCollided(sf::Sprite& sprite, const float& deltaTime) {
+	sf::FloatRect nextPosBorder = { sprite.getPosition() + player.velocity * deltaTime, sf::Vector2f(sprite.getTexture()->getSize()) };
+
+	//Out of map (left, right)
+	if (nextPosBorder.left < 0 || nextPosBorder.left + nextPosBorder.width > SCREEN_WIDTH) return true;
+
+	//Out of view (top)
+	if (nextPosBorder.top < mWorldView.getCenter().y - mWorldView.getSize().y / 2.0f) return true;
+
+
+	return false;
 }
 
 void GWORLD::loadTextures()

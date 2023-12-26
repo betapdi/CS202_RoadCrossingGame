@@ -158,14 +158,14 @@ void GMAP::generateAnimals() {
 				pos = sf::Vector2f(Constants::SCREEN_WIDTH - 400, mapPos[i].first.y - 50);
 			}
 			pos.y -= 10;
-			for (int j = 0; j < 1; ++j) {
+			for (int j = 0; j < maxAnimal; ++j) {
 				std::unique_ptr<CANIMAL> animal(new CANIMAL(type, mWorldBounds, *mTextures, 50, 0.1));
 				mAnimal.push_back(animal.get());
 				pos.x = pos.x + randInt(150, 300);
 				animal->setPosition(pos);
 				animal->saveOrgPos(pos);
 				mSceneLayers->at(Animal)->attachChild(std::move(animal));
-				std::cout << pos.x << " " << pos.y << std::endl;
+				//std::cout << pos.x << " " << pos.y << std::endl;
 			}
 		}
 	}

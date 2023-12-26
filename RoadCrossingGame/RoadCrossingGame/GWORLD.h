@@ -10,7 +10,7 @@
 #include <vector>
 #include "Aircraft.h"
 #include "Constants.h"
-#include"PLAYER.h"
+#include "PLAYER.h"
 
 namespace sf {
 	class RenderWindow;
@@ -31,6 +31,8 @@ private:
 	void handleMapOutOfWorld(float deltaTime);
 	void handlePlayerOutOfWorld(float deltaTime);
 	GMAP* getCurrentMap();
+	void playerMovement(float deltaTime);
+	bool isCollided(sf::Sprite& sprite, const float& deltaTime);
 
 	//void generateRoads();
 	//void generateObstacle();

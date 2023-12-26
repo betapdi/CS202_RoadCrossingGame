@@ -47,69 +47,7 @@ public:
 			break;
 		}
 
-		_sprite.setPosition(640, 0);
-	}
-
-	void Movement(float deltaTime)
-	{
-		switch (dir) {
-		case sf::Keyboard::Up:
-			_sprite.move(velocity.x * deltaTime, velocity.y * deltaTime);
-			curTime += deltaTime;
-			if (curTime >= deltaTime * 4) {
-				if (source.y != DIRECTION_Y_UP_INITAL) {
-					source.x = DIRECTION_X_UP_INITAL;
-					source.y = DIRECTION_Y_UP_INITAL;
-				}
-				if (source.x >= 2)
-					source.x = DIRECTION_X_UP_INITAL;
-				else source.x++;
-				curTime -= deltaTime * 4;
-			}
-			break;
-		case sf::Keyboard::Down:
-			_sprite.move(velocity.x * deltaTime, velocity.y * deltaTime);
-			curTime += deltaTime;
-			if (curTime >= deltaTime * 4) {
-				if (source.y != DIRECTION_Y_DOWN_INITAL) {
-					source.x = DIRECTION_X_DOWN_INITAL;
-					source.y = DIRECTION_Y_DOWN_INITAL;
-				}
-				if (source.x >= 2)
-					source.x = DIRECTION_X_DOWN_INITAL;
-				else source.x++;
-				curTime -= deltaTime * 4;
-			}
-			break;
-		case sf::Keyboard::Right:
-			_sprite.move(velocity.x * deltaTime, velocity.y * deltaTime);
-			curTime += deltaTime;
-			if (curTime >= deltaTime * 4) {
-				if (source.y != DIRECTION_Y_RIGHT_INITAL) {
-					source.x = DIRECTION_X_RIGHT_INITAL;
-					source.y = DIRECTION_Y_RIGHT_INITAL;
-				}
-				if (source.x >= 2)
-					source.x = DIRECTION_X_RIGHT_INITAL;
-				else source.x++;
-				curTime -= deltaTime * 4;
-			}
-			break;
-		case sf::Keyboard::Left:
-			_sprite.move(velocity.x * deltaTime, velocity.y * deltaTime);
-			curTime += deltaTime;
-			if (curTime >= deltaTime * 4) {
-				if (source.y != DIRETION_Y_LEFT_INITAL) {
-					source.x = DIRECTION_X_LEFT_INITAL;
-					source.y = DIRETION_Y_LEFT_INITAL;
-				}
-				if (source.x >= 2)
-					source.x = DIRECTION_X_LEFT_INITAL;
-				else source.x++;
-				curTime -= deltaTime * 4;
-			}
-			break;
-		}
+		_sprite.setPosition(640, 200);
 	}
 
 	void process(sf::Event &_event) {
@@ -144,6 +82,7 @@ public:
 			dir = sf::Keyboard::Unknown;
 		}
 	}
+
 	void render(sf::RenderWindow* window) {
 		//std::cout << "Render player called!!" << std::endl;
 		_sprite.setTextureRect(sf::IntRect(source.x * SPRITE_WIDTH, source.y * SPRITE_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT));
@@ -156,7 +95,8 @@ public:
 		Camera.move(0.f, float(_sprite.getPosition().y-600));
 		return Camera;
 	}
-private:
+
+public:
 	float curTime = 0.0f, frameTime;
 	sf::Vector2f velocity = { 0.0f, 0.0f };
 	float speed = 200.0f;
