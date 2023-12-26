@@ -25,6 +25,8 @@ public:
 	void saveOrgPos(const sf::Vector2f& position);
 	virtual void updateCurrent(float deltaTime);
 	int getDirection();
+	bool isIntersect(const sf::FloatRect& rect);
+	sf::FloatRect getBorder();
 private:
 	void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 private:

@@ -2,12 +2,14 @@
 #include <iomanip>
 #include "Others.h"
 
-GMAP::GMAP(sf::RenderWindow& window, const float& yMapCoordinate, std::vector<CSCENENODE*>* mSceneLayers, CSCENENODE* mSceneGraph, TextureHolder* mTextures, float* mScrollSpeed)
+GMAP::GMAP(sf::RenderWindow& window, const float& yMapCoordinate, std::vector<CSCENENODE*>* mSceneLayers, CSCENENODE* mSceneGraph, TextureHolder* mTextures, float* mScrollSpeed, bool* isLoss, Player* player)
 	: mWindow(window)
 	, mWorldBounds(0.f, yMapCoordinate, SCREEN_WIDTH, SCREEN_HEIGHT)
 	, mRoadBounds(0.f, 0.f, window.getDefaultView().getSize().x, Constants::ROAD_SIZE)
 	, mScrollSpeed(mScrollSpeed)
 	, yCoor(yMapCoordinate)
+	, isLoss(isLoss)
+	, player(player)
 {
 	this->mSceneGraph = mSceneGraph;
 	this->mSceneLayers = mSceneLayers;
@@ -35,10 +37,23 @@ void GMAP::handleTouchBorder(Aircraft* mPlayerAircraft) {
 
 }
 
-
 void GMAP::update(float deltaTime)
 {
 	mSceneGraph->update(deltaTime);
+	checkLose(deltaTime);
+}
+
+void GMAP::checkLose(float deltaTime) {
+	if (mAnimal.empty()) return;
+	for (auto& it : mAnimal) {
+		if (it->isIntersect(player->getBorder())) {
+			//std::cout << "LOSE" << std::endl;
+			//std::cout << "PLAYER: " << player->getBorder().left << " " << player->getBorder().top << " " << player->getBorder().left + player->getBorder().width << " " << player->getBorder().top + player->getBorder().height << std::endl;
+			//std::cout << "Animal: " << it->getBorder().left << " " << it->getBorder().top << " " << it->getBorder().left + it->getBorder().width << " " << it->getBorder().top + it->getBorder().height << std::endl;
+			*isLoss = true;
+			return;
+		}
+	}
 }
 
 void GMAP::draw() {}
@@ -143,13 +158,14 @@ void GMAP::generateAnimals() {
 				pos = sf::Vector2f(Constants::SCREEN_WIDTH - 400, mapPos[i].first.y - 50);
 			}
 			pos.y -= 10;
-			for (int i = 0; i < Constants::maxAnimal; ++i) {
+			for (int j = 0; j < 1; ++j) {
 				std::unique_ptr<CANIMAL> animal(new CANIMAL(type, mWorldBounds, *mTextures, 50, 0.1));
 				mAnimal.push_back(animal.get());
 				pos.x = pos.x + randInt(150, 300);
 				animal->setPosition(pos);
 				animal->saveOrgPos(pos);
 				mSceneLayers->at(Animal)->attachChild(std::move(animal));
+				std::cout << pos.x << " " << pos.y << std::endl;
 			}
 		}
 	}

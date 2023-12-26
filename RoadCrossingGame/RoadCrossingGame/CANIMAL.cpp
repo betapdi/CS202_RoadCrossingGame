@@ -114,3 +114,14 @@ int CANIMAL::getDirection() {
 void CANIMAL::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(mAnimation, states);
 }
+
+bool CANIMAL::isIntersect(const sf::FloatRect& rect) {
+	sf::FloatRect currRect = getBorder();
+	//std::cout << rect.left << " " << rect.top << std::endl;
+	//std::cout << currRect.left << " " << currRect.top << " " << orgPos.x << " " << orgPos.y << std::endl;
+	return currRect.intersects(rect);
+}
+
+sf::FloatRect CANIMAL::getBorder() {
+	return sf::FloatRect(mAnimation.getGlobalBounds().left + orgPos.x, mAnimation.getGlobalBounds().top + orgPos.y, mAnimation.getGlobalBounds().width, mAnimation.getGlobalBounds().height);
+}

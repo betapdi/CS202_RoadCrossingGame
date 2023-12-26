@@ -57,6 +57,7 @@ private:
 
 	//
 	bool isInit;
+	bool isLoss;
 };
 
 #endif // !GWORLD_H

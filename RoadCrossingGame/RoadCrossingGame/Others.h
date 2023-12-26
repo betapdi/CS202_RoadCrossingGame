@@ -49,4 +49,8 @@ int randObject(int minValue, int maxValue, double probabilityOfZeroToOne) {
         return intDistribution2(gen);
     }
 }
+
+int isIntersect(const sf::FloatRect& rect1, const sf::FloatRect& rect2) {
+    return (int)rect1.intersects(rect2);
+}
 #endif // !OTHERS_H

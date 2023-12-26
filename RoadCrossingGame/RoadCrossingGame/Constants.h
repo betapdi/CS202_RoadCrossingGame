@@ -62,6 +62,15 @@ namespace Constants {
 	static sf::Texture* PANDA1		=		CASSET::getInstance()->GetTexture("character/panda1.png");
 	static sf::Texture* PANDA2		=		CASSET::getInstance()->GetTexture("character/panda2.png");
 
+	const enum Characters
+	{
+		Bunny,
+		Cat,
+		Panda,
+		Panda1,
+		Panda2
+	};
+
 	static sf::Texture* START_LANE	=		CASSET::getInstance()->GetTexture("objects/statics/start_lane.png");
 	static sf::Texture* TOP_LANE	=		CASSET::getInstance()->GetTexture("objects/statics/top_lane1.png");
 	static sf::Texture* INNER_LANE	=		CASSET::getInstance()->GetTexture("objects/statics/inner_lane.png");

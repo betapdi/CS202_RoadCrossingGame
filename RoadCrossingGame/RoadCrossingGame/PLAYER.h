@@ -1,6 +1,9 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include "Constants.h"
+using namespace Constants;
+
 #define SPRITE_WIDTH 32
 #define SPRITE_HEIGHT  32
 
@@ -17,9 +20,34 @@
 
 class Player {
 public:
-	void ini() {
-		_sprite.setTexture(*Constants::BUNNY);
-		_sprite.setPosition(640, 200);
+	sf::FloatRect getBorder() {
+		return _sprite.getGlobalBounds();
+	}
+
+	void ini(int characterId) {
+		switch (characterId) {
+		case Characters::Bunny:
+			_sprite.setTexture(*BUNNY);
+			break;
+
+		case Characters::Cat:
+			_sprite.setTexture(*CAT);
+			break;
+
+		case Characters::Panda:
+			_sprite.setTexture(*PANDA);
+			break;
+
+		case Characters::Panda1:
+			_sprite.setTexture(*PANDA1);
+			break;
+
+		case Characters::Panda2:
+			_sprite.setTexture(*PANDA2);
+			break;
+		}
+
+		_sprite.setPosition(640, 0);
 	}
 
 	void Movement(float deltaTime)
