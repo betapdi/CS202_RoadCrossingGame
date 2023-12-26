@@ -22,9 +22,11 @@ public:
 	int lightStatus();
 	void updateCurrent(float deltaTime);
 	void updateTrafficLight();
+	sf::FloatRect getRect();
 private:
 	const sf::IntRect getTexture(int type);
 	virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
+
 private:
 	const int SIZE = 96;
 	sf::Sprite sprite;

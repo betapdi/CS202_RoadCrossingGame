@@ -84,3 +84,9 @@ void COBJECT::updateCurrent(float deltaTime) {
 void COBJECT::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(sprite, states);
 }
+
+sf::FloatRect COBJECT::getRect() {
+	sf::FloatRect bounds = sprite.getLocalBounds();
+	sf::FloatRect sizeOfObj = { this->getPosition() - sf::Vector2f(SIZE / 2.0f, SIZE), sf::Vector2f(bounds.width, bounds.height) };
+	return sizeOfObj;
+}

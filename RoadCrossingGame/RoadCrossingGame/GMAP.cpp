@@ -56,6 +56,25 @@ void GMAP::checkLose(float deltaTime) {
 	}
 }
 
+bool GMAP::isCollided(sf::FloatRect &border) {
+	for (auto& it : mObstacle) {
+		sf::FloatRect curRect = it->getRect();
+		//std::cout << curRect.width << " " << curRect.height << std::endl;
+		if (curRect.intersects(border)) {
+			//std::cout << "PLAYER: " << border.left << " " << border.top << " " << border.left + border.width << " " << border.top + border.height << std::endl;
+			//std::cout << "OBSTACLE: " << curRect.left << " " << curRect.top << " " << curRect.left + curRect.width << " " << curRect.top + curRect.height << std::endl;
+			return true;
+		}
+	}
+
+	//for (auto& it : mTrafficLight) {
+	//	sf::FloatRect curRect = it->getRect();
+	//	if (curRect.intersects(border)) return true;
+	//}
+
+	return false;
+}
+
 void GMAP::draw() {}
 
 void GMAP::buildScene()
@@ -138,6 +157,7 @@ void GMAP::generateObstacle(bool isInit) {
 				int type = randObject(0, Constants::maxObstacle, 0.7f);
 
 				std::unique_ptr<COBSTACLE> obstacle(new COBSTACLE(type, *mTextures));
+				mObstacle.push_back(obstacle.get());
 				obstacle->setPosition(randInt(startPos, endPos), mapPos[i].first.y + 54);
 				//std::cout << "Pos: " << obstacle->getPosition().x << " - " << obstacle->getPosition().y << std::endl;
 				mSceneLayers->at(Obstacle)->attachChild(std::move(obstacle));

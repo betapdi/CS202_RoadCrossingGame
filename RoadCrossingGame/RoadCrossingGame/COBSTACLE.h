@@ -27,7 +27,7 @@ public:
 	//COBSTACLE(const TextureHolder& textures);
 	COBSTACLE(int type, const TextureHolder& textures);
 	COBSTACLE(obstacleType type, const TextureHolder& textures);
-	float getWidthObstacle();
+	sf::FloatRect getRect();
 private:
 	virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 private:

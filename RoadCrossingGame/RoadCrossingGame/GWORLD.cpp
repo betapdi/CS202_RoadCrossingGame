@@ -201,7 +201,7 @@ void GWORLD::playerMovement(float deltaTime)
 }
 
 bool GWORLD::isCollided(sf::Sprite& sprite, const float& deltaTime) {
-	sf::FloatRect nextPosBorder = { sprite.getPosition() + player.velocity * deltaTime, sf::Vector2f(sprite.getTexture()->getSize()) };
+	sf::FloatRect nextPosBorder = { sprite.getPosition() + player.velocity * deltaTime, sf::Vector2f(SPRITE_WIDTH, SPRITE_HEIGHT) };
 
 	//Out of map (left, right)
 	if (nextPosBorder.left < 0 || nextPosBorder.left + nextPosBorder.width > SCREEN_WIDTH) return true;
@@ -209,6 +209,10 @@ bool GWORLD::isCollided(sf::Sprite& sprite, const float& deltaTime) {
 	//Out of view (top)
 	if (nextPosBorder.top < mWorldView.getCenter().y - mWorldView.getSize().y / 2.0f) return true;
 
+	//Collide with obstacle
+	for (auto& it : mMaps) {
+		if (it.isCollided(nextPosBorder)) return true;
+	}
 
 	return false;
 }

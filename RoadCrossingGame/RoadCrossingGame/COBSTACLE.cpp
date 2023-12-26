@@ -106,13 +106,14 @@ COBSTACLE::COBSTACLE(obstacleType type, const TextureHolder& textures)
 	, mSprite(textures.get(toTextureID(type)))
 {
 	sf::FloatRect bounds = mSprite.getLocalBounds();
-	mSprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
+	mSprite.setOrigin(0, bounds.height);
 }
 
 
-float COBSTACLE::getWidthObstacle() {
-	sf::FloatRect sizeOfObj = mSprite.getLocalBounds();
-	return sizeOfObj.width;
+sf::FloatRect COBSTACLE::getRect() {
+	sf::FloatRect bounds = mSprite.getLocalBounds();
+	sf::FloatRect sizeOfObj = { this->getPosition() - sf::Vector2f(0, bounds.height), sf::Vector2f(bounds.width, bounds.height)};
+	return sizeOfObj;
 }
 
 

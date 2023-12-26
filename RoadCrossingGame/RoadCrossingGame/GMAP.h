@@ -8,6 +8,7 @@
 #include "CROAD.h"
 #include "CANIMAL.h"
 #include "COBJECT.h"
+#include "COBSTACLE.h"
 #include <vector>
 #include "Aircraft.h"
 #include <algorithm>
@@ -30,6 +31,7 @@ public:
 	sf::Vector2f getCoordinate();
 	void rebuild(const float& yMapCoordinate);
 	void handleTouchBorder(Aircraft* mPlayerAircraft);
+	bool isCollided(sf::FloatRect &border);
 private:
 	void buildScene();
 	void generateRoads();
@@ -52,6 +54,7 @@ private:
 
 	std::vector<CANIMAL*> mAnimal;
 	std::vector<COBJECT*> mTrafficLight;
+	std::vector<COBSTACLE*> mObstacle;
 
 	bool isInit;
 	bool* isLoss;

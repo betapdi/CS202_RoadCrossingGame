@@ -27,7 +27,7 @@ private:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 	void drawChildren(sf::RenderTarget& target, sf::RenderStates states) const;
-private:
+public:
 	std::vector<Ptr> mChildren;
 	CSCENENODE* mParent;
 };
