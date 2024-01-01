@@ -42,6 +42,7 @@ private:
 	void generateAnimals();
 	void generateVehicles();
 	void generateTrafficLight();
+	void generateTrain();
 private:
 	sf::RenderWindow& mWindow;
 	TextureHolder* mTextures;
@@ -50,6 +51,8 @@ private:
 	std::vector<CANIMAL*> mAnimal;
 	std::vector<COBJECT*> mTrafficLight;
 	std::vector<CVEHICLE*> mVehicle;
+	std::vector<CVEHICLE*> mTrain;
+	std::vector<CVEHICLE*> mTrainTail;
 	bool isInit;
 	std::vector<std::pair<sf::Vector2f, int>> mapPos;
 	sf::FloatRect mWorldBounds;

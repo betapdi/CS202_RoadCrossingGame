@@ -185,6 +185,8 @@ void GWORLD::loadTextures()
 	mTextures.load(Textures::TRUCK_R, "Media/Textures/vehicles/truck_right.png");
 	mTextures.load(Textures::BLUE_TRUCK_L, "Media/Textures/vehicles/blue_truck_left.png");
 	mTextures.load(Textures::BLUE_TRUCK_R, "Media/Textures/vehicles/blue_truck_right.png");
-	mTextures.load(Textures::BUS_L, "Media/Textures/vehicles/bus_left.png");
-	mTextures.load(Textures::BUS_R, "Media/Textures/vehicles/bus_right.png");
+	mTextures.load(Textures::OLD_TRAIN_L, "Media/Textures/vehicles/old_train_left.png");
+	mTextures.load(Textures::OLD_TRAIN_R, "Media/Textures/vehicles/old_train_right.png");
+	mTextures.load(Textures::TRAIN_L, "Media/Textures/vehicles/train_left.png");
+	mTextures.load(Textures::TRAIN_R, "Media/Textures/vehicles/train_right.png");
 }

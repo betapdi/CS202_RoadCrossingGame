@@ -57,8 +57,12 @@ namespace Textures
 		BLUE_TRUCK_R,
 		TRUCK_L,
 		TRUCK_R,
-		BUS_L,
-		BUS_R,
+		//BUS_L,
+		//BUS_R,
+		OLD_TRAIN_L,
+		OLD_TRAIN_R,
+		TRAIN_L,
+		TRAIN_R,
 	};
 }
 template <typename Resource, typename Identifier>
