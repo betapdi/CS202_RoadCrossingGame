@@ -5,7 +5,7 @@ CPAUSE::CPAUSE() {
 	prevChoice = -1;
 	currentTime = 0;
 	isEntered = false;
-	cntValue = 3;
+	cntValue = 4;
 	displayMenu = true;
 	displayCountdown = false;
 }

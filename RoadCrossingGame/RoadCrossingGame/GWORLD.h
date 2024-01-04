@@ -24,6 +24,7 @@ public:
 	void update(float deltaTime);
 	void draw();
 	void processEvents(sf::Event& event);
+	void setMoveWorld(bool moveWorld);
 private:
 	void loadTextures();
 	void buildMaps();
@@ -33,7 +34,7 @@ private:
 	GMAP* getCurrentMap();
 	void playerMovement(float deltaTime);
 	bool isCollided(sf::Sprite& sprite, const float& deltaTime);
-
+	void getPlayerID();
 	//void generateRoads();
 	//void generateObstacle();
 	//void generatePosition(bool isInit);
@@ -46,6 +47,7 @@ private:
 	TextureHolder mTextures;
 	sf::View mWorldView;
 
+	int playerID;
 	Player player;
 
 	CSCENENODE worldSceneGraph[3];
@@ -59,6 +61,7 @@ private:
 	std::vector<int> id;
 
 	//
+	bool moveWorld;
 	bool isInit;
 	bool isLoss;
 };

@@ -55,7 +55,10 @@ void CPLAYING::processEvents() {
 				isPause = true;
 			}*/
 			if (event.key.code == sf::Keyboard::Escape) STATEMACHINE::getInstance()->changeState(stateTypes::PAUSE);
-			else mWorld.processEvents(event);
+			else {
+				mWorld.setMoveWorld(true);
+				mWorld.processEvents(event);
+			}
 			//handlePlayerInput(event.key.code, true);
 			break;
 
@@ -71,10 +74,6 @@ void CPLAYING::processEvents() {
 }
 
 void CPLAYING::update(float deltaTime) {
-	if (isPause) {
-		STATEMACHINE::getInstance()->changeState(stateTypes::GAMEOVER);
-		isPause = !isPause;
-	}
 	mWorld.update(deltaTime);
 }
 

@@ -10,8 +10,10 @@
 #include "GBUTTON.h"
 #include "GANIMATION.h"
 #include "RESOURCEIDENTIFIER.h"
+#include "PLAYER.h"
 #include <list>
 #include <algorithm>
+#include <fstream>
 
 class CSETTING : public GSTATE {
 public:
@@ -27,6 +29,8 @@ public:
 	void update(float deltaTime);
 	void render(sf::RenderWindow* window);
 	//void moveCharacter(int dir, float deltaTime);
+	void getSetting();
+	void updateSetting();
 private:
 	CBACKGROUND background;
 	sf::Clock clock;
@@ -39,28 +43,22 @@ private:
 
 	bool isInit;
 	int cur;
-	int curChoice;
 	int prevChoice;
 	int chooseID;
 	int direction;
 	GANIMATION* selectedCharacter;
 	GANIMATION* prevCharacter;
 	sf::Sprite selectedStamp;
-	//bool changeCharacter;
-	//bool fromLeft;
-	//bool fromRight;
-	//float moveSpeed;
-	//float characterScale;
-	//float erasedScale;
 	
-	bool musicPressed;
-	bool sfxPressed;
+	bool playMusic;
+	bool playSfx;
 	bool resetPressed;
 
 	bool isFocus;
 	bool isSelected;
 	bool chooseFocus;
 	bool chooseSelected;
+	bool isQuit;
 };
 
 #endif // !CSETTING_H

@@ -149,6 +149,7 @@
     <ClCompile Include="CGAMEOVER.cpp" />
     <ClCompile Include="CLAYER.cpp" />
     <ClCompile Include="CMENU.cpp" />
+    <ClCompile Include="CMONEY.cpp" />
     <ClCompile Include="COBJECT.cpp" />
     <ClCompile Include="COBSTACLE.cpp" />
     <ClCompile Include="CPAUSE.cpp" />
@@ -180,6 +181,7 @@
     <ClInclude Include="CGAMEOVER.h" />
     <ClInclude Include="CLAYER.h" />
     <ClInclude Include="CMENU.h" />
+    <ClInclude Include="CMONEY.h" />
     <ClInclude Include="COBJECT.h" />
     <ClInclude Include="COBSTACLE.h" />
     <ClInclude Include="Constants.h" />

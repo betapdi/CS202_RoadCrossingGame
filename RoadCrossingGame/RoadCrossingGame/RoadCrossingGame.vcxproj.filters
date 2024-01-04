@@ -57,6 +57,9 @@
       <Filter>WORLD</Filter>
     </ClCompile>
     <ClCompile Include="CPAUSE.cpp" />
+    <ClCompile Include="CMONEY.cpp">
+      <Filter>WORLD</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CASSET.h" />
@@ -128,6 +131,9 @@
     </ClInclude>
     <ClInclude Include="CPAUSE.h" />
     <ClInclude Include="PLAYER.h" />
+    <ClInclude Include="CMONEY.h">
+      <Filter>WORLD</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GUI">

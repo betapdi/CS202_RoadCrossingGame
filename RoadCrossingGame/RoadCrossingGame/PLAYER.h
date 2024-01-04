@@ -2,6 +2,7 @@
 #define PLAYER_H
 
 #include "Constants.h"
+#include <fstream>
 using namespace Constants;
 
 #define SPRITE_WIDTH 32
@@ -46,8 +47,8 @@ public:
 			_sprite.setTexture(*PANDA2);
 			break;
 		}
-
-		_sprite.setPosition(640, 200);
+		//_sprite.setScale(1.5f, 1.5f);
+		_sprite.setPosition(Constants::SCREEN_WIDTH / 2.0f, Constants::SCREEN_HEIGHT / 2.0f + 100.0f);
 	}
 
 	void process(sf::Event &_event) {
@@ -87,6 +88,7 @@ public:
 		//std::cout << "Render player called!!" << std::endl;
 		_sprite.setTextureRect(sf::IntRect(source.x * SPRITE_WIDTH, source.y * SPRITE_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT));
 		window->draw(_sprite);
+		drawBorder(*window, sf::RenderStates::Default);
 	}
 
 	sf::View followView(sf::View Camera) {

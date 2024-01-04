@@ -1,16 +1,14 @@
 #include "CSETTING.h"
 
 CSETTING::CSETTING()
-	: musicPressed(0), sfxPressed(0), resetPressed(0), isFocus(0), isSelected(0)
+	: resetPressed(0), isFocus(0), isSelected(0), isQuit(0)
 	, chooseFocus(0), chooseSelected(0)
 {
-	prevChoice = -1;
-	curChoice = 0;
-	cur = 0;
-	prevCharacter = nullptr;
-	selectedCharacter = nullptr;
-	isInit = true;
-	chooseID = 0; //default
+	prevChoice			= -1;
+	direction			= 0;
+	selectedCharacter	= nullptr;
+	isInit				= true;
+	getSetting();
 }
 
 CSETTING::~CSETTING() {
@@ -37,7 +35,6 @@ void CSETTING::init() {
 	button->setSize(sf::Vector2f(50, 50));
 	button->setPosition(Constants::SCREEN_WIDTH - 1.5 * button->getSize().x, button->getSize().y / 2);
 	button->setClickFunction([]() {
-		STATEMACHINE::getInstance()->popState();
 		});
 	buttonList.push_back(button);
 
@@ -60,14 +57,24 @@ void CSETTING::init() {
 	buttonList.push_back(button);	
 	
 	button = new GBUTTON();
-	button->init(Constants::MUSIC_ON);
+	if (playMusic) {
+		button->init(Constants::MUSIC_ON);
+	}
+	else {
+		button->init(Constants::MUSIC_OFF);
+	}
 	button->setPosition(350, 604);
 	button->setClickFunction([]() {
 		});
 	buttonList.push_back(button);	
 	
 	button = new GBUTTON();
-	button->init(Constants::SFX_ON);
+	if (playSfx) {
+		button->init(Constants::SFX_ON);
+	}
+	else {
+		button->init(Constants::SFX_OFF);
+	}
 	button->setPosition(350 + 290, 604);
 	button->setClickFunction([]() {
 		});
@@ -183,7 +190,7 @@ void CSETTING::init() {
 	selectedStamp.setOrigin(characterBound.width / 2.0f, characterBound.height / 2.0f);
 	selectedStamp.setScale(sf::Vector2f(0.3f, 0.3f));
 	selectedStamp.setPosition(Constants::SCREEN_WIDTH / 2.0f, Constants::SCREEN_HEIGHT - Constants::SCREEN_HEIGHT / 2.0f);
-	if (isInit) selectedCharacter = mCharacters[cur];
+	selectedCharacter = mCharacters[cur];
 }
 
 void CSETTING::processEvents() {
@@ -208,47 +215,54 @@ void CSETTING::processEvents() {
 		}
 
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+			if (buttonList[0]->getGlobalBounds().contains((sf::Vector2f)sf::Mouse::getPosition(*curWindow->getWindow()))) {
+				isQuit = true;
+			}
 			//Music
 			if (buttonList[3]->getGlobalBounds().contains((sf::Vector2f)sf::Mouse::getPosition(*curWindow->getWindow()))) {
-				if (!musicPressed) {
+				playMusic = !playMusic;
+				if (!playMusic) {
 					buttonList[3]->setTexture(Constants::MUSIC_OFF);
 					Constants::ROUND_N_ROUND->stop();
 				}
-				else if (musicPressed) {
+				else {
 					buttonList[3]->setTexture(Constants::MUSIC_ON);
 					Constants::ROUND_N_ROUND->play();
 				}
-				musicPressed = !musicPressed;
 			}			
 			
 			//SFX
 			if (buttonList[4]->getGlobalBounds().contains((sf::Vector2f)sf::Mouse::getPosition(*curWindow->getWindow()))) {
-				if (!sfxPressed) 
+				playSfx = !playSfx;
+				if (!playSfx) {
 					buttonList[4]->setTexture(Constants::SFX_OFF);
-				else if (sfxPressed) 
+				}
+				else {
 					buttonList[4]->setTexture(Constants::SFX_ON);
-				sfxPressed = !sfxPressed;
+				}
 			}
 
 			//Reset
 			if (buttonList[5]->getGlobalBounds().contains((sf::Vector2f)sf::Mouse::getPosition(*curWindow->getWindow()))) {
-				musicPressed = false;
-				sfxPressed = false;
+				playMusic	= true;
+				playSfx		= true;
+				cur			= 0;
+				chooseID	= 0;
 				buttonList[3]->setTexture(Constants::MUSIC_ON);
 				buttonList[4]->setTexture(Constants::SFX_ON);
 				Constants::ROUND_N_ROUND->play();
-				cur = 0;
 			}
+			updateSetting();
 
 			//MOVE_LEFT
-			if (buttonList[1]->getGlobalBounds().contains((sf::Vector2f)sf::Mouse::getPosition(*curWindow->getWindow())) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+			if (buttonList[1]->getGlobalBounds().contains((sf::Vector2f)sf::Mouse::getPosition(*curWindow->getWindow()))) {
 				prevChoice = cur;
 				cur = (++cur) % (Constants::maxCharacters);
 				direction = -1;
 			}
 
 			//MOVE_RIGHT
-			if (buttonList[2]->getGlobalBounds().contains((sf::Vector2f)sf::Mouse::getPosition(*curWindow->getWindow())) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+			if (buttonList[2]->getGlobalBounds().contains((sf::Vector2f)sf::Mouse::getPosition(*curWindow->getWindow()))) {
 				prevChoice = cur;
 				cur = (--cur + Constants::maxCharacters) % (Constants::maxCharacters);
 				direction = 1;
@@ -258,14 +272,8 @@ void CSETTING::processEvents() {
 		}
 
 		selectedCharacter = mCharacters[cur];
-		if (chooseSelected) {
-			isInit = false;
-		}
-		//if (prevCharacter) {
-		//	selectedCharacter->setPosition(Constants::SCREEN_WIDTH, Constants::SCREEN_HEIGHT);
-
-		//	prevCharacter = characters[prevChoice];
-		//	erasedScale = characters[prevChoice]->getScale().x;
+		//if (chooseSelected) {
+		//	isInit = false;
 		//}
 	}
 }
@@ -273,25 +281,32 @@ void CSETTING::processEvents() {
 void CSETTING::update(float deltaTime) {
 	background.update(deltaTime);
 	mCharacters[cur]->update(deltaTime);
-	if (chooseFocus) {
-		cursor.loadFromSystem(sf::Cursor::Hand);
-		curWindow->getWindow()->setMouseCursor(cursor);
-	}
-	(chooseFocus ? rrect[2].setFillColor(sf::Color(119, 52, 59, 200)) : rrect[2].setFillColor(sf::Color(119, 52, 59, 225)));
-	//if (isFocus) {
+
+	//if (chooseFocus) {
 	//	cursor.loadFromSystem(sf::Cursor::Hand);
 	//	curWindow->getWindow()->setMouseCursor(cursor);
 	//}
-	//else {
-	//	cursor.loadFromSystem(sf::Cursor::Arrow);
-	//	curWindow->getWindow()->setMouseCursor(cursor);
-	//}
+
+	if (isQuit) {
+		updateSetting();
+		STATEMACHINE::getInstance()->popState();
+	}
+
+	if (chooseFocus) {
+		rrect[2].setFillColor(sf::Color(119, 52, 59, 200));
+		rrect[2].setSize(sf::Vector2f(388, 64));
+	}
+	else {
+		rrect[2].setFillColor(sf::Color(119, 52, 59, 225));
+		rrect[2].setSize(sf::Vector2f(387, 62));
+	}
+
 	if (chooseSelected) {
-		// Set character
 		isInit = false;
 		chooseID = cur;
 		chooseSelected = !chooseSelected;
 	}
+
 	for (auto button : buttonList) {
 		button->update(deltaTime);
 	}
@@ -305,45 +320,38 @@ void CSETTING::render(sf::RenderWindow* window) {
 	for (auto button : buttonList) {
 		button->render(window);
 	}
-	//if (prevCharacter) window->draw(*prevCharacter);
 	window->draw(*selectedCharacter);
 	if (chooseID == cur) {
 		window->draw(selectedStamp);
 	}
-	if (prevCharacter) window->draw(*prevCharacter);
 	for (int i = 0; i < 4; ++i) {
 		window->draw(text[i]);
 	}
 }
 
-//void CSETTING::moveCharacter(int dir, float deltaTime) {
-//	if (prevCharacter) {
-//		float moveDistance = moveSpeed * deltaTime;
-//
-//		// Move the characters to the left
-//		selectedCharacter->move(dir * moveDistance, 0);
-//		prevCharacter->move(dir * moveDistance, 0);
-//
-//		// Scale the characters
-//		characterScale += 0.2f * deltaTime;  // Adjust the scale factor as needed
-//		erasedScale -= 0.5f * deltaTime;
-//		selectedCharacter->setScale(characterScale, characterScale);
-//		prevCharacter->setScale(erasedScale, erasedScale);
-//
-//		// Check if characters reached the center
-//		float centerPosX = Constants::SCREEN_WIDTH / 2.0f;
-//		if (selectedCharacter->getPosition().x >= centerPosX) {
-//			// Set final position and scale
-//			selectedCharacter->setPosition(centerPosX, Constants::SCREEN_HEIGHT / 2);
-//			selectedCharacter->setScale(characters[cur]->getScale());
-//			prevCharacter->setScale(0, 0);
-//			// Reset the scale and erase the previous character
-//			characterScale = 1.0f;
-//		}
-//	}
-//}
+void CSETTING::getSetting() {
+	std::ifstream fin;
+	fin.open("../Data/Setting.txt");
+	if (!fin.is_open()) {
+		std::cout << "Unable to open Setting File.\n";
+		return;
+	}
+	fin >> cur;
+	chooseID = cur;
+	fin >> playMusic;
+	fin >> playSfx;
+	fin.close();
+}
 
-
-
-
-
+void CSETTING::updateSetting() {
+	std::ofstream fout;
+	fout.open("../Data/Setting.txt", std::ofstream::trunc);
+	if (!fout.is_open()) {
+		std::cout << "Unable to open Setting File.\n";
+		return;
+	}
+	fout << cur << '\n';
+	fout << playMusic << '\n';
+	fout << playSfx << '\n';
+	fout.close();
+}

@@ -9,6 +9,7 @@ GWORLD::GWORLD(sf::RenderWindow& window)
 	, mScrollSpeed(-100.f)
 	, mPlayerAircraft(nullptr)
 	, isLoss(false)
+	, moveWorld(false)
 {
 	//mWindow.setView(sf::View(sf::FloatRect(0, SCREEN_HEIGHT * 2, SCREEN_WIDTH, SCREEN_HEIGHT)));
 	//std::cout << "View position: " << mWindow.getView().getCenter().x << ", " << mWindow.getView().getCenter().y << std::endl;
@@ -28,7 +29,7 @@ GMAP* GWORLD::getCurrentMap() {
 
 void GWORLD::update(float deltaTime) {
 	//scroll the view
-	mWorldView.move(0.f, mScrollSpeed * deltaTime);
+	if (moveWorld) mWorldView.move(0.f, mScrollSpeed * deltaTime);
 
 	playerMovement(deltaTime);
 
@@ -44,17 +45,17 @@ void GWORLD::update(float deltaTime) {
 	//Handle player touches border
 	GMAP* currMap = getCurrentMap();
 
-	//Move the player sidewards (plane scouts follow the main aircraft)
-	sf::Vector2f position = mPlayerAircraft->getPosition();
-	sf::Vector2f velocity = mPlayerAircraft->getVelocity();
+	////Move the player sidewards (plane scouts follow the main aircraft)
+	//sf::Vector2f position = mPlayerAircraft->getPosition();
+	//sf::Vector2f velocity = mPlayerAircraft->getVelocity();
 
-	//If player touches borders, flip its X velocity
-	if (position.x <= 150.f
-		|| position.x >= SCREEN_WIDTH - 150.f)
-	{
-		velocity.x = -velocity.x;
-		mPlayerAircraft->setVelocity(velocity);
-	}
+	////If player touches borders, flip its X velocity
+	//if (position.x <= 150.f
+	//	|| position.x >= SCREEN_WIDTH - 150.f)
+	//{
+	//	velocity.x = -velocity.x;
+	//	mPlayerAircraft->setVelocity(velocity);
+	//}
 
 	// Apply movements && Scroll the world downward
 	for (auto& it : mMaps) {
@@ -63,12 +64,14 @@ void GWORLD::update(float deltaTime) {
 
 	//std::cout << player.getBorder().left << " " << player.getBorder().top << std::endl;
 
-	if (isLoss) STATEMACHINE::getInstance()->popState();
+	if (isLoss) STATEMACHINE::getInstance()->changeState(GAMEOVER);
 }
 
 void GWORLD::handlePlayerOutOfWorld(float deltaTime) {
 	float viewYCoordinate = mWorldView.getCenter().y + mWorldView.getSize().y / 2.0f;
 	if (viewYCoordinate < player.getBorder().top + player.getBorder().height - 1) {
+		//std::cout << "ViewYCoordinate: " << viewYCoordinate << std::endl;
+		//std::cout << "Size of player: " << player.getBorder().top + player.getBorder().height << std::endl;
 		isLoss = true;
 		return;
 	}
@@ -91,6 +94,17 @@ void GWORLD::handleMapOutOfWorld(float deltaTime) {
 	}
 }
 
+void GWORLD::getPlayerID() {
+	std::ifstream fin;
+	fin.open("../Data/Setting.txt");
+	if (!fin.is_open()) {
+		std::cout << "Unable to open Setting File.\n";
+		return;
+	}
+	fin >> playerID;
+	fin.close();
+}
+
 void GWORLD::buildPlayer() {
 	// Initialize the different layers
 	for (std::size_t currMap = 0; currMap < 3; ++currMap) {
@@ -101,22 +115,23 @@ void GWORLD::buildPlayer() {
 		}
 	}
 
-	player.ini(1);
+	getPlayerID();
+	player.ini(playerID);
 
-	std::unique_ptr<Aircraft> leader(new Aircraft(Aircraft::Eagle, mTextures));
+	/*std::unique_ptr<Aircraft> leader(new Aircraft(Aircraft::Eagle, mTextures));
 	mPlayerAircraft = leader.get();
 	mPlayerAircraft->setPosition(mSpawnPosition);
 	mPlayerAircraft->setVelocity(40.f, mScrollSpeed);
-	worldSceneLayers[0][Air]->attachChild(std::move(leader));
+	worldSceneLayers[0][Air]->attachChild(std::move(leader));*/
 
-	// Add two escorting aircrafts, placed relatively to the main plane
-	std::unique_ptr<Aircraft> leftEscort(new Aircraft(Aircraft::Raptor, mTextures));
-	leftEscort->setPosition(-80.f, 50.f);
-	mPlayerAircraft->attachChild(std::move(leftEscort));
+	//// Add two escorting aircrafts, placed relatively to the main plane
+	//std::unique_ptr<Aircraft> leftEscort(new Aircraft(Aircraft::Raptor, mTextures));
+	//leftEscort->setPosition(-80.f, 50.f);
+	//mPlayerAircraft->attachChild(std::move(leftEscort));
 
-	std::unique_ptr<Aircraft> rightEscort(new Aircraft(Aircraft::Raptor, mTextures));
-	rightEscort->setPosition(80.f, 50.f);
-	mPlayerAircraft->attachChild(std::move(rightEscort));
+	//std::unique_ptr<Aircraft> rightEscort(new Aircraft(Aircraft::Raptor, mTextures));
+	//rightEscort->setPosition(80.f, 50.f);
+	//mPlayerAircraft->attachChild(std::move(rightEscort));
 }
 
 void GWORLD::buildMaps() {
@@ -201,7 +216,10 @@ void GWORLD::playerMovement(float deltaTime)
 }
 
 bool GWORLD::isCollided(sf::Sprite& sprite, const float& deltaTime) {
-	sf::FloatRect nextPosBorder = { sprite.getPosition() + player.velocity * deltaTime, sf::Vector2f(SPRITE_WIDTH, SPRITE_HEIGHT) };
+	sf::Vector2f getPos = sprite.getPosition() + player.velocity * deltaTime;
+	getPos.y -= SPRITE_HEIGHT / 2.0f;
+	//sf::FloatRect nextPosBorder = { getPos + player.velocity * deltaTime, sf::Vector2f(SPRITE_WIDTH, SPRITE_HEIGHT) };
+	sf::FloatRect nextPosBorder = { getPos, sf::Vector2f(SPRITE_WIDTH, SPRITE_HEIGHT) };
 
 	//Out of map (left, right)
 	if (nextPosBorder.left < 0 || nextPosBorder.left + nextPosBorder.width > SCREEN_WIDTH) return true;
@@ -216,6 +234,11 @@ bool GWORLD::isCollided(sf::Sprite& sprite, const float& deltaTime) {
 
 	return false;
 }
+
+void GWORLD::setMoveWorld(bool moveWorld) {
+	this->moveWorld = moveWorld;
+}
+
 
 void GWORLD::loadTextures()
 {
@@ -251,8 +274,9 @@ void GWORLD::loadTextures()
 	mTextures.load(Textures::GROCERY,				"Media/Textures/grocery.png");
 	mTextures.load(Textures::SHOP,					"Media/Textures/shop_1.png");
 	mTextures.load(Textures::HOUSE,					"Media/Textures/house.png");
-	//mTextures.load(Textures::TRAFFIC_LIGHT,			"Media/Textures/traffic_light.png");
+	//mTextures.load(Textures::TRAFFIC_LIGHT,		"Media/Textures/traffic_light.png");
 	mTextures.load(Textures::TRAFFIC_LIGHT,			"Media/Textures/traffic_light_edit.png");
+	mTextures.load(Textures::MONEY,					"Media/Textures/money.png");
 
 	// --- ANIMALS ---
 	mTextures.load(Textures::BEAR_LEFT,				"Media/Textures/bear_left.png");
