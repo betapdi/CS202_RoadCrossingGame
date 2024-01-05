@@ -112,10 +112,18 @@ COBSTACLE::COBSTACLE(obstacleType type, const TextureHolder& textures)
 
 sf::FloatRect COBSTACLE::getRect() {
 	sf::FloatRect bounds = mSprite.getLocalBounds();
-	sf::FloatRect sizeOfObj = { this->getPosition() - sf::Vector2f(0, bounds.height), sf::Vector2f(bounds.width, bounds.height)};
+	sf::Vector2f getPos = this->getPosition();
+	sf::FloatRect sizeOfObj = { getPos.x, getPos.y - 60.0f, bounds.width, 60.0f };
 	return sizeOfObj;
 }
 
+float COBSTACLE::getSizeX() const {
+	//if (this != nullptr) {
+		sf::FloatRect bound = mSprite.getGlobalBounds();
+		return bound.width;
+	//}
+	//return 0;
+}
 
 void COBSTACLE::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(mSprite, states);

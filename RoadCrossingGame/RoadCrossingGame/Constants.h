@@ -16,7 +16,7 @@ namespace Constants {
 	const int maxCharacters			= 5;
 	const int maxCar				= 7;
 	const int maxObstacle			= 10;
-	const int maxAnimal				= 7;
+	const int maxAnimal				= 15;
 
 	const enum Layer
 	{
@@ -24,6 +24,7 @@ namespace Constants {
 		Road,
 		Animal,
 		Obstacle,
+		Money,
 		Air,
 		LayerCount
 	};
@@ -76,6 +77,10 @@ namespace Constants {
 	static sf::Texture* INNER_LANE	=		CASSET::getInstance()->GetTexture("objects/statics/inner_lane.png");
 
 	static sf::Music* ROUND_N_ROUND = CASSET::getInstance()->GetMusic("roundnround.wav");
+	static sf::Sound* MOVE_SFX		= CASSET::getInstance()->GetSound("player_move.wav");
+	static sf::Sound* GAME_OVER_SFX = CASSET::getInstance()->GetSound("game_over.wav");
+	static sf::Sound* COUNTDOWN_SFX = CASSET::getInstance()->GetSound("countdown_voice.wav");
+	static sf::Sound* MONEY_COLLECTED = CASSET::getInstance()->GetSound("money_collected.wav");
 	//static sf::RenderWindow* getCurWindow = WindowConnector::getInstance()->getWindow();
 }
 #endif // !CONSTANT_H

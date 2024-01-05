@@ -61,4 +61,6 @@ private:
 	bool isQuit;
 };
 
+bool getSFX();
+bool getMusic();
 #endif // !CSETTING_H

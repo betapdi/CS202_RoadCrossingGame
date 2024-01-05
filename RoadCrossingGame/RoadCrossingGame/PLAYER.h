@@ -3,6 +3,7 @@
 
 #include "Constants.h"
 #include <fstream>
+#include "CSETTING.h"
 using namespace Constants;
 
 #define SPRITE_WIDTH 32
@@ -18,11 +19,38 @@ using namespace Constants;
 #define DIRECTION_X_RIGHT_INITAL 0
 #define DIRECTION_X_UP_INITAL  0
 
+bool getSFX();
+bool getMusic();
 
 class Player {
 public:
 	sf::FloatRect getBorder() {
 		return _sprite.getGlobalBounds();
+	}
+
+	sf::FloatRect getFootBorder() const {
+		sf::FloatRect globalBounds = _sprite.getGlobalBounds();
+		sf::FloatRect footBounds = globalBounds;
+
+		// Set the height of the footBounds to only cover the bottom part of the player
+		float footHeight = 10.0f; // You can adjust this value based on your needs
+		footBounds.height = footHeight;
+		footBounds.top = globalBounds.top + globalBounds.height - footHeight;
+
+		return footBounds;
+	}
+
+	void drawBorder(sf::RenderTarget& target, sf::RenderStates states) const {
+		sf::FloatRect footBounds = getFootBorder();
+
+		sf::RectangleShape borderRect;
+		borderRect.setSize(sf::Vector2f(footBounds.width, footBounds.height));
+		borderRect.setPosition(footBounds.left, footBounds.top);
+		borderRect.setFillColor(sf::Color::Transparent);
+		borderRect.setOutlineColor(sf::Color::Green); // You can set any color you prefer
+		borderRect.setOutlineThickness(2.0f);
+
+		target.draw(borderRect, states);
 	}
 
 	void ini(int characterId) {
@@ -49,6 +77,7 @@ public:
 		}
 		//_sprite.setScale(1.5f, 1.5f);
 		_sprite.setPosition(Constants::SCREEN_WIDTH / 2.0f, Constants::SCREEN_HEIGHT / 2.0f + 100.0f);
+		hasSFX = getSFX();
 	}
 
 	void process(sf::Event &_event) {
@@ -77,6 +106,10 @@ public:
 				velocity.y = speed;
 				break;
 			}
+			if (hasSFX) {
+				Constants::MOVE_SFX->setVolume(40);
+				Constants::MOVE_SFX->play();
+			}
 			break;
 		case sf::Event::KeyReleased:
 			velocity = { 0.0f, 0.0f };
@@ -100,10 +133,12 @@ public:
 
 public:
 	float curTime = 0.0f, frameTime;
+	bool hasSFX;
 	sf::Vector2f velocity = { 0.0f, 0.0f };
 	float speed = 200.0f;
 	sf::Keyboard::Key dir;
 	sf::Sprite _sprite;
 	sf::Vector2i source = { 0,0 };
 };
+
 #endif

@@ -60,10 +60,11 @@ private:
 	std::vector<GMAP> mMaps;
 	std::vector<int> id;
 
-	//
+	sf::Clock clock;
 	bool moveWorld;
 	bool isInit;
 	bool isLoss;
+	bool playSFX;
 };
 
 #endif // !GWORLD_H

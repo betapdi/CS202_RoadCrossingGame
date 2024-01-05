@@ -8,6 +8,7 @@
 #include "CROAD.h"
 #include "CANIMAL.h"
 #include "COBJECT.h"
+#include "CMONEY.h"
 #include "COBSTACLE.h"
 #include <vector>
 #include "Aircraft.h"
@@ -24,25 +25,28 @@ namespace sf {
 
 class GMAP {
 public:
-	GMAP(sf::RenderWindow& window, const float& yMapCoordinate, std::vector<CSCENENODE*>* mSceneLayers, CSCENENODE* mSceneGraph, TextureHolder* mTextures, float* mScrollSpeed, bool* isLoss, Player* player);
+	GMAP(sf::RenderWindow& window, const float& yMapCoordinate, std::vector<CSCENENODE*>* mSceneLayers, CSCENENODE* mSceneGraph, TextureHolder* mTextures, float* mScrollSpeed, bool* isLoss, bool* isInit, Player* player);
 	void update(float deltaTime);
 	void draw();
 
 	sf::Vector2f getCoordinate();
-	void rebuild(const float& yMapCoordinate);
+	void rebuild(const float& yMapCoordinate, bool isInit);
 	void handleTouchBorder(Aircraft* mPlayerAircraft);
 	bool isCollided(sf::FloatRect &border);
 private:
-	void buildScene();
+	void buildScene(bool isInit);
 	void generateRoads();
 	//void adaptPlayerPosition();
 	//void adaptPlayerVelocity();
 	//sf::FloatRect getViewBounds() const;
+	void generateInitialObstacle();
 	void generateObstacle(bool isInit);
 	void generatePosition(bool isInit);
 	void generateAnimals();
 	void generateTrafficLight();
+	void generateMoney();
 	void checkLose(float deltaTime);
+	void checkMoney();
 private:
 	sf::RenderWindow& mWindow;
 	TextureHolder* mTextures;
@@ -55,8 +59,8 @@ private:
 	std::vector<CANIMAL*> mAnimal;
 	std::vector<COBJECT*> mTrafficLight;
 	std::vector<COBSTACLE*> mObstacle;
-
-	bool isInit;
+	std::vector<CMONEY*> mMoney;
+	//static bool isInit;
 	bool* isLoss;
 
 	std::vector<std::pair<sf::Vector2f, int>> mapPos;

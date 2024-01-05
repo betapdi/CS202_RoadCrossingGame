@@ -128,6 +128,7 @@ void CPAUSE::update(float deltaTime) {
 
 	if (isEntered) {
 		if (choice == 0) {
+			Constants::COUNTDOWN_SFX->play();
 			displayMenu = false;
 		}
 		else if (choice == 1) {

@@ -355,3 +355,34 @@ void CSETTING::updateSetting() {
 	fout << playSfx << '\n';
 	fout.close();
 }
+
+bool getSFX() {
+	std::ifstream fin;
+	fin.open("../Data/Setting.txt");
+	if (!fin.is_open()) {
+		std::cout << "Unable to open Setting File.\n";
+		return -1;
+	}
+	int value;
+	std::string x;
+	getline(fin, x);
+	getline(fin, x);
+	fin >> value;
+	fin.close();
+	return value;
+}
+
+bool getMusic() {
+	std::ifstream fin;
+	fin.open("../Data/Setting.txt");
+	if (!fin.is_open()) {
+		std::cout << "Unable to open Setting File.\n";
+		return -1;
+	}
+	int value;
+	std::string x;
+	getline(fin, x);
+	fin >> value;
+	fin.close();
+	return value;
+}

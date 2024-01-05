@@ -28,11 +28,13 @@ public:
 	COBSTACLE(int type, const TextureHolder& textures);
 	COBSTACLE(obstacleType type, const TextureHolder& textures);
 	sf::FloatRect getRect();
+	float getSizeX() const;
 private:
 	virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 private:
 	obstacleType mType;
 	sf::Sprite mSprite;
+	//sf::FloatRect bounds;
 };
 
 #endif // !COBSTACLE_H

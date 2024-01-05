@@ -10,6 +10,8 @@ GWORLD::GWORLD(sf::RenderWindow& window)
 	, mPlayerAircraft(nullptr)
 	, isLoss(false)
 	, moveWorld(false)
+	, playSFX(false)
+	, isInit(true)
 {
 	//mWindow.setView(sf::View(sf::FloatRect(0, SCREEN_HEIGHT * 2, SCREEN_WIDTH, SCREEN_HEIGHT)));
 	//std::cout << "View position: " << mWindow.getView().getCenter().x << ", " << mWindow.getView().getCenter().y << std::endl;
@@ -64,7 +66,11 @@ void GWORLD::update(float deltaTime) {
 
 	//std::cout << player.getBorder().left << " " << player.getBorder().top << std::endl;
 
-	if (isLoss) STATEMACHINE::getInstance()->changeState(GAMEOVER);
+	if (isLoss) {
+		Constants::GAME_OVER_SFX->setVolume(40);
+		Constants::GAME_OVER_SFX->play();
+		STATEMACHINE::getInstance()->changeState(GAMEOVER);
+	}
 }
 
 void GWORLD::handlePlayerOutOfWorld(float deltaTime) {
@@ -89,7 +95,7 @@ void GWORLD::handleMapOutOfWorld(float deltaTime) {
 	if (viewYCoordinate < currMap->getCoordinate().y) {
 		//std::cout << id.front() << std::endl;
 		GMAP* currMap = getCurrentMap();
-		currMap->rebuild(lastYCoordinate);
+		currMap->rebuild(lastYCoordinate, isInit);
 		std::rotate(id.begin(), id.begin() + 1, id.end());
 	}
 }
@@ -138,9 +144,10 @@ void GWORLD::buildMaps() {
 	id.resize(3); std::iota(id.begin(), id.end(), 0);
 
 	for (int i = 0; i < 3; ++i) {
-		mMaps.push_back(GMAP(mWindow, (float)Constants::SCREEN_HEIGHT * (-i), &worldSceneLayers[i], &worldSceneGraph[i], &mTextures, &mScrollSpeed, &isLoss, &player));
+		mMaps.push_back(GMAP(mWindow, (float)Constants::SCREEN_HEIGHT * (-i), &worldSceneLayers[i], &worldSceneGraph[i], &mTextures, &mScrollSpeed, &isLoss, &isInit, &player));
 		//std::cout << SCREEN_HEIGHT * (-i) << std::endl;
 	}
+	isInit = false;
 }
 
 void GWORLD::draw() {
@@ -262,21 +269,21 @@ void GWORLD::loadTextures()
 
 	// --- OBSTACLES ---
 	mTextures.load(Textures::SMALL_TREE,			"Media/Textures/small_tree.png");
-	mTextures.load(Textures::BIG_TREE,				"Media/Textures/small_tree_resize.png");
+	mTextures.load(Textures::BIG_TREE,				"Media/Textures/double_tree.png");
 	mTextures.load(Textures::BENCH,					"Media/Textures/bench.png");
 	//mTextures.load(Textures::GRASS,				"Media/Textures/grass.png");
 	mTextures.load(Textures::VENDING_MACHINE,		"Media/Textures/vending_machine.png");
 	mTextures.load(Textures::BLUE_SIGN,				"Media/Textures/blue_sign.png");
 	mTextures.load(Textures::GREEN_SIGN,			"Media/Textures/green_sign.png");
 	mTextures.load(Textures::WHITE_SIGN,			"Media/Textures/white_sign.png");
-	mTextures.load(Textures::HOTDOG,				"Media/Textures/hotdog.png");
+	mTextures.load(Textures::HOTDOG,				"Media/Textures/triple_tree.png");
 	mTextures.load(Textures::LIGHT,					"Media/Textures/light.png");
 	mTextures.load(Textures::GROCERY,				"Media/Textures/grocery.png");
 	mTextures.load(Textures::SHOP,					"Media/Textures/shop_1.png");
 	mTextures.load(Textures::HOUSE,					"Media/Textures/house.png");
 	//mTextures.load(Textures::TRAFFIC_LIGHT,		"Media/Textures/traffic_light.png");
 	mTextures.load(Textures::TRAFFIC_LIGHT,			"Media/Textures/traffic_light_edit.png");
-	mTextures.load(Textures::MONEY,					"Media/Textures/money.png");
+	mTextures.load(Textures::MONEY,					"Media/Textures/coin.png");
 
 	// --- ANIMALS ---
 	mTextures.load(Textures::BEAR_LEFT,				"Media/Textures/bear_left.png");

@@ -115,6 +115,7 @@ void CANIMAL::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) con
 	target.draw(mAnimation, states);
 }
 
+
 bool CANIMAL::isIntersect(const sf::FloatRect& rect) {
 	sf::FloatRect currRect = getBorder();
 	//std::cout << rect.left << " " << rect.top << std::endl;
@@ -123,5 +124,6 @@ bool CANIMAL::isIntersect(const sf::FloatRect& rect) {
 }
 
 sf::FloatRect CANIMAL::getBorder() {
-	return sf::FloatRect(mAnimation.getGlobalBounds().left + orgPos.x, mAnimation.getGlobalBounds().top + orgPos.y, mAnimation.getGlobalBounds().width, mAnimation.getGlobalBounds().height);
+	return sf::FloatRect(mAnimation.getGlobalBounds().left + orgPos.x, mAnimation.getGlobalBounds().top + orgPos.y, 80.0f, 60.0f);
+	//return sf::FloatRect(mAnimation.getGlobalBounds().left + orgPos.x, mAnimation.getGlobalBounds().top + orgPos.y, mAnimation.getGlobalBounds().width, mAnimation.getGlobalBounds().height);
 }
