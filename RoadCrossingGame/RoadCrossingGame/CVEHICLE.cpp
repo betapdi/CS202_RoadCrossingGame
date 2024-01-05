@@ -279,10 +279,12 @@ CVEHICLE::Vehicle fromIntToType(int type) {
 }
 
 int CVEHICLE::fromIntToDir(int dir) {
-	if (dir % 2 != 0) {
+	if (dir % 2 == 0) {
+		return -1;
+	}
+	else {
 		return 1;
 	}
-	else return -1;
 }
 
 /*sf::FloatRect CVEHICLE::getBound() const
