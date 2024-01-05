@@ -41,6 +41,7 @@ private:
 	void generatePosition(bool isInit);
 	void generateAnimals();
 	void generateVehicles();
+	void generateCars();
 	void generateTrafficLight();
 	void generateTrain();
 private:

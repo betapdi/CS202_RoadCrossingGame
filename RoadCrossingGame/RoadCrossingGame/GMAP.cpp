@@ -217,6 +217,12 @@ void GMAP::generateTrafficLight() {
 
 void GMAP::generateVehicles()
 {
+	generateCars();
+	generateTrain();
+}
+
+void GMAP::generateCars()
+{
 	//srand(time(0));
 	int type = randEvenOdd(0, 7, false);
 	//float speed;
@@ -268,7 +274,6 @@ void GMAP::generateVehicles()
 		}
 
 	}
-	generateTrain();
 }
 
 void GMAP::generateTrain()
