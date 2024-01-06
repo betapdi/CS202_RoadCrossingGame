@@ -189,12 +189,12 @@ void GMAP::generateCars()
 			//sf::Vector2f position(Constants::SCREEN_WIDTH, mapPos[i].first.y);
 			sf::Vector2f position;
 			if (type % 2 != 0) {
-				position = sf::Vector2f(mapPos[i].first.x - 100.f, mapPos[i].first.y);
+				position = sf::Vector2f(mapPos[i].first.x - 5000.f, mapPos[i].first.y);
 				//type = randEvenOdd(0, 7, false);
 				std::cout << type << " Pos: " << mapPos[i].first.x << std::endl;
 			}
 			else {
-				position = sf::Vector2f(Constants::SCREEN_WIDTH - 400.f, mapPos[i].first.y);
+				position = sf::Vector2f(Constants::SCREEN_WIDTH - 100.f, mapPos[i].first.y);
 				//type = randEvenOdd(0, 7, true);
 				std::cout << type << " Pos: " << mapPos[i].first.x << std::endl;
 
@@ -221,7 +221,7 @@ void GMAP::generateCars()
 					position.x = position.x + randInt(50, 100);
 
 				}*/
-				position.x = position.x + randInt(150, 300);
+				position.x = position.x + randInt(200, 1000);
 				vehicle->setPosition(position);
 				vehicle->saveOrgPos(position);
 				mSceneLayers->at(Vehicle)->attachChild(std::move(vehicle));
