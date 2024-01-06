@@ -29,6 +29,12 @@ void GMAP::rebuild(const float& lastYCoordinate, bool isInit) {
 		mSceneLayers->at(i)->clear();
 	}
 
+	mAnimal.clear();
+	mTrafficLight.clear();
+	mObstacle.clear();
+	mMoney.clear();
+	mapPos.clear();
+
 	buildScene(isInit);
 }
 
