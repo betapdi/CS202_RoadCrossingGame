@@ -5,6 +5,7 @@
 #include "RESOURCEIDENTIFIER.h"
 #include "CRESOURCEHOLDER.h"
 int main() {
+    srand(time(0));
     CGAME crossy_road;
     crossy_road.run();
 

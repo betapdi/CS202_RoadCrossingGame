@@ -10,12 +10,14 @@
 #include "COBJECT.h"
 #include "CMONEY.h"
 #include "COBSTACLE.h"
+#include "CVEHICLE.h"
 #include <vector>
 #include "Aircraft.h"
 #include <algorithm>
 #include "Constants.h"
 #include <queue>
 #include "PLAYER.h"
+#include <time.h>
 
 using namespace Constants;
 
@@ -43,10 +45,13 @@ private:
 	void generateObstacle(bool isInit);
 	void generatePosition(bool isInit);
 	void generateAnimals();
+	void generateVehicles();
+	void generateCars();
 	void generateTrafficLight();
 	void generateMoney();
 	void checkLose(float deltaTime);
 	void checkMoney();
+	void generateTrain();
 private:
 	sf::RenderWindow& mWindow;
 	TextureHolder* mTextures;
@@ -63,6 +68,10 @@ private:
 	//static bool isInit;
 	bool* isLoss;
 
+	std::vector<CVEHICLE*> mVehicle;
+	std::vector<CVEHICLE*> mTrain;
+	std::vector<CVEHICLE*> mTrainTail;
+	bool isInit;
 	std::vector<std::pair<sf::Vector2f, int>> mapPos;
 	sf::FloatRect mWorldBounds;
 	sf::FloatRect mRoadBounds;

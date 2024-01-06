@@ -1,6 +1,8 @@
 #ifndef OTHERS_H
 #define OTHERS_H
 #include <random>
+#include <cstdlib>
+#include<time.h>
 #include "COBSTACLE.h"
 
 int randInt(int min, int max) {
@@ -50,7 +52,34 @@ int randObject(int minValue, int maxValue, double probabilityOfZeroToOne) {
     }
 }
 
+
 int isIntersect(const sf::FloatRect& rect1, const sf::FloatRect& rect2) {
     return (int)rect1.intersects(rect2);
+
+int randEvenOdd(int lb, int ub, bool isOdd) {
+    int randNum = 2 * (rand() % ((ub - lb) / 2 + 1)) + lb;
+    int randNum2 = 2 * (rand() % ((ub - 2 - lb) / 2 + 1)) + lb;
+    if (isOdd) {
+        if (lb % 2 == 0 && ub % 2 == 0) {
+            return randNum2;
+        }
+        else if (lb % 2 == 0) {
+            return randNum + 1;
+        }
+        else if (lb % 2 != 0) {
+            return randNum;
+        }
+    }
+    else {
+        if (lb % 2 != 0 && ub % 2 != 0) {
+            return 2 * (rand() % ((ub - 2 - lb) / 2 + 1)) + lb;
+        }
+        else if (lb % 2 != 0) {
+            return randNum + 1;
+        }
+        else if (lb % 2 == 0) {
+            return randNum;
+        }
+    }
 }
 #endif // !OTHERS_H

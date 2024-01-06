@@ -17,6 +17,7 @@ namespace Constants {
 	const int maxCar				= 7;
 	const int maxObstacle			= 10;
 	const int maxAnimal				= 15;
+	const int maxTrain              = 2;
 
 	const enum Layer
 	{
@@ -25,6 +26,7 @@ namespace Constants {
 		Animal,
 		Obstacle,
 		Money,
+		Vehicle,
 		Air,
 		LayerCount
 	};
