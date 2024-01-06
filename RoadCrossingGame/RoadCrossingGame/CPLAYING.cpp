@@ -83,7 +83,7 @@ void CPLAYING::processEvents() {
 
 void CPLAYING::update(float deltaTime) {
 	mWorld.update(deltaTime);
-	point.setString(to_string(mWorld.score));
+	point.setString(std::to_string(mWorld.score));
 }
 
 

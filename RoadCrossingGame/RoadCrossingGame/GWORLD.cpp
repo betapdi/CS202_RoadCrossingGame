@@ -71,7 +71,7 @@ void GWORLD::update(float deltaTime) {
 		Constants::GAME_OVER_SFX->setVolume(40);
 		Constants::GAME_OVER_SFX->play();
 		std::ofstream fout;
-		fout.open("../Data/Ranking.txt", fstream::app);
+		fout.open("../Data/Ranking.txt", std::ofstream::app);
 		fout << score << "\n";
 		fout.close();
 		STATEMACHINE::getInstance()->changeState(GAMEOVER);
