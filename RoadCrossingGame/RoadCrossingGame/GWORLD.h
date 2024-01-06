@@ -21,6 +21,7 @@ using namespace Constants;
 class GWORLD {
 public:
 	explicit GWORLD(sf::RenderWindow& window);
+	std::string getScore();
 	void update(float deltaTime);
 	void draw();
 	void processEvents(sf::Event& event);
@@ -41,6 +42,7 @@ private:
 
 public:
 	std::vector<std::pair<sf::Vector2f, int>> mapPos;
+	int score;
 
 private:
 	sf::RenderWindow& mWindow;
@@ -65,6 +67,7 @@ private:
 	bool isInit;
 	bool isLoss;
 	bool playSFX;
+
 };
 
 #endif // !GWORLD_H

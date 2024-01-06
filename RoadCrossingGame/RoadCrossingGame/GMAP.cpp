@@ -2,7 +2,7 @@
 #include <iomanip>
 #include "Others.h"
 
-GMAP::GMAP(sf::RenderWindow& window, const float& yMapCoordinate, std::vector<CSCENENODE*>* mSceneLayers, CSCENENODE* mSceneGraph, TextureHolder* mTextures, float* mScrollSpeed, bool* isLoss, bool* isInit, Player* player)
+GMAP::GMAP(sf::RenderWindow& window, const float& yMapCoordinate, std::vector<CSCENENODE*>* mSceneLayers, CSCENENODE* mSceneGraph, TextureHolder* mTextures, float* mScrollSpeed, bool* isLoss, bool* isInit, Player* player, int* score)
 	: mWindow(window)
 	, mWorldBounds(0.f, yMapCoordinate, SCREEN_WIDTH, SCREEN_HEIGHT)
 	, mRoadBounds(0.f, 0.f, window.getDefaultView().getSize().x, Constants::ROAD_SIZE)
@@ -10,6 +10,7 @@ GMAP::GMAP(sf::RenderWindow& window, const float& yMapCoordinate, std::vector<CS
 	, yCoor(yMapCoordinate)
 	, isLoss(isLoss)
 	, player(player)
+	, score(score)
 {
 	this->mSceneGraph = mSceneGraph;
 	this->mSceneLayers = mSceneLayers;
@@ -67,15 +68,17 @@ void GMAP::checkMoney() {
 	if (mMoney.empty()) return;
 
 	for (auto it = mMoney.begin(); it != mMoney.end();) {
-		if ((*it)->isIntersect(player->getBorder())) {
+		if ((*it)->isIntersect(player->getBorder())&& !(*it)->isCollect()) {
 			(*it)->setCollected(true);
 			Constants::MONEY_COLLECTED->play();
+			(*score)++;
 			return;
 			//it = mMoney.erase(it);  // Use the returned iterator after erasing
 		}
 		else {
 			++it;
 		}
+
 	}
 }
 

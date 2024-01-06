@@ -41,6 +41,14 @@ void CPLAYING::init() {
 	rrect.setOrigin(bound.width / 2, bound.height / 2);
 	rrect.setPosition(Constants::SCREEN_WIDTH - bound.width / 1.8f, bound.height / 1.5f);
 	rrect.setFillColor(sf::Color(217, 217, 217, 200));
+	point.setString("0");
+	point.setFont(*Constants::LUCKIESTGUY);
+	point.setFillColor(sf::Color(254, 185, 44, 255));
+	point.setCharacterSize(30);
+	point.setOutlineThickness(2);
+	point.setOutlineColor(sf::Color::White);
+	point.setOrigin(bound.width / 2, bound.height / 2);
+	point.setPosition(rrect.getPosition().x +114 , rrect.getPosition().y + 10 );
 }
 
 void CPLAYING::processEvents() {
@@ -75,15 +83,17 @@ void CPLAYING::processEvents() {
 
 void CPLAYING::update(float deltaTime) {
 	mWorld.update(deltaTime);
+	point.setString(to_string(mWorld.score));
 }
 
 
 void CPLAYING::render(sf::RenderWindow* window) {
 	window->clear(sf::Color::White);
 	mWorld.draw();
-	window->draw(point);
+
 	window->setView(window->getDefaultView());
 	window->draw(rrect);
+	window->draw(point);
 
 	/*sf::View Camera;
 	Camera = window->getDefaultView();

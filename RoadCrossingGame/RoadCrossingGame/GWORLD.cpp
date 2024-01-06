@@ -62,6 +62,7 @@ void GWORLD::update(float deltaTime) {
 	// Apply movements && Scroll the world downward
 	for (auto& it : mMaps) {
 		it.update(deltaTime);
+	
 	}
 
 	//std::cout << player.getBorder().left << " " << player.getBorder().top << std::endl;
@@ -69,6 +70,10 @@ void GWORLD::update(float deltaTime) {
 	if (isLoss) {
 		Constants::GAME_OVER_SFX->setVolume(40);
 		Constants::GAME_OVER_SFX->play();
+		std::ofstream fout;
+		fout.open("../Data/Ranking.txt", fstream::app);
+		fout << score << "\n";
+		fout.close();
 		STATEMACHINE::getInstance()->changeState(GAMEOVER);
 	}
 }
@@ -144,7 +149,7 @@ void GWORLD::buildMaps() {
 	id.resize(3); std::iota(id.begin(), id.end(), 0);
 
 	for (int i = 0; i < 3; ++i) {
-		mMaps.push_back(GMAP(mWindow, (float)Constants::SCREEN_HEIGHT * (-i), &worldSceneLayers[i], &worldSceneGraph[i], &mTextures, &mScrollSpeed, &isLoss, &isInit, &player));
+		mMaps.push_back(GMAP(mWindow, (float)Constants::SCREEN_HEIGHT * (-i), &worldSceneLayers[i], &worldSceneGraph[i], &mTextures, &mScrollSpeed, &isLoss, &isInit, &player, &score));
 		//std::cout << SCREEN_HEIGHT * (-i) << std::endl;
 	}
 	isInit = false;
@@ -245,8 +250,7 @@ bool GWORLD::isCollided(sf::Sprite& sprite, const float& deltaTime) {
 void GWORLD::setMoveWorld(bool moveWorld) {
 	this->moveWorld = moveWorld;
 }
-
-
+ 
 void GWORLD::loadTextures()
 {
 	mTextures.load(Textures::Eagle, "Media/Textures/Eagle.png");
