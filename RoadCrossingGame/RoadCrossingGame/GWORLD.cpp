@@ -44,6 +44,8 @@ void GWORLD::update(float deltaTime) {
 	//Handle player out of world
 	handlePlayerOutOfWorld(deltaTime);
 
+	calculateScore();
+
 	//Handle player touches border
 	GMAP* currMap = getCurrentMap();
 
@@ -245,6 +247,13 @@ bool GWORLD::isCollided(sf::Sprite& sprite, const float& deltaTime) {
 	}
 
 	return false;
+}
+
+void GWORLD::calculateScore() {
+	if (player._sprite.getPosition().y < scorey) {
+		score++;
+		scorey -= 60;
+	}
 }
 
 void GWORLD::setMoveWorld(bool moveWorld) {

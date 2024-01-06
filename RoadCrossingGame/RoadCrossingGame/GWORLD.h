@@ -21,7 +21,6 @@ using namespace Constants;
 class GWORLD {
 public:
 	explicit GWORLD(sf::RenderWindow& window);
-	std::string getScore();
 	void update(float deltaTime);
 	void draw();
 	void processEvents(sf::Event& event);
@@ -36,6 +35,7 @@ private:
 	void playerMovement(float deltaTime);
 	bool isCollided(sf::Sprite& sprite, const float& deltaTime);
 	void getPlayerID();
+	void calculateScore();
 	//void generateRoads();
 	//void generateObstacle();
 	//void generatePosition(bool isInit);
@@ -68,6 +68,7 @@ private:
 	bool isLoss;
 	bool playSFX;
 
+	int scorey = 7 * 60;
 };
 
 #endif // !GWORLD_H

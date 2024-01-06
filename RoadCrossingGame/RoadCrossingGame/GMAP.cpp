@@ -71,7 +71,7 @@ void GMAP::checkMoney() {
 		if ((*it)->isIntersect(player->getBorder())&& !(*it)->isCollect()) {
 			(*it)->setCollected(true);
 			Constants::MONEY_COLLECTED->play();
-			(*score)++;
+			(*score)+=10;
 			return;
 			//it = mMoney.erase(it);  // Use the returned iterator after erasing
 		}

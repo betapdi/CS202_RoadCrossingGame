@@ -88,7 +88,7 @@ void CGAMEOVER::init() {
 	fin.close();
 
 	std::string curScore = std::to_string(Score.back());
-	sort(Score.begin(), Score.end(), std::greater<int>());
+	sort(Score.begin(), Score.end()-1, std::greater<int>());
 	score[0].setString(curScore);
 	score[1].setString(std::to_string(Score[0]));
 
