@@ -31,51 +31,54 @@ GMAP* GWORLD::getCurrentMap() {
 
 void GWORLD::update(float deltaTime) {
 	//scroll the view
-	if (moveWorld) mWorldView.move(0.f, mScrollSpeed * deltaTime);
+	if (!isLoss) {
+		if (moveWorld) mWorldView.move(0.f, mScrollSpeed * deltaTime);
 
-	playerMovement(deltaTime);
+		playerMovement(deltaTime);
 
-	//std::cout << "View position: " << mWindow.getView().getCenter().x << ", " << mWindow.getView().getCenter().y << std::endl;
+		//std::cout << "View position: " << mWindow.getView().getCenter().x << ", " << mWindow.getView().getCenter().y << std::endl;
 
-	//std::cout << "Player position: " << mPlayerAircraft->getPosition().x << ", " << mPlayerAircraft->getPosition().y << std::endl;
-	//Handle map out of world
-	handleMapOutOfWorld(deltaTime);
-	
-	//Handle player out of world
-	handlePlayerOutOfWorld(deltaTime);
+		//std::cout << "Player position: " << mPlayerAircraft->getPosition().x << ", " << mPlayerAircraft->getPosition().y << std::endl;
+		//Handle map out of world
+		handleMapOutOfWorld(deltaTime);
 
-	calculateScore();
+		//Handle player out of world
+		handlePlayerOutOfWorld(deltaTime);
 
-	//Handle player touches border
-	GMAP* currMap = getCurrentMap();
+		calculateScore();
 
-	////Move the player sidewards (plane scouts follow the main aircraft)
-	//sf::Vector2f position = mPlayerAircraft->getPosition();
-	//sf::Vector2f velocity = mPlayerAircraft->getVelocity();
+		//Handle player touches border
+		GMAP* currMap = getCurrentMap();
 
-	////If player touches borders, flip its X velocity
-	//if (position.x <= 150.f
-	//	|| position.x >= SCREEN_WIDTH - 150.f)
-	//{
-	//	velocity.x = -velocity.x;
-	//	mPlayerAircraft->setVelocity(velocity);
-	//}
+		////Move the player sidewards (plane scouts follow the main aircraft)
+		//sf::Vector2f position = mPlayerAircraft->getPosition();
+		//sf::Vector2f velocity = mPlayerAircraft->getVelocity();
 
-	// Apply movements && Scroll the world downward
-	for (auto& it : mMaps) {
-		it.update(deltaTime);
-	
+		////If player touches borders, flip its X velocity
+		//if (position.x <= 150.f
+		//	|| position.x >= SCREEN_WIDTH - 150.f)
+		//{
+		//	velocity.x = -velocity.x;
+		//	mPlayerAircraft->setVelocity(velocity);
+		//}
+
+		// Apply movements && Scroll the world downward
+		for (auto& it : mMaps) {
+			it.update(deltaTime);
+
+		}
+
+		//std::cout << player.getBorder().left << " " << player.getBorder().top << std::endl;
 	}
-
-	//std::cout << player.getBorder().left << " " << player.getBorder().top << std::endl;
-
-	if (isLoss) {
+	else {
 		Constants::GAME_OVER_SFX->setVolume(40);
 		Constants::GAME_OVER_SFX->play();
 		std::ofstream fout;
 		fout.open("../Data/Ranking.txt", std::ofstream::app);
 		fout << score << "\n";
 		fout.close();
+		if(player.explosion(deltaTime))
+		//sleep(sf::seconds(0.3f));
 		STATEMACHINE::getInstance()->changeState(GAMEOVER);
 	}
 }
@@ -158,6 +161,9 @@ void GWORLD::buildMaps() {
 }
 
 void GWORLD::draw() {
+	//if (isLoss) return;
+	mWindow.clear(sf::Color::White);
+
 	mWindow.setView(mWorldView);
 
 	for (std::size_t i = 0; i < LayerCount; ++i) {
