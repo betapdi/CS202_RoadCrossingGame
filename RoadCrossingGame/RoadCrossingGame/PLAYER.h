@@ -123,7 +123,22 @@ public:
 		//std::cout << "Render player called!!" << std::endl;
 		_sprite.setTextureRect(sf::IntRect(source.x * SPRITE_WIDTH, source.y * SPRITE_HEIGHT, SPRITE_WIDTH, SPRITE_HEIGHT));
 		window->draw(_sprite);
-		drawBorder(*window, sf::RenderStates::Default);
+		//drawBorder(*window, sf::RenderStates::Default);
+	}
+
+	void save(std::ofstream& fout) const {
+		fout.write((char*)(&hasSFX), sizeof(bool));
+		sf::Vector2f curPos = _sprite.getPosition();
+		fout.write((char*)(&curPos.x), sizeof(float));
+		fout.write((char*)(&curPos.y), sizeof(float));
+	}
+
+	void load(std::ifstream& fin) {
+		fin.read((char*)(&hasSFX), sizeof(bool));
+		float posX, posY;
+		fin.read((char*)(&posX), sizeof(float));
+		fin.read((char*)(&posY), sizeof(float));
+		_sprite.setPosition(posX, posY);
 	}
 
 	sf::View followView(sf::View Camera) {

@@ -7,7 +7,6 @@ CSETTING::CSETTING()
 	prevChoice			= -1;
 	direction			= 0;
 	selectedCharacter	= nullptr;
-	isInit				= true;
 	getSetting();
 }
 
@@ -302,7 +301,7 @@ void CSETTING::update(float deltaTime) {
 	}
 
 	if (chooseSelected) {
-		isInit = false;
+		//isInit = false;
 		chooseID = cur;
 		chooseSelected = !chooseSelected;
 	}
@@ -385,4 +384,21 @@ bool getMusic() {
 	fin >> value;
 	fin.close();
 	return value;
+}
+
+std::vector<bool> getSetting() {
+	std::ifstream fin;
+	fin.open("../Data/Setting.txt");
+	if (!fin.is_open()) {
+		std::cout << "Unable to open Setting File.\n";
+		return {0};
+	}
+	int x;
+	std::vector<bool> ans;
+	for (int i = 0; i < 3; ++i) {
+		fin >> x;
+		ans.push_back(x);
+	}
+	return ans;
+	fin.close();
 }

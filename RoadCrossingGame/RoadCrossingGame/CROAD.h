@@ -3,6 +3,7 @@
 
 #include "RESOURCEIDENTIFIER.h"
 #include "CENTITY.h"
+#include <fstream>
 
 class CROAD : public CENTITY {
 public:
@@ -17,6 +18,9 @@ public:
 public:
 	CROAD(const sf::Texture& texture, const sf::IntRect& textureRect);
 	CROAD(int type, const TextureHolder& textures, const sf::IntRect& textureRect);
+	void save(std::ofstream& fout) const;
+	void load(std::ifstream& fin);
+
 private:
 	virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 

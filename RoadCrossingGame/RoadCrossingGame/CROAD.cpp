@@ -63,6 +63,14 @@ CROAD::CROAD(int type, const TextureHolder& textures, const sf::IntRect& texture
 	mRect.setSize(sf::Vector2f(Constants::SCREEN_WIDTH, Constants::ROAD_SIZE));
 }
 
+void CROAD::save(std::ofstream& fout) const {
+	fout.write((char*)(&mType), sizeof(roadTypes));
+}
+
+void CROAD::load(std::ifstream& fin) {
+	fin.read((char*)(&mType), sizeof(roadTypes));
+}
+
 void CROAD::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	target.draw(mRect, states);

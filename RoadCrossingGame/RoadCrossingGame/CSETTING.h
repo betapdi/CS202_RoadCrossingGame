@@ -35,19 +35,15 @@ private:
 	CBACKGROUND background;
 	sf::Clock clock;
 	std::vector<GBUTTON*> buttonList;
-	std::vector<sf::Sprite*> characters;
 	std::vector<GANIMATION*> mCharacters;
 	sf::RoundedRectangleShape rrect[3];
 	sf::Text text[4];
-	sf::Cursor cursor;
 
-	bool isInit;
 	int cur;
 	int prevChoice;
 	int chooseID;
 	int direction;
 	GANIMATION* selectedCharacter;
-	GANIMATION* prevCharacter;
 	sf::Sprite selectedStamp;
 	
 	bool playMusic;
@@ -63,4 +59,5 @@ private:
 
 bool getSFX();
 bool getMusic();
+std::vector<bool> getSetting();
 #endif // !CSETTING_H

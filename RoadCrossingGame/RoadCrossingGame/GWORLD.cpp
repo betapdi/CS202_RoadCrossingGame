@@ -10,8 +10,9 @@ GWORLD::GWORLD(sf::RenderWindow& window)
 	, mPlayerAircraft(nullptr)
 	, isLoss(false)
 	, moveWorld(false)
-	, playSFX(false)
+	, playSFX(true)
 	, isInit(true)
+	, isBackFromPause(false)
 {
 	//mWindow.setView(sf::View(sf::FloatRect(0, SCREEN_HEIGHT * 2, SCREEN_WIDTH, SCREEN_HEIGHT)));
 	//std::cout << "View position: " << mWindow.getView().getCenter().x << ", " << mWindow.getView().getCenter().y << std::endl;
@@ -33,47 +34,47 @@ void GWORLD::update(float deltaTime) {
 	//scroll the view
 	if (!isLoss) {
 		if (moveWorld) mWorldView.move(0.f, mScrollSpeed * deltaTime);
+	}
+	if (isBackFromPause || isInit) {
+		std::vector<bool> setting = getSetting();
+		player.ini(setting[0]);
+		if (!setting[1]) {
+			Constants::ROUND_N_ROUND->stop();
+		}
+		playSFX = setting[2];
+		setBackFromPause(false);
+		isInit = false;
+	}
 
-		playerMovement(deltaTime);
+	playerMovement(deltaTime);
 
-		//std::cout << "View position: " << mWindow.getView().getCenter().x << ", " << mWindow.getView().getCenter().y << std::endl;
+	//std::cout << "View position: " << mWindow.getView().getCenter().x << ", " << mWindow.getView().getCenter().y << std::endl;
 
-		//std::cout << "Player position: " << mPlayerAircraft->getPosition().x << ", " << mPlayerAircraft->getPosition().y << std::endl;
-		//Handle map out of world
-		handleMapOutOfWorld(deltaTime);
+	//std::cout << "Player position: " << mPlayerAircraft->getPosition().x << ", " << mPlayerAircraft->getPosition().y << std::endl;
+	//Handle map out of world
+	handleMapOutOfWorld(deltaTime);
 
-		//Handle player out of world
-		handlePlayerOutOfWorld(deltaTime);
+	//Handle player out of world
+	handlePlayerOutOfWorld(deltaTime);
 
-		calculateScore();
+	calculateScore();
 
-		//Handle player touches border
-		GMAP* currMap = getCurrentMap();
+	//Handle player touches border
+	GMAP* currMap = getCurrentMap();
 
-		////Move the player sidewards (plane scouts follow the main aircraft)
-		//sf::Vector2f position = mPlayerAircraft->getPosition();
-		//sf::Vector2f velocity = mPlayerAircraft->getVelocity();
+	// Apply movements && Scroll the world downward
+	for (auto& it : mMaps) {
+		it.setSFXAllow(playSFX);
+		it.update(deltaTime);
+	}
 
-		////If player touches borders, flip its X velocity
-		//if (position.x <= 150.f
-		//	|| position.x >= SCREEN_WIDTH - 150.f)
-		//{
-		//	velocity.x = -velocity.x;
-		//	mPlayerAircraft->setVelocity(velocity);
-		//}
-
-		// Apply movements && Scroll the world downward
-		for (auto& it : mMaps) {
-			it.update(deltaTime);
-
+	if (isLoss) {
+		//std::cout << player.getBorder().left << " " << player.getBorder().top << std::endl;
+		if (playSFX) {
+			Constants::GAME_OVER_SFX->setVolume(40);
+			Constants::GAME_OVER_SFX->play();
 		}
 
-		//std::cout << player.getBorder().left << " " << player.getBorder().top << std::endl;
-	}
-	else {
-		Constants::GAME_OVER_SFX->setVolume(40);
-		Constants::GAME_OVER_SFX->play();
-		
 		if (player.explosion(deltaTime)) {
 			std::ofstream fout;
 			fout.open("../Data/Ranking.txt", std::ofstream::app);
@@ -135,20 +136,6 @@ void GWORLD::buildPlayer() {
 	getPlayerID();
 	player.ini(playerID);
 
-	/*std::unique_ptr<Aircraft> leader(new Aircraft(Aircraft::Eagle, mTextures));
-	mPlayerAircraft = leader.get();
-	mPlayerAircraft->setPosition(mSpawnPosition);
-	mPlayerAircraft->setVelocity(40.f, mScrollSpeed);
-	worldSceneLayers[0][Air]->attachChild(std::move(leader));*/
-
-	//// Add two escorting aircrafts, placed relatively to the main plane
-	//std::unique_ptr<Aircraft> leftEscort(new Aircraft(Aircraft::Raptor, mTextures));
-	//leftEscort->setPosition(-80.f, 50.f);
-	//mPlayerAircraft->attachChild(std::move(leftEscort));
-
-	//std::unique_ptr<Aircraft> rightEscort(new Aircraft(Aircraft::Raptor, mTextures));
-	//rightEscort->setPosition(80.f, 50.f);
-	//mPlayerAircraft->attachChild(std::move(rightEscort));
 }
 
 void GWORLD::buildMaps() {
@@ -158,7 +145,6 @@ void GWORLD::buildMaps() {
 		mMaps.push_back(GMAP(mWindow, (float)Constants::SCREEN_HEIGHT * (-i), &worldSceneLayers[i], &worldSceneGraph[i], &mTextures, &mScrollSpeed, &isLoss, &isInit, &player, &score));
 		//std::cout << SCREEN_HEIGHT * (-i) << std::endl;
 	}
-	isInit = false;
 }
 
 void GWORLD::draw() {
@@ -266,7 +252,12 @@ void GWORLD::calculateScore() {
 void GWORLD::setMoveWorld(bool moveWorld) {
 	this->moveWorld = moveWorld;
 }
- 
+
+void GWORLD::setBackFromPause(bool isBack) {
+	isBackFromPause = isBack;
+}
+
+
 void GWORLD::loadTextures()
 {
 	mTextures.load(Textures::Eagle, "Media/Textures/Eagle.png");
@@ -334,4 +325,8 @@ void GWORLD::loadTextures()
 	mTextures.load(Textures::OLD_TRAIN_R, "Media/Textures/vehicles/old_train_right.png");
 	mTextures.load(Textures::TRAIN_L, "Media/Textures/vehicles/train_left.png");
 	mTextures.load(Textures::TRAIN_R, "Media/Textures/vehicles/train_right.png");
+}
+
+void GWORLD::saveCharacterID(std::ofstream& fout) {
+	fout.write((char*)(&playerID), sizeof(int));
 }

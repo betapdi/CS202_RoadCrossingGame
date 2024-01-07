@@ -62,7 +62,10 @@ void CPLAYING::processEvents() {
 				!sf::Keyboard::isKeyPressed(sf::Keyboard::S) || !sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 				isPause = true;
 			}*/
-			if (event.key.code == sf::Keyboard::Escape) STATEMACHINE::getInstance()->changeState(stateTypes::PAUSE);
+			if (event.key.code == sf::Keyboard::Escape) {
+				mWorld.setBackFromPause(true);
+				STATEMACHINE::getInstance()->changeState(stateTypes::PAUSE);
+			}
 			else {
 				mWorld.setMoveWorld(true);
 				mWorld.processEvents(event);

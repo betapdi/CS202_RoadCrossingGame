@@ -10,6 +10,7 @@ GMAP::GMAP(sf::RenderWindow& window, const float& yMapCoordinate, std::vector<CS
 	, yCoor(yMapCoordinate)
 	, isLoss(isLoss)
 	, player(player)
+	, hasSFX(true)
 	, score(score)
 {
 	this->mSceneGraph = mSceneGraph;
@@ -114,22 +115,17 @@ void GMAP::checkLose(float deltaTime) {
 }
 
 void GMAP::checkMoney() {
-	//if (mMoney.empty()) return;
-	//for (auto it = mMoney.begin(); it != mMoney.end(); it++) {
-	//	if ((*it)->isIntersect(player->getBorder())) {
-	//		(*it)->setCollected(true);
-	//		return;
-	//	}
-	//}
 	if (mMoney.empty()) return;
 
 	for (auto it = mMoney.begin(); it != mMoney.end();) {
 		if ((*it)->isIntersect(player->getBorder())&& !(*it)->isCollect()) {
 			(*it)->setCollected(true);
-			Constants::MONEY_COLLECTED->play();
+			if (hasSFX) {
+				Constants::MONEY_COLLECTED->play();
+			}
+			it = mMoney.erase(it);  // Use the returned iterator after erasing
 			(*score)+=10;
 			return;
-			//it = mMoney.erase(it);  // Use the returned iterator after erasing
 		}
 		else {
 			++it;
@@ -137,6 +133,11 @@ void GMAP::checkMoney() {
 
 	}
 }
+
+void GMAP::setSFXAllow(bool isAllowed) {
+	hasSFX = isAllowed;
+}
+
 
 bool GMAP::isCollided(sf::FloatRect &border) {
 	for (auto& it : mObstacle) {
@@ -169,9 +170,9 @@ void GMAP::buildScene(bool isInit)
 	//	std::cout << ": " << mapPos[i].second << std::endl;
 	//}
 	generateRoads();
-	generateObstacle(isInit);
 	generateAnimals();
 	generateVehicles();
+	generateObstacle(isInit);
 	generateTrafficLight();
 	generateMoney();
 }
@@ -237,12 +238,13 @@ void GMAP::generateObstacle(bool isInit) {
 				int numOfObstacle;
 				numOfObstacle = randBiasedInt(4, Constants::maxObstacle, 0.4f);
 				float startPos = 0;
-				float endPos = startPos + 120;
+				float endPos = startPos + mWorldBounds.width / numOfObstacle;
 				for (int j = 0; j < numOfObstacle; ++j) {
 					int type = randObject(0, Constants::maxObstacle, 0.7f);
 					std::unique_ptr<COBSTACLE> obstacle(new COBSTACLE(type, *mTextures));
-					obstacle->setPosition(randInt(startPos, endPos), mapPos[i].first.y + 54);
-
+					sf::Vector2f pos(randInt(startPos, endPos), mapPos[i].first.y + 54);
+					obstacle->setPosition(pos);
+					obstacle->savePos(pos);
 					startPos = obstacle->getPosition().x + obstacle->getSizeX();
 					endPos = startPos + mWorldBounds.width / numOfObstacle;
 
@@ -257,13 +259,15 @@ void GMAP::generateObstacle(bool isInit) {
 void GMAP::generateInitialObstacle() {
 	for (int i = 0; i < mapPos.size(); ++i) {
 		if (mapPos[i].second == 3) {
-			int numOfObstacle = randBiasedInt(10, 15, 0.5f);
+			int numOfObstacle = randBiasedInt(4, 10, 0.5f);
 			float startPos1 = 0;
 			float endPos1 = startPos1 + 120;
 			for (int j = 0; j < numOfObstacle; ++j) {
 				int type = randObject(0, Constants::maxObstacle, 0.7f);
 				std::unique_ptr<COBSTACLE> obstacle(new COBSTACLE(type, *mTextures));
-				obstacle->setPosition(randInt(startPos1, endPos1), mapPos[i].first.y + 54.0f);
+				sf::Vector2f pos(randInt(startPos1, endPos1), mapPos[i].first.y + 54.0f);
+				obstacle->setPosition(pos);
+				obstacle->savePos(pos);
 				startPos1 = obstacle->getPosition().x + 120;
 				endPos1 = startPos1 + mWorldBounds.width / numOfObstacle;
 				if ((startPos1 >= Constants::SCREEN_WIDTH / 2 - 100 && startPos1 < Constants::SCREEN_WIDTH / 2 + 50) ||
@@ -293,8 +297,7 @@ void GMAP::generateAnimals() {
 				pos.y -= 12;
 			}
 			for (int j = 0; j < maxAnimal; ++j) {
-				std::unique_ptr<CANIMAL> animal(new CANIMAL(type, mWorldBounds, *mTextures, 50, 0.1));
-				mAnimal.push_back(animal.get());
+				std::unique_ptr<CANIMAL> animal(new CANIMAL(type, *mTextures, 50, 0.1));
 				if (type % 2 == 0) {
 					pos.x = pos.x - randInt(200, 400);
 				}
@@ -303,6 +306,7 @@ void GMAP::generateAnimals() {
 				}
 				animal->setPosition(pos);
 				animal->saveOrgPos(pos);
+				mAnimal.push_back(animal.get());
 				mSceneLayers->at(Animal)->attachChild(std::move(animal));
 				//std::cout << pos.x << " " << pos.y << std::endl;
 			}
@@ -484,4 +488,66 @@ void GMAP::generateTrain()
 			}
 		}
 	}
+}
+
+void GMAP::savePos(std::ofstream& fout) {
+	//fout("../Data/savegame.dat", std::ios::binary | std::ios::out);
+
+	if (fout.is_open()) {
+		std::size_t mapPosSize = mapPos.size();
+		fout.write((char*)(&mapPosSize), sizeof(std::size_t));
+
+		for (const auto& it : mapPos) {
+			fout.write((char*)(&it.first), sizeof(sf::Vector2f));
+			fout.write((char*)(&it.second), sizeof(int));
+		}
+
+		std::size_t numObstacles = mObstacle.size();
+		fout.write((char*)(&numObstacles), sizeof(std::size_t));
+
+		for (const auto& obstacle : mObstacle) {
+			obstacle->save(fout);
+		}
+		fout.close();
+	}
+	else {
+		std::cerr << "Unable to open savegame.dat" << std::endl;
+	}
+}
+
+void GMAP::loadPos(std::ifstream& fin) {
+	std::size_t mapPosSize = mapPos.size();
+	fin.read((char*)(&mapPosSize), sizeof(std::size_t));
+	mapPos.clear();
+	mObstacle.clear();
+	//Read position from file
+	for (std::size_t i = 0; i < mapPosSize; ++i) {
+		sf::Vector2f pos;
+		int roadType;
+		fin.read((char*)(&pos), sizeof(sf::Vector2f));
+		fin.read((char*)(&roadType), sizeof(int));
+
+		mapPos.push_back(std::make_pair(pos, roadType));
+	}
+	//Generate road
+	generateRoads();
+
+	//Generate obstacles form file
+	std::size_t numObstacles;
+	fin.read((char*)(&numObstacles), sizeof(std::size_t));
+
+	for (std::size_t i = 0; i < numObstacles; ++i) {
+		int type;
+		sf::Vector2f pos;
+		fin.read((char*)(&type), sizeof(int));
+		fin.read((char*)(&pos), sizeof(sf::Vector2f));
+		std::unique_ptr<COBSTACLE> obstacle(new COBSTACLE(type, *mTextures));
+		obstacle->setPosition(pos);
+		mObstacle.push_back(obstacle.get());
+		mSceneLayers->at(Obstacle)->attachChild(std::move(obstacle));
+	}
+}
+
+void GMAP::saveCharacterID(std::ofstream& fout) {
+
 }

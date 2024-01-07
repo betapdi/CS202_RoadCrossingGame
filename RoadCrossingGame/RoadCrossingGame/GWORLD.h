@@ -25,6 +25,8 @@ public:
 	void draw();
 	void processEvents(sf::Event& event);
 	void setMoveWorld(bool moveWorld);
+	void setBackFromPause(bool isBack);
+	void saveCharacterID(std::ofstream& fout);
 private:
 	void loadTextures();
 	void buildMaps();
@@ -63,6 +65,7 @@ private:
 	std::vector<int> id;
 
 	sf::Clock clock;
+	bool isBackFromPause;
 	bool moveWorld;
 	bool isInit;
 	bool isLoss;

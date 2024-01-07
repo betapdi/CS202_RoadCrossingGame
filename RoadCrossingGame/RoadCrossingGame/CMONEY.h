@@ -15,6 +15,7 @@ public:
 	sf::FloatRect getBorder();
 	void setCollected(bool isCollected);
 	void savePos(sf::Vector2f position);
+	void sfxAllow(bool hasSFX);
 	//void drawBounds(sf::RenderTarget& target, sf::RenderStates states) const;
 private:
 	virtual void updateCurrent(float deltaTime);
@@ -25,6 +26,7 @@ private:
 	bool isCollected;
 	sf::RectangleShape box;
 	sf::Vector2f pos;
+	bool hasSFX;
 };
 
 #endif // ! CMONEY_H

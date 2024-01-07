@@ -35,6 +35,10 @@ public:
 	void rebuild(const float& yMapCoordinate, bool isInit);
 	void handleTouchBorder(Aircraft* mPlayerAircraft);
 	bool isCollided(sf::FloatRect &border);
+	void setSFXAllow(bool isAllowed);
+	void savePos(std::ofstream& fout);
+	void saveCharacterID(std::ofstream& fout);
+	void loadPos(std::ifstream& fin);
 private:
 	void buildScene(bool isInit);
 	void generateRoads();
@@ -68,6 +72,7 @@ private:
 	std::vector<CMONEY*> mMoney;
 	//static bool isInit;
 	bool* isLoss;
+	bool hasSFX;
 
 	std::vector<CVEHICLE*> mVehicle;
 	std::vector<CVEHICLE*> mTrain;

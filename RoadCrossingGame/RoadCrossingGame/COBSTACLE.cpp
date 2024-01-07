@@ -91,26 +91,37 @@ COBSTACLE::obstacleType fromIntToType(int type) {
 }
 
 
+COBSTACLE::COBSTACLE(const TextureHolder& textures) {
+}
+
 COBSTACLE::COBSTACLE(int type, const TextureHolder& textures)
-	: mType(fromIntToType(type))
+	: type(type)
+	,mType(fromIntToType(type))
 	, mSprite(textures.get(toTextureID(mType)))
 {
-	sf::FloatRect bounds = mSprite.getLocalBounds();
+	bounds = mSprite.getLocalBounds();
 	mSprite.setOrigin(0, bounds.height);
 	//mSprite.setScale(1.5, 1.5);
 }
 
 
-COBSTACLE::COBSTACLE(obstacleType type, const TextureHolder& textures)
-	: mType(type)
-	, mSprite(textures.get(toTextureID(type)))
-{
-	sf::FloatRect bounds = mSprite.getLocalBounds();
-	mSprite.setOrigin(0, bounds.height);
-}
+//COBSTACLE::COBSTACLE(obstacleType type, const TextureHolder& textures)
+//	: mType(type)
+//	, mSprite(textures.get(toTextureID(type)))
+//{
+//	bounds = mSprite.getLocalBounds();
+//	mSprite.setOrigin(0, bounds.height);
+//}
 
 
 sf::FloatRect COBSTACLE::getRect() {
+	//sf::FloatRect bounds = mSprite.getLocalBounds();
+	//if (this != nullptr) {
+	//	sf::FloatRect sizeOfObj = { pos.x, pos.y - 60.0f, bounds.width, 60.0f };
+	//	return sizeOfObj;
+	//}
+	//return { 0,0,0,0 };
+	//return { pos.x, pos.y, bounds.width, 60.0f };
 	sf::FloatRect bounds = mSprite.getLocalBounds();
 	sf::Vector2f getPos = this->getPosition();
 	sf::FloatRect sizeOfObj = { getPos.x, getPos.y - bounds.height - 20, bounds.width, bounds.height };
@@ -125,6 +136,20 @@ float COBSTACLE::getSizeX() const {
 	//return 0;
 }
 
+void COBSTACLE::savePos(const sf::Vector2f& pos) {
+	this->pos = pos;
+}
+
 void COBSTACLE::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(mSprite, states);
 }
+
+void COBSTACLE::save(std::ofstream& fout) const {
+	fout.write((char*)(&type), sizeof(int));
+	fout.write((char*)(&pos), sizeof(sf::Vector2f));
+}
+
+//void COBSTACLE::load(std::ifstream& fin) {
+//	fin.read((char*)(&type), sizeof(int));
+//	fin.read((char*)(&pos), sizeof(sf::Vector2f));
+//}

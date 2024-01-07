@@ -37,7 +37,8 @@ void CGAMEOVER::init() {
 	button->setPosition(Constants::SCREEN_WIDTH - 1.5 * button->getSize().x, button->getSize().y / 2);
 	button->setClickFunction([]() {
 		STATEMACHINE::getInstance()->popState();
-		});
+		STATEMACHINE::getInstance()->changeState(stateTypes::PLAYING);
+	});
 	buttonList.push_back(button);
 
 	//TITLE: CROSSY ROAD
@@ -201,9 +202,11 @@ void CGAMEOVER::update(float deltaTime) {
 
 	if (isEntered) {
 		if (choice == 0) {
+			STATEMACHINE::getInstance()->popState();
 			STATEMACHINE::getInstance()->changeState(stateTypes::PLAYING);
 		}
 		else if (choice == 1) {
+			STATEMACHINE::getInstance()->popState();
 			STATEMACHINE::getInstance()->changeState(stateTypes::MENU);
 		}
 		else if (choice == 2) {

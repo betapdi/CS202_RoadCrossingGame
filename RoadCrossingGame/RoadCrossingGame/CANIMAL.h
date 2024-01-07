@@ -20,7 +20,7 @@ public:
 		WOLF_R,
 	};
 public:
-	CANIMAL(int type, sf::FloatRect mWorldBound, const TextureHolder& textures, float speedMove, float frameTime);
+	CANIMAL(int type, const TextureHolder& textures, float speedMove, float frameTime);
 	sf::Vector2i getFrameNum(int type);
 	void saveOrgPos(const sf::Vector2f& position);
 	virtual void updateCurrent(float deltaTime);

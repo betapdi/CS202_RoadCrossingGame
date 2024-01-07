@@ -8,6 +8,7 @@ Textures::ID getTextureID() {
 CMONEY::CMONEY(const TextureHolder& textures, float frameTime)
 	: mAnimation(textures.get(getTextureID()), sf::Vector2i(14, 1), frameTime)
 	, isCollected(false)
+	, hasSFX(true)
 {
 	mAnimation.setScale(2.0f, 2.0f);
 	sf::FloatRect getBound = mAnimation.getGlobalBounds();
@@ -27,6 +28,9 @@ void CMONEY::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) cons
 	if (!isCollected) {
 		target.draw(mAnimation, states);
 		target.draw(box, states);
+	}
+	else {
+		return;
 	}
 }
 

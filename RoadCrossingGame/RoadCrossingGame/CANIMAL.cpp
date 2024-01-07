@@ -69,6 +69,8 @@ CANIMAL::Animal fromIntToType(int type) {
 	case 9:
 		return CANIMAL::WOLF_L;
 		break;
+	default:
+		break;
 	}
 }
 
@@ -79,9 +81,8 @@ int fromIntToDir(int dir) {
 	else return - 1;
 }
 
-CANIMAL::CANIMAL(int type, sf::FloatRect mWorldBound, const TextureHolder& textures, float speedMove, float frameTime)
+CANIMAL::CANIMAL(int type, const TextureHolder& textures, float speedMove, float frameTime)
 	: mType(fromIntToType(type))
-	, mWorldBound(mWorldBound)
 	, mSpeed(speedMove)
 	, mDirection(fromIntToDir(type))
 	, mAnimation(textures.get(toTextureID(mType)), getFrameNum(type), frameTime)

@@ -14,26 +14,26 @@ void GBUTTON::init(sf::Texture* texture) {
 	this->setTexture(texture);
 	this->setSize(sf::Vector2f(62, 62));
 
-	float expansionAmount = 30.0f;
-	sf::FloatRect expandBound (
-		this->getGlobalBounds().left + expansionAmount,
-		this->getGlobalBounds().top + expansionAmount,
-		this->getGlobalBounds().width + 2 * expansionAmount,
-		this->getGlobalBounds().height + 2 * expansionAmount
-	);
+	//float expansionAmount = 30.0f;
+	//sf::FloatRect expandBound (
+	//	this->getGlobalBounds().left + expansionAmount,
+	//	this->getGlobalBounds().top + expansionAmount,
+	//	this->getGlobalBounds().width + 2 * expansionAmount,
+	//	this->getGlobalBounds().height + 2 * expansionAmount
+	//);
 	//this->getGlobalBounds = expandBound;
 }
 
 void GBUTTON::update(float deltaTime) {
 	handleTouchEvent();
-	if (isFocus) {
-		orgCursor.loadFromSystem(sf::Cursor::Hand);
-		curWindow->getWindow()->setMouseCursor(orgCursor);
-	}
-	else {
-		orgCursor.loadFromSystem(sf::Cursor::Arrow);
-		curWindow->getWindow()->setMouseCursor(orgCursor);
-	}
+	//if (isFocus) {
+	//	orgCursor.loadFromSystem(sf::Cursor::Hand);
+	//	curWindow->getWindow()->setMouseCursor(orgCursor);
+	//}
+	//else {
+	//	orgCursor.loadFromSystem(sf::Cursor::Arrow);
+	//	curWindow->getWindow()->setMouseCursor(orgCursor);
+	//}
 }
 
 void GBUTTON::render(sf::RenderWindow* window) {
