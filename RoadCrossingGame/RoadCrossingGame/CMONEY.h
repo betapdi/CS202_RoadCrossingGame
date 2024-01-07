@@ -9,6 +9,7 @@
 
 class CMONEY : public CENTITY {
 public:
+	bool isCollect();
 	CMONEY(const TextureHolder& textures, float frameTime);
 	bool isIntersect(const sf::FloatRect& rect);
 	sf::FloatRect getBorder();

@@ -69,8 +69,13 @@ void CRATING::init(){
 	medal.setTexture(*Constants::MEDAL);
 	medal.setPosition(Constants::SCREEN_WIDTH / 2.95f, Constants::SCREEN_HEIGHT / 2.79f);
 
+	std:: ifstream fin;
+	fin.open("../Data/Ranking.txt");
+	std::string score;
+
 	for (int i = 0; i < maxRank; ++i) {
-		text[i].setString("147");
+		fin >> score;
+		text[i].setString(score);
 		text[i].setFont(*Constants::LUCKIESTGUY);
 		text[i].setFillColor(sf::Color(254, 185, 44, 255));
 		text[i].setCharacterSize(60);
@@ -80,6 +85,8 @@ void CRATING::init(){
 		text[i].setOrigin(bound.width / 2, bound.height / 2);
 		text[i].setPosition(Constants::SCREEN_WIDTH / 2, Constants::SCREEN_HEIGHT / 2.55f + 95 * i);
 	}
+
+	fin.close();
 }
 
 void CRATING::processEvents() {

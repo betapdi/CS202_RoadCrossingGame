@@ -35,12 +35,14 @@ private:
 	void playerMovement(float deltaTime);
 	bool isCollided(sf::Sprite& sprite, const float& deltaTime);
 	void getPlayerID();
+	void calculateScore();
 	//void generateRoads();
 	//void generateObstacle();
 	//void generatePosition(bool isInit);
 
 public:
 	std::vector<std::pair<sf::Vector2f, int>> mapPos;
+	int score;
 
 private:
 	sf::RenderWindow& mWindow;
@@ -65,6 +67,8 @@ private:
 	bool isInit;
 	bool isLoss;
 	bool playSFX;
+
+	int scorey = 7 * 60;
 };
 
 #endif // !GWORLD_H

@@ -27,7 +27,7 @@ namespace sf {
 
 class GMAP {
 public:
-	GMAP(sf::RenderWindow& window, const float& yMapCoordinate, std::vector<CSCENENODE*>* mSceneLayers, CSCENENODE* mSceneGraph, TextureHolder* mTextures, float* mScrollSpeed, bool* isLoss, bool* isInit, Player* player);
+	GMAP(sf::RenderWindow& window, const float& yMapCoordinate, std::vector<CSCENENODE*>* mSceneLayers, CSCENENODE* mSceneGraph, TextureHolder* mTextures, float* mScrollSpeed, bool* isLoss, bool* isInit, Player* player, int* score);
 	void update(float deltaTime);
 	void draw();
 
@@ -80,6 +80,8 @@ private:
 
 	float* mScrollSpeed;
 	float yCoor;
+
+	int* score;
 };
 
 #endif // !GMAP_H

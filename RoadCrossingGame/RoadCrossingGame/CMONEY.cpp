@@ -46,6 +46,9 @@ void CMONEY::setCollected(bool isCollected) {
 	this->isCollected = isCollected;
 }
 
+bool CMONEY::isCollect() {
+	return isCollected;
+}
 void CMONEY::savePos(sf::Vector2f position) {
 	pos = position;
 }

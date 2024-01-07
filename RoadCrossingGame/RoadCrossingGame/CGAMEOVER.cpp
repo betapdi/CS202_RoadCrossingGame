@@ -1,5 +1,6 @@
 #include "CGAMEOVER.h"
-
+#include<fstream>
+#include<vector>
 CGAMEOVER::CGAMEOVER() {
 	choice = 0;
 	prevChoice = -1;
@@ -75,6 +76,28 @@ void CGAMEOVER::init() {
 	sf::FloatRect bound;
 	text[0].setString("YOUR SCORE:");
 	text[1].setString("HIGHEST SCORE:");
+
+	std::ifstream fin;
+	fin.open("../Data/Ranking.txt");
+	std::vector<int>Score;
+	while (!fin.eof()) {
+		int a;
+		fin >> a;
+		Score.push_back(a);
+	}
+	fin.close();
+
+	std::string curScore = std::to_string(Score.back());
+	sort(Score.begin(), Score.end()-1, std::greater<int>());
+	score[0].setString(curScore);
+	score[1].setString(std::to_string(Score[0]));
+
+	std::ofstream fout;
+	fout.open("../Data/Ranking.txt");
+	for (int i = 0; i < 3; i++)
+		fout << Score[i] << "\n";
+	fout.close();
+
 	for (int i = 0; i < 2; ++i) {
 		//Box
 		rrect[i].setSize(sf::Vector2f(400, 80));
@@ -88,6 +111,7 @@ void CGAMEOVER::init() {
 		rrect[i].setPosition(Constants::SCREEN_WIDTH / 1.5f, Constants::SCREEN_HEIGHT / 2.9f + i * 120);
 
 		//Text
+		//text[i].setString(mWorld->getScore());
 		text[i].setFont(*Constants::BRUCE_FOREVER);
 		text[i].setFillColor(sf::Color::White);
 		text[i].setCharacterSize(30);
@@ -96,6 +120,17 @@ void CGAMEOVER::init() {
 		textBounds = text[i].getGlobalBounds();
 		text[i].setOrigin(0, textBounds.height / 2);
 		text[i].setPosition(Constants::SCREEN_WIDTH / 5.2f, Constants::SCREEN_HEIGHT / 2.9f + i * 120);
+		
+		//Score
+		score[i].setFont(*Constants::BRUCE_FOREVER);
+		score[i].setFillColor(sf::Color::White);
+		score[i].setCharacterSize(30);
+		score[i].setOutlineThickness(3);
+		score[i].setOutlineColor(sf::Color(136, 28, 28, 255));
+		textBounds = text[i].getGlobalBounds();
+		score[i].setOrigin(0, textBounds.height / 2);
+		score[i].setPosition(Constants::SCREEN_WIDTH / 5.2f + 500 , Constants::SCREEN_HEIGHT / 2.9f + i * 120);
+		
 	}
 
 	star.setTexture(*Constants::STAR);
@@ -186,6 +221,7 @@ void CGAMEOVER::render(sf::RenderWindow* window) {
 	window->draw(gameover);
 	for (int i = 0; i < 2; ++i) {
 		window->draw(rrect[i]);
+		window->draw(score[i]);
 		window->draw(text[i]);
 	}
 	window->draw(star);
