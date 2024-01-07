@@ -445,6 +445,10 @@ void CVEHICLE::updateCurrent(float deltaTime) {
 	mAnimation.move(mDirection * mSpeed * deltaTime, 0);
 }
 
+void CVEHICLE::setSpeed(const float& speed) {
+	mSpeed = speed;
+}
+
 int CVEHICLE::getDirection() {
 	return mDirection;
 }

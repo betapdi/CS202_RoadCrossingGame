@@ -104,6 +104,7 @@ public:
 	sf::FloatRect getBorder();
 	int fromIntToDir(int dir);
 	sf::FloatRect getBound() const;
+	void setSpeed(const float& speed);
 private:
 	void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 private:

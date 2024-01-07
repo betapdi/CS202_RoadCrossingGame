@@ -15,7 +15,7 @@ GMAP::GMAP(sf::RenderWindow& window, const float& yMapCoordinate, std::vector<CS
 	this->mSceneLayers = mSceneLayers;
 	this->mTextures = mTextures;
 
-	std::cout << this->mSceneLayers->size() << std::endl;
+	//std::cout << this->mSceneLayers->size() << std::endl;
 	buildScene(isInit);
 }
 
@@ -34,6 +34,9 @@ void GMAP::rebuild(const float& lastYCoordinate, bool isInit) {
 	mObstacle.clear();
 	mMoney.clear();
 	mapPos.clear();
+	mVehicle.clear();
+	mTrain.clear();
+	mTrainTail.clear();
 
 	buildScene(isInit);
 }
@@ -45,17 +48,64 @@ void GMAP::handleTouchBorder(Aircraft* mPlayerAircraft) {
 void GMAP::update(float deltaTime)
 {
 	mSceneGraph->update(deltaTime);
+	handleTrafficLightChange();
 	checkMoney();
 	checkLose(deltaTime);
 }
 
+void GMAP::handleTrafficLightChange() {
+	int i = 0;
+	while (!mTrafficLight.empty() && i < mTrafficLight.size()) {
+		auto& it = mTrafficLight[i];
+		float roadYPos = it->getPosition().y - 5.f;
+		//std::cout << "WTF??? " << roadYPos << std::endl;
+
+		for (int j = 0; j < mVehicle.size(); ++j) {
+			auto& it1 = mVehicle[j];
+			if (abs(roadYPos - (it1->getPosition().y + 20)) <= 20) {
+				//std::cout << it1->getPosition().y << std::endl;
+				int status = it->getStatus();
+
+				if (status == 1) { //Red
+					it1->setSpeed(0);
+				}
+
+				else if (status == 2) { //Yellow
+					it1->setSpeed(100);
+				}
+
+				else it1->setSpeed(200);//Green
+;			}
+		}
+
+		++i;
+	}
+}
+
 void GMAP::checkLose(float deltaTime) {
-	if (mAnimal.empty()) return;
 	for (auto& it : mAnimal) {
 		if (it->isIntersect(player->getBorder())) {
-			//std::cout << "LOSE" << std::endl;
-			//std::cout << "PLAYER: " << player->getBorder().left << " " << player->getBorder().top << " " << player->getBorder().left + player->getBorder().width << " " << player->getBorder().top + player->getBorder().height << std::endl;
-			//std::cout << "Animal: " << it->getBorder().left << " " << it->getBorder().top << " " << it->getBorder().left + it->getBorder().width << " " << it->getBorder().top + it->getBorder().height << std::endl;
+			*isLoss = true;
+			return;
+		}
+	}
+
+	for (auto& it : mVehicle) {
+		if (it->isIntersect(player->getBorder())) {
+			*isLoss = true;
+			return;
+		}
+	}
+
+	for (auto& it : mTrain) {
+		if (it->isIntersect(player->getBorder())) {
+			*isLoss = true;
+			return;
+		}
+	}
+
+	for (auto& it : mTrainTail) {
+		if (it->isIntersect(player->getBorder())) {
 			*isLoss = true;
 			return;
 		}
@@ -261,13 +311,14 @@ void GMAP::generateAnimals() {
 
 void GMAP::generateTrafficLight() {
 	for (int i = 0; i < mapPos.size(); ++i) {
-		if (mapPos[i].second == 0 || mapPos[i].second == 2) {
+		if (mapPos[i].second == 0) {
 			int hasTrafficLight = randBiasedInt(0, 1, 0.7f);
 			if (hasTrafficLight) {
-				int randPos = randInt(20, SCREEN_WIDTH - 50);
+				int randPos = randInt(50, SCREEN_WIDTH - 50);
 				std::unique_ptr<COBJECT> trafficLight(new COBJECT(0, *mTextures, sf::Vector2f(randPos, mapPos[i].first.y + 5.f)));
+				//std::cout << "GEN TRAFFIC: " << trafficLight->getPosition().y << std::endl;
 				mTrafficLight.push_back(trafficLight.get());
-				mSceneLayers->at(Obstacle)->attachChild(std::move(trafficLight));
+				mSceneLayers->at(TrafficLight)->attachChild(std::move(trafficLight));
 			}
 		}
 	}
@@ -307,17 +358,17 @@ void GMAP::generateCars()
 			if (type % 2 != 0) {
 				position = sf::Vector2f(mapPos[i].first.x - 5000.f, mapPos[i].first.y);
 				//type = randEvenOdd(0, 7, false);
-				std::cout << type << " Pos: " << mapPos[i].first.x << std::endl;
+				//std::cout << type << " Pos: " << mapPos[i].first.x << std::endl;
 			}
 			else {
 				position = sf::Vector2f(Constants::SCREEN_WIDTH - 100.f, mapPos[i].first.y);
 				//type = randEvenOdd(0, 7, true);
-				std::cout << type << " Pos: " << mapPos[i].first.x << std::endl;
+				//std::cout << type << " Pos: " << mapPos[i].first.x << std::endl;
 
 			}
 			//position.y -= 10;
 			//speed = static_cast<float>(rand() % 50 + 150);
-			position.y -= randInt(18, 20);
+			position.y -= 20;
 			//sf::Vector2f position(Constants::SCREEN_WIDTH, mapPos[i].first.y);
 			for (int i = 0; i < Constants::maxCar; ++i) {
 				if (type % 2 == 0) {
@@ -340,7 +391,10 @@ void GMAP::generateCars()
 				position.x = position.x + randInt(200, 1000);
 				vehicle->setPosition(position);
 				vehicle->saveOrgPos(position);
+
+				//std::cout << "GEN CARS: " << vehicle->getPosition().y << std::endl;
 				mSceneLayers->at(Vehicle)->attachChild(std::move(vehicle));
+
 			}
 			if (type % 2 == 0) {
 				type = randEvenOdd(0, 7, true);
@@ -384,7 +438,7 @@ void GMAP::generateTrain()
 			float headSize = 0;
 			float tailSize = 0;
 			for (int i = 0; i < Constants::maxTrain; i++) {
-				std::unique_ptr<CVEHICLE> train(new CVEHICLE(type, mWorldBounds, *mTextures, 450, 0.1));
+				std::unique_ptr<CVEHICLE> train(new CVEHICLE(type, mWorldBounds, *mTextures, 700, 0.1));
 				mTrain.push_back(train.get());
 				pos.x = pos.x + randInt(1000, 1500) + headSize + (tailSize * 5);
 				train->setPosition(pos);
@@ -395,7 +449,7 @@ void GMAP::generateTrain()
 				else pos.x -= (headSize + 60);
 				//mSceneLayers->at(Vehicle)->attachChild(std::move(train));
 				for (int i = 0; i < 5; i++) {
-					std::unique_ptr<CVEHICLE> train_tail(new CVEHICLE(type1, mWorldBounds, *mTextures, 450, 0.1));
+					std::unique_ptr<CVEHICLE> train_tail(new CVEHICLE(type1, mWorldBounds, *mTextures, 700, 0.1));
 					tailSize = train_tail->getBound().width;
 					if (i > 0) {
 						if (type % 2 == 0) {

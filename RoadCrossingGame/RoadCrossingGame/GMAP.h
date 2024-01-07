@@ -52,6 +52,7 @@ private:
 	void checkLose(float deltaTime);
 	void checkMoney();
 	void generateTrain();
+	void handleTrafficLightChange();
 private:
 	sf::RenderWindow& mWindow;
 	TextureHolder* mTextures;

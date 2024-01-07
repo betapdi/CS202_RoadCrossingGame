@@ -22,6 +22,8 @@ public:
 	int lightStatus();
 	void updateCurrent(float deltaTime);
 	void updateTrafficLight();
+	int getStatus();
+	sf::Vector2f getPosition();
 	sf::FloatRect getRect();
 private:
 	const sf::IntRect getTexture(int type);

@@ -113,7 +113,7 @@ COBSTACLE::COBSTACLE(obstacleType type, const TextureHolder& textures)
 sf::FloatRect COBSTACLE::getRect() {
 	sf::FloatRect bounds = mSprite.getLocalBounds();
 	sf::Vector2f getPos = this->getPosition();
-	sf::FloatRect sizeOfObj = { getPos.x, getPos.y - 60.0f, bounds.width, 60.0f };
+	sf::FloatRect sizeOfObj = { getPos.x, getPos.y - bounds.height - 20, bounds.width, bounds.height };
 	return sizeOfObj;
 }
 

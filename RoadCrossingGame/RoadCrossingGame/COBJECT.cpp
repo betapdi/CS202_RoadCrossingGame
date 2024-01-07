@@ -85,6 +85,14 @@ void COBJECT::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) con
 	target.draw(sprite, states);
 }
 
+int COBJECT::getStatus() {
+	return status;
+}
+
+sf::Vector2f COBJECT::getPosition() {
+	return sprite.getPosition();
+}
+
 sf::FloatRect COBJECT::getRect() {
 	sf::FloatRect bounds = sprite.getLocalBounds();
 	sf::FloatRect sizeOfObj = { this->getPosition() - sf::Vector2f(SIZE / 2.0f, SIZE), sf::Vector2f(bounds.width, bounds.height) };

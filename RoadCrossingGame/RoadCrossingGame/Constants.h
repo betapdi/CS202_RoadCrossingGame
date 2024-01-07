@@ -25,6 +25,7 @@ namespace Constants {
 		Road,
 		Animal,
 		Obstacle,
+		TrafficLight,
 		Money,
 		Vehicle,
 		Air,
