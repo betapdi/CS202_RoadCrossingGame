@@ -27,6 +27,7 @@ public:
 	void setMoveWorld(bool moveWorld);
 	void setBackFromPause(bool isBack);
 	void saveCharacterID(std::ofstream& fout);
+
 private:
 	void loadTextures();
 	void buildMaps();

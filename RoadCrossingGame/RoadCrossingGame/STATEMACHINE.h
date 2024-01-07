@@ -23,7 +23,7 @@ public:
 	~STATEMACHINE();
 
 	void changeState(GSTATE* state);
-	void changeState(stateTypes state);
+	void changeState(stateTypes state, int type);
 	void pushState(stateTypes state);
 	void popState();
 	void quit();

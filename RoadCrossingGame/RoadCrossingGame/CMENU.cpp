@@ -377,20 +377,20 @@ void CMENU::update(float deltaTime) {
 
 	if (isEntered) {
 		if (choice == 0) {
-			STATEMACHINE::getInstance()->changeState(stateTypes::PLAYING);
+			STATEMACHINE::getInstance()->changeState(stateTypes::PLAYING, 0);
 		}
 		else if (choice == 1) {
-			STATEMACHINE::getInstance()->changeState(stateTypes::SETTING);
+			STATEMACHINE::getInstance()->changeState(stateTypes::SETTING, 0);
 		}
 		else if (choice == 2) {
 			// LOAD GAME
-			STATEMACHINE::getInstance()->changeState(stateTypes::GAMEOVER);
+			STATEMACHINE::getInstance()->changeState(stateTypes::PLAYING, 1);
 		}
 		else if (choice == 3) {
-			STATEMACHINE::getInstance()->changeState(stateTypes::CREDIT);
+			STATEMACHINE::getInstance()->changeState(stateTypes::CREDIT, 0);
 		}
 		else if (choice == 4) {
-			STATEMACHINE::getInstance()->changeState(stateTypes::RANKING);
+			STATEMACHINE::getInstance()->changeState(stateTypes::RANKING, 0);
 		}
 		isEntered = !isEntered;
 	}

@@ -27,7 +27,7 @@ bool getMusic();
 class Player {
 public:
 	sf::FloatRect getBorder() {
-		return _sprite.getGlobalBounds();
+		return sf::FloatRect(_sprite.getPosition(), sf::Vector2f(_sprite.getLocalBounds().width, _sprite.getLocalBounds().height));
 	}
 
 	sf::FloatRect getFootBorder() const {
@@ -55,30 +55,10 @@ public:
 		target.draw(borderRect, states);
 	}
 
-	void ini(int characterId) {
-		switch (characterId) {
-		case Characters::Bunny:
-			_sprite.setTexture(*BUNNY);
-			break;
-
-		case Characters::Cat:
-			_sprite.setTexture(*CAT);
-			break;
-
-		case Characters::Panda:
-			_sprite.setTexture(*PANDA);
-			break;
-
-		case Characters::Panda1:
-			_sprite.setTexture(*PANDA1);
-			break;
-
-		case Characters::Panda2:
-			_sprite.setTexture(*PANDA2);
-			break;
-		}
+	void ini(int characterId, float posX = Constants::SCREEN_WIDTH / 2.0f, float posY = Constants::SCREEN_HEIGHT / 2.0f + 100.0f) {
+		setTexture(characterId);
 		//_sprite.setScale(1.5f, 1.5f);
-		_sprite.setPosition(Constants::SCREEN_WIDTH / 2.0f, Constants::SCREEN_HEIGHT / 2.0f + 100.0f);
+		_sprite.setPosition(posX, posY);
 		hasSFX = getSFX();
 	}
 
@@ -138,7 +118,33 @@ public:
 		float posX, posY;
 		fin.read((char*)(&posX), sizeof(float));
 		fin.read((char*)(&posY), sizeof(float));
+		std::cout << "Player pos: " << posX << " " << posY << std::endl;
 		_sprite.setPosition(posX, posY);
+		std::cout << "Current Player: " << getBorder().left << " " << getBorder().top << " " << getBorder().height << std::endl;
+	}
+
+	void setTexture(int characterId) {
+		switch (characterId) {
+		case Characters::Bunny:
+			_sprite.setTexture(*BUNNY);
+			break;
+
+		case Characters::Cat:
+			_sprite.setTexture(*CAT);
+			break;
+
+		case Characters::Panda:
+			_sprite.setTexture(*PANDA);
+			break;
+
+		case Characters::Panda1:
+			_sprite.setTexture(*PANDA1);
+			break;
+
+		case Characters::Panda2:
+			_sprite.setTexture(*PANDA2);
+			break;
+		}
 	}
 
 	sf::View followView(sf::View Camera) {

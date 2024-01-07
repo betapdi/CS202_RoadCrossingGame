@@ -495,6 +495,7 @@ void GMAP::savePos(std::ofstream& fout) {
 
 	if (fout.is_open()) {
 		std::size_t mapPosSize = mapPos.size();
+		fout.write((char*)(&mWorldBounds), sizeof(sf::FloatRect));
 		fout.write((char*)(&mapPosSize), sizeof(std::size_t));
 
 		for (const auto& it : mapPos) {
@@ -508,18 +509,31 @@ void GMAP::savePos(std::ofstream& fout) {
 		for (const auto& obstacle : mObstacle) {
 			obstacle->save(fout);
 		}
-		fout.close();
 	}
 	else {
-		std::cerr << "Unable to open savegame.dat" << std::endl;
+		std::cerr << "Unable to open Save.dat" << std::endl;
 	}
 }
 
 void GMAP::loadPos(std::ifstream& fin) {
+	for (std::size_t i = 0; i < LayerCount - 1; ++i) {
+		mSceneLayers->at(i)->clear();
+	}
+
+	mAnimal.clear();
+	mTrafficLight.clear();
+	mObstacle.clear();
+	mMoney.clear();
+	mapPos.clear();
+	mVehicle.clear();
+	mTrain.clear();
+	mTrainTail.clear();
+
+	fin.read((char*)(&mWorldBounds), sizeof(sf::FloatRect));
+
 	std::size_t mapPosSize = mapPos.size();
 	fin.read((char*)(&mapPosSize), sizeof(std::size_t));
-	mapPos.clear();
-	mObstacle.clear();
+
 	//Read position from file
 	for (std::size_t i = 0; i < mapPosSize; ++i) {
 		sf::Vector2f pos;

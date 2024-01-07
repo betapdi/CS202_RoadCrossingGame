@@ -18,13 +18,13 @@ void STATEMACHINE::changeState(GSTATE* state) {
 	nextState = state;
 }
 
-void STATEMACHINE::changeState(stateTypes state) {
-	GSTATE* gstate = GSTATE::createGState(state);
+void STATEMACHINE::changeState(stateTypes state, int type) {
+	GSTATE* gstate = GSTATE::createGState(state, type);
 	changeState(gstate);
 }
 
 void STATEMACHINE::pushState(stateTypes state) {
-	GSTATE* gstate = GSTATE::createGState(state);
+	GSTATE* gstate = GSTATE::createGState(state, 0);
 	if (!states.empty()) {
 		states.back()->pause();
 	}

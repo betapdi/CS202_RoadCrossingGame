@@ -37,7 +37,7 @@ void CGAMEOVER::init() {
 	button->setPosition(Constants::SCREEN_WIDTH - 1.5 * button->getSize().x, button->getSize().y / 2);
 	button->setClickFunction([]() {
 		STATEMACHINE::getInstance()->popState();
-		STATEMACHINE::getInstance()->changeState(stateTypes::PLAYING);
+		STATEMACHINE::getInstance()->changeState(stateTypes::PLAYING, 0);
 	});
 	buttonList.push_back(button);
 
@@ -203,17 +203,17 @@ void CGAMEOVER::update(float deltaTime) {
 	if (isEntered) {
 		if (choice == 0) {
 			STATEMACHINE::getInstance()->popState();
-			STATEMACHINE::getInstance()->changeState(stateTypes::PLAYING);
+			STATEMACHINE::getInstance()->changeState(stateTypes::PLAYING, 0);
 		}
 		else if (choice == 1) {
 			STATEMACHINE::getInstance()->popState();
-			STATEMACHINE::getInstance()->changeState(stateTypes::MENU);
+			STATEMACHINE::getInstance()->changeState(stateTypes::MENU, 0);
 		}
 		else if (choice == 2) {
-			STATEMACHINE::getInstance()->changeState(stateTypes::SETTING);
+			STATEMACHINE::getInstance()->changeState(stateTypes::SETTING, 0);
 		}
 		else if (choice == 3) {
-			STATEMACHINE::getInstance()->changeState(stateTypes::RANKING);
+			STATEMACHINE::getInstance()->changeState(stateTypes::RANKING, 0);
 		}
 		isEntered = !isEntered;
 	}

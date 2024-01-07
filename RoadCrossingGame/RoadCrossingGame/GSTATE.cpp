@@ -7,7 +7,7 @@
 #include "CGAMEOVER.h"
 #include "CPAUSE.h"
 
-GSTATE* GSTATE::createGState(stateTypes state) {
+GSTATE* GSTATE::createGState(stateTypes state, int type) {
 	GSTATE* gState;
 	switch (state) {
 	case INVALID:
@@ -26,7 +26,7 @@ GSTATE* GSTATE::createGState(stateTypes state) {
 		gState = new CRATING();
 		break;
 	case PLAYING:
-		gState = new CPLAYING(curWindow->getWindow());
+		gState = new CPLAYING(curWindow->getWindow(), type);
 		break;
 	case GAMEOVER:
 		gState = new CGAMEOVER();

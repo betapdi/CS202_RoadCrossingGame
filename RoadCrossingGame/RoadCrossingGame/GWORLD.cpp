@@ -37,7 +37,7 @@ void GWORLD::update(float deltaTime) {
 	}
 	if (isBackFromPause || isInit) {
 		std::vector<bool> setting = getSetting();
-		player.ini(setting[0]);
+		player.setTexture(setting[0]);
 		if (!setting[1]) {
 			Constants::ROUND_N_ROUND->stop();
 		}
@@ -80,16 +80,21 @@ void GWORLD::update(float deltaTime) {
 			fout.open("../Data/Ranking.txt", std::ofstream::app);
 			fout << score << "\n";
 			fout.close();
-			STATEMACHINE::getInstance()->changeState(GAMEOVER);
+			STATEMACHINE::getInstance()->changeState(GAMEOVER, 0);
 		}
 	}
 }
 
 void GWORLD::handlePlayerOutOfWorld(float deltaTime) {
 	float viewYCoordinate = mWorldView.getCenter().y + mWorldView.getSize().y / 2.0f;
+
+	//std::cout << "Current View: " << viewYCoordinate << std::endl;
+	//std::cout << "Current Player: " << player.getBorder().left << " " << player.getBorder().top << " " << player.getBorder().height << std::endl;
+
 	if (viewYCoordinate < player.getBorder().top + player.getBorder().height - 1) {
+		//std::cout << "GAME OVER because Player out of World!!" << std::endl;
 		//std::cout << "ViewYCoordinate: " << viewYCoordinate << std::endl;
-		//std::cout << "Size of player: " << player.getBorder().top + player.getBorder().height << std::endl;
+		//std::cout << "PlayerYPos: " << player.getBorder().top + player.getBorder().height << std::endl;
 		isLoss = true;
 		return;
 	}
@@ -257,6 +262,9 @@ void GWORLD::setBackFromPause(bool isBack) {
 	isBackFromPause = isBack;
 }
 
+void GWORLD::saveCharacterID(std::ofstream& fout) {
+	fout.write((char*)(&playerID), sizeof(int));
+}
 
 void GWORLD::loadTextures()
 {
@@ -325,8 +333,4 @@ void GWORLD::loadTextures()
 	mTextures.load(Textures::OLD_TRAIN_R, "Media/Textures/vehicles/old_train_right.png");
 	mTextures.load(Textures::TRAIN_L, "Media/Textures/vehicles/train_left.png");
 	mTextures.load(Textures::TRAIN_R, "Media/Textures/vehicles/train_right.png");
-}
-
-void GWORLD::saveCharacterID(std::ofstream& fout) {
-	fout.write((char*)(&playerID), sizeof(int));
 }

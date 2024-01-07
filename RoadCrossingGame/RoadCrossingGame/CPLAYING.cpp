@@ -2,7 +2,7 @@
 #include "WindowConnector.h"
 
 
-CPLAYING::CPLAYING(sf::RenderWindow* window)
+CPLAYING::CPLAYING(sf::RenderWindow* window, int type)
 	: mWorld(*window)
 	, mFont()
 	, mStatisticsText()
@@ -10,6 +10,8 @@ CPLAYING::CPLAYING(sf::RenderWindow* window)
 	, mStatisticsNumFrames(0)
 {
 	curWindow->setWindow(window);
+	std::cout << type << std::endl;
+	if (type == 1) loadWorld();
 	//mFont.loadFromFile("Assets/Font/LuckiestGuy-Regular.ttf");
 	//mStatisticsText.setFont(mFont);
 	//mStatisticsText.setPosition(5.f, 5.f);
@@ -64,7 +66,8 @@ void CPLAYING::processEvents() {
 			}*/
 			if (event.key.code == sf::Keyboard::Escape) {
 				mWorld.setBackFromPause(true);
-				STATEMACHINE::getInstance()->changeState(stateTypes::PAUSE);
+				saveWorld();
+				STATEMACHINE::getInstance()->changeState(stateTypes::PAUSE, 0);
 			}
 			else {
 				mWorld.setMoveWorld(true);
@@ -122,4 +125,34 @@ void CPLAYING::updateStatistics(float elapsedTime) {
 
 void CPLAYING::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
 	//
+}
+
+void CPLAYING::saveWorld() {
+	std::ofstream fout;
+	fout.open("../Data/Save.dat", std::ios::binary | std::ios::trunc);
+
+	if (fout.is_open()) {
+		fout.write((char*)(&mWorld), sizeof(GWORLD));
+	}
+
+	else {
+		std::cout << "WTF, why can't open???" << std::endl;
+	}
+
+	fout.close();
+}
+
+void CPLAYING::loadWorld() {
+	std::ifstream fin;
+	fin.open("../Data/Save.dat");
+
+	if (fin.is_open()) {
+		fin.read((char*)(&mWorld), sizeof(GWORLD));
+	}
+
+	else {
+		std::cout << "WTF, why can't open???" << std::endl;
+	}
+
+	fin.close();
 }

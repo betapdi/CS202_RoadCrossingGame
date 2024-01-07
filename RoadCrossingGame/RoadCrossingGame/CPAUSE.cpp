@@ -132,10 +132,10 @@ void CPAUSE::update(float deltaTime) {
 			displayMenu = false;
 		}
 		else if (choice == 1) {
-			STATEMACHINE::getInstance()->changeState(stateTypes::MENU);
+			STATEMACHINE::getInstance()->changeState(stateTypes::MENU, 0);
 		}
 		else if (choice == 2) {
-			STATEMACHINE::getInstance()->changeState(stateTypes::SETTING);
+			STATEMACHINE::getInstance()->changeState(stateTypes::SETTING, 0);
 		}
 		isEntered = !isEntered;
 	}

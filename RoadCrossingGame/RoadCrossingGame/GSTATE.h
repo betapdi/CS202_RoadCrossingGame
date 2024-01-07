@@ -20,7 +20,7 @@ public:
 	virtual void update(float deltaTime) = 0;
 	virtual void render(sf::RenderWindow* window) = 0;
 
-	static GSTATE* createGState(stateTypes state);
+	static GSTATE* createGState(stateTypes state, int type);
 };
 
 #endif // !GSTATE_H

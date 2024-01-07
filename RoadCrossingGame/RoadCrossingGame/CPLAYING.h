@@ -6,7 +6,7 @@
 
 class CPLAYING : public GSTATE{
 public:
-	CPLAYING(sf::RenderWindow* window);
+	CPLAYING(sf::RenderWindow* window, int type);
 	~CPLAYING();
 
 	void exit();
@@ -20,6 +20,8 @@ public:
 
 	void updateStatistics(float elapsedTime);
 	void handlePlayerInput(sf::Keyboard::Key key, bool isPressed);
+	void saveWorld();
+	void loadWorld();
 private:
 	static const sf::Time	TimePerFrame;
 
