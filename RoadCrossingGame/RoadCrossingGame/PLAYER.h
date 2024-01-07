@@ -3,7 +3,9 @@
 
 #include "Constants.h"
 #include <fstream>
+#include <string> 
 #include "CSETTING.h"
+
 using namespace Constants;
 
 #define SPRITE_WIDTH 32
@@ -131,14 +133,24 @@ public:
 		return Camera;
 	}
 
+	bool explosion(float deltaTime) {
+		curTime += deltaTime;
+		if (curTime >= frameTime) return 1;
+		_sprite.setTexture(*EXPLOSION);
+		source = { 0,0 };
+		return 0;
+	}
+
 public:
-	float curTime = 0.0f, frameTime;
+	float curTime = 0.0f, frameTime =0.5f;
 	bool hasSFX;
+	int score = 0;
 	sf::Vector2f velocity = { 0.0f, 0.0f };
 	float speed = 200.0f;
 	sf::Keyboard::Key dir;
 	sf::Sprite _sprite;
 	sf::Vector2i source = { 0,0 };
+
 };
 
 #endif
