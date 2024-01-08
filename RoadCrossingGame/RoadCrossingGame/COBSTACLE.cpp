@@ -58,22 +58,22 @@ COBSTACLE::obstacleType fromIntToType(int type) {
 		return COBSTACLE::BENCH;
 		break;
 	case 3:
-		return COBSTACLE::VENDING_MACHINE;
-		break;
-	case 4:
 		return COBSTACLE::BLUE_SIGN;
 		break;
-	case 5:
+	case 4:
 		return COBSTACLE::GREEN_SIGN;
 		break;
-	case 6:
+	case 5:
 		return COBSTACLE::WHITE_SIGN;
 		break;
-	case 7:
+	case 6:
 		return COBSTACLE::HOTDOG;
 		break;
-	case 8:
+	case 7:
 		return COBSTACLE::LIGHT;
+		break;
+	case 8:
+		return COBSTACLE::VENDING_MACHINE;
 		break;
 	case 9:
 		return COBSTACLE::GROCERY;

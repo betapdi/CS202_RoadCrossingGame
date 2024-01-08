@@ -180,11 +180,11 @@ Textures::ID toTextureID(CVEHICLE::Vehicle type) {
 	case CVEHICLE::BLUE_CAR_R:
 		return Textures::BLUE_CAR_R;
 		break;
-	case CVEHICLE::GREEN_CAR_L:
-		return Textures::GREEN_CAR_L;
+	case CVEHICLE::POLICE_CAR_L:
+		return Textures::POLICE_CAR_L;
 		break;
-	case CVEHICLE::GREEN_CAR_R:
-		return Textures::GREEN_CAR_R;
+	case CVEHICLE::POLICE_CAR_R:
+		return Textures::POLICE_CAR_R;
 		break;
 		/*case CVEHICLE::ORANGE_CAR_L:
 			return Textures::ORANGE_CAR_L;
@@ -234,10 +234,10 @@ CVEHICLE::Vehicle fromIntToType(int type) {
 		return CVEHICLE::BLUE_CAR_R;
 		break;
 	case 2:
-		return CVEHICLE::GREEN_CAR_L;
+		return CVEHICLE::POLICE_CAR_L;
 		break;
 	case 3:
-		return CVEHICLE::GREEN_CAR_R;
+		return CVEHICLE::POLICE_CAR_R;
 		break;
 		//case 4:
 			//return CVEHICLE::ORANGE_CAR_L;
@@ -408,17 +408,12 @@ CVEHICLE::CVEHICLE(int type, sf::FloatRect mWorldBound, const TextureHolder& tex
 	: mType(fromIntToType(type))
 	, mWorldBound(mWorldBound)
 	, mSpeed(speedMove)
+	, orgSpeed(speedMove)
 	, mDirection(fromIntToDir(type))
 	, mAnimation(textures.get(toTextureID(mType)), getFrameNum(type), frameTime)
 {
-	if (type == 8 || type == 9) {
-		mAnimation.setScale(1.2f, 1.2f);
-	}
-	else if (type == 10 || type == 11) {
-		mAnimation.setScale(1.5f, 1.5f);
-	}
-	else {
-		mAnimation.setScale(2.5f, 2.5f);
+	if (type < 8) {
+		mAnimation.setScale(2.0f, 2.0f);
 	}
 	/*sf::FloatRect bounds = mAnimation.getLocalBounds();
 	mAnimation.setOrigin(bounds.width / 2, 0);*/
@@ -447,6 +442,10 @@ void CVEHICLE::updateCurrent(float deltaTime) {
 
 void CVEHICLE::setSpeed(const float& speed) {
 	mSpeed = speed;
+}
+
+void CVEHICLE::setDefaultSpeed() {
+	mSpeed = orgSpeed;
 }
 
 int CVEHICLE::getDirection() {

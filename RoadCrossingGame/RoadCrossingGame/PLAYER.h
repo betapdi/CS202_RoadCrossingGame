@@ -158,6 +158,8 @@ public:
 		curTime += deltaTime;
 		if (curTime >= frameTime) return 1;
 		_sprite.setTexture(*EXPLOSION);
+		velocity = { 0.0f,0.0f };
+		_sprite.setScale(3.0f, 3.0f);
 		source = { 0,0 };
 		return 0;
 	}

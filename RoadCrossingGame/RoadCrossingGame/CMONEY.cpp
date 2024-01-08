@@ -27,7 +27,7 @@ void CMONEY::updateCurrent(float deltaTime) {
 void CMONEY::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const {
 	if (!isCollected) {
 		target.draw(mAnimation, states);
-		target.draw(box, states);
+		//target.draw(box, states);
 	}
 	else {
 		return;

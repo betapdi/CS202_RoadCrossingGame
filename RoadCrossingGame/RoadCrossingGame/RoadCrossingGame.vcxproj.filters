@@ -52,12 +52,14 @@
     <ClCompile Include="CANIMAL.cpp">
       <Filter>WORLD</Filter>
     </ClCompile>
-    <ClCompile Include="CVEHICLE.cpp" />
     <ClCompile Include="COBJECT.cpp">
       <Filter>WORLD</Filter>
     </ClCompile>
     <ClCompile Include="CPAUSE.cpp" />
     <ClCompile Include="CMONEY.cpp">
+      <Filter>WORLD</Filter>
+    </ClCompile>
+    <ClCompile Include="CVEHICLE.cpp">
       <Filter>WORLD</Filter>
     </ClCompile>
   </ItemGroup>
@@ -125,13 +127,15 @@
     <ClInclude Include="CANIMAL.h">
       <Filter>WORLD</Filter>
     </ClInclude>
-    <ClInclude Include="CVEHICLE.h" />
     <ClInclude Include="COBJECT.h">
       <Filter>WORLD</Filter>
     </ClInclude>
     <ClInclude Include="CPAUSE.h" />
     <ClInclude Include="PLAYER.h" />
     <ClInclude Include="CMONEY.h">
+      <Filter>WORLD</Filter>
+    </ClInclude>
+    <ClInclude Include="CVEHICLE.h">
       <Filter>WORLD</Filter>
     </ClInclude>
   </ItemGroup>

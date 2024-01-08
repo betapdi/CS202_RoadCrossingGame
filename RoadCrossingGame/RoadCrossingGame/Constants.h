@@ -14,20 +14,20 @@ namespace Constants {
 
 	const int maxMenu				= 5;
 	const int maxCharacters			= 5;
-	const int maxCar				= 7;
+	const int maxCar				= 10;
 	const int maxObstacle			= 10;
 	const int maxAnimal				= 15;
-	const int maxTrain              = 2;
+	const int maxTrain              = 3;
 
 	const enum Layer
 	{
 		Background,
 		Road,
 		Animal,
+		Vehicle,
 		Obstacle,
 		TrafficLight,
 		Money,
-		Vehicle,
 		Air,
 		LayerCount
 	};

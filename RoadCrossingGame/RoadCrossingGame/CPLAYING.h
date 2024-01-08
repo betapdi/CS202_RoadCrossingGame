@@ -29,6 +29,7 @@ private:
 	GWORLD						mWorld;
 	sf::RoundedRectangleShape	rrect;
 	sf::Text					point;
+	sf::Sprite					star;
 	sf::Font					mFont;
 	sf::Text					mStatisticsText;
 	float						mStatisticsUpdateTime;

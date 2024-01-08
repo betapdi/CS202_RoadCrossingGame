@@ -6,7 +6,7 @@ GWORLD::GWORLD(sf::RenderWindow& window)
 	: mWindow(window)
 	, mWorldView(window.getDefaultView())
 	, mTextures()
-	, mScrollSpeed(-50.f)
+	, mScrollSpeed(-60.f)
 	, mPlayerAircraft(nullptr)
 	, isLoss(false)
 	, moveWorld(false)
@@ -32,6 +32,15 @@ GMAP* GWORLD::getCurrentMap() {
 
 void GWORLD::update(float deltaTime) {
 	//scroll the view
+	if (score > 30) {
+		mScrollSpeed = -70.0f;
+	}
+	else if (score > 60) {
+		mScrollSpeed = -80.0f;
+	}
+	else if (score > 100) {
+		mScrollSpeed = -100.0f;
+	}
 	if (!isLoss) {
 		if (moveWorld) mWorldView.move(0.f, mScrollSpeed * deltaTime);
 	}
@@ -320,7 +329,9 @@ void GWORLD::loadTextures()
 	mTextures.load(Textures::BLUE_CAR_L, "Media/Textures/vehicles/blue_car_left.png");
 	mTextures.load(Textures::BLUE_CAR_R, "Media/Textures/vehicles/blue_car_right.png");
 	mTextures.load(Textures::GREEN_CAR_L, "Media/Textures/vehicles/green_car_left.png");
-	mTextures.load(Textures::GREEN_CAR_R, "Media/Textures/vehicles/green_car_right.png");
+	mTextures.load(Textures::GREEN_CAR_R, "Media/Textures/vehicles/green_car_right.png");	
+	mTextures.load(Textures::POLICE_CAR_L, "Media/Textures/vehicles/police_car_left.png");
+	mTextures.load(Textures::POLICE_CAR_R, "Media/Textures/vehicles/police_car_right.png");
 	//mTextures.load(Textures::ORANGE_CAR_L, "Media/Textures/vehicles/orange_car_left.png");
 	//mTextures.load(Textures::ORANGE_CAR_R, "Media/Textures/vehicles/orange_car_right.png");
 	mTextures.load(Textures::RED_CAR_L, "Media/Textures/vehicles/red_car_left.png");

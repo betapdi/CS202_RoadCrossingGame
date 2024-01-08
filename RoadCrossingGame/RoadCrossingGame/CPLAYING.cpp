@@ -42,15 +42,22 @@ void CPLAYING::init() {
 	sf::FloatRect bound = rrect.getGlobalBounds();
 	rrect.setOrigin(bound.width / 2, bound.height / 2);
 	rrect.setPosition(Constants::SCREEN_WIDTH - bound.width / 1.8f, bound.height / 1.5f);
-	rrect.setFillColor(sf::Color(217, 217, 217, 200));
+	rrect.setFillColor(sf::Color(217, 217, 217, 220));
 	point.setString("0");
 	point.setFont(*Constants::LUCKIESTGUY);
 	point.setFillColor(sf::Color(254, 185, 44, 255));
-	point.setCharacterSize(30);
+	point.setCharacterSize(40);
 	point.setOutlineThickness(2);
 	point.setOutlineColor(sf::Color::White);
-	point.setOrigin(bound.width / 2, bound.height / 2);
-	point.setPosition(rrect.getPosition().x +114 , rrect.getPosition().y + 10 );
+	sf::FloatRect bound1 = point.getGlobalBounds();
+	point.setOrigin(bound1.width / 2, bound1.height / 2);
+	point.setPosition(Constants::SCREEN_WIDTH - bound.width / 1.9f, bound.height / 1.8f);
+	//point.setPosition(rrect.getPosition().x + 114 , rrect.getPosition().y + 10 );
+	star.setTexture(*Constants::STAR);
+	star.setScale(0.8f, 0.8f);
+	sf::FloatRect starbound = star.getGlobalBounds();
+	star.setOrigin(starbound.width / 2.0f, starbound.height / 2.0f);
+	star.setPosition(Constants::SCREEN_WIDTH - bound.width + 20.0f, bound.height / 1.5f - 5.0f);
 }
 
 void CPLAYING::processEvents() {
@@ -98,6 +105,7 @@ void CPLAYING::render(sf::RenderWindow* window) {
 
 	window->setView(window->getDefaultView());
 	window->draw(rrect);
+	window->draw(star);
 	window->draw(point);
 
 	/*sf::View Camera;

@@ -71,12 +71,13 @@ void GMAP::handleTrafficLightChange() {
 				if (status == 1) { //Red
 					it1->setSpeed(0);
 				}
-
 				else if (status == 2) { //Yellow
 					it1->setSpeed(100);
 				}
-
-				else it1->setSpeed(200);//Green
+				else {
+					//it1->setSpeed(200);//Green
+					it1->setDefaultSpeed();
+				}
 ;			}
 		}
 
@@ -263,16 +264,16 @@ void GMAP::generateInitialObstacle() {
 			float startPos1 = 0;
 			float endPos1 = startPos1 + 120;
 			for (int j = 0; j < numOfObstacle; ++j) {
-				int type = randObject(0, Constants::maxObstacle, 0.7f);
+				int type = randObject(0, 6, 0.7f);
 				std::unique_ptr<COBSTACLE> obstacle(new COBSTACLE(type, *mTextures));
 				sf::Vector2f pos(randInt(startPos1, endPos1), mapPos[i].first.y + 54.0f);
 				obstacle->setPosition(pos);
 				obstacle->savePos(pos);
 				startPos1 = obstacle->getPosition().x + 120;
 				endPos1 = startPos1 + mWorldBounds.width / numOfObstacle;
-				if ((startPos1 >= Constants::SCREEN_WIDTH / 2 - 100 && startPos1 < Constants::SCREEN_WIDTH / 2 + 50) ||
-					(endPos1 >= Constants::SCREEN_WIDTH / 2 - 100 && endPos1 < Constants::SCREEN_WIDTH / 2 + 50)) {
-					startPos1 = Constants::SCREEN_WIDTH / 2 + 70;
+				if ((startPos1 >= Constants::SCREEN_WIDTH / 2 - 130 && startPos1 < Constants::SCREEN_WIDTH / 2 + 50) ||
+					(endPos1 >= Constants::SCREEN_WIDTH / 2 - 130 && endPos1 < Constants::SCREEN_WIDTH / 2 + 50)) {
+					startPos1 = Constants::SCREEN_WIDTH / 2 + 50;
 					endPos1 = startPos1 + mWorldBounds.width / numOfObstacle;
 				}
 				mObstacle.push_back(obstacle.get());
@@ -297,12 +298,26 @@ void GMAP::generateAnimals() {
 				pos.y -= 12;
 			}
 			for (int j = 0; j < maxAnimal; ++j) {
-				std::unique_ptr<CANIMAL> animal(new CANIMAL(type, *mTextures, 50, 0.1));
-				if (type % 2 == 0) {
-					pos.x = pos.x - randInt(200, 400);
+				//Changing speed for different levels
+				float speed = 50.0f;
+				if (*score >= 20 && *score <= 40) {
+					std::cout << *score << std::endl;
+					speed = 70.0f;
+				}
+				else if (*score > 40 && *score <= 60) {
+					std::cout << *score << std::endl;
+					speed = 80.0f;
 				}
 				else {
-					pos.x = pos.x + randInt(200, 400);
+					std::cout << *score << std::endl;
+					speed = 100.0f;
+				}
+				std::unique_ptr<CANIMAL> animal(new CANIMAL(type, *mTextures, speed, 0.1));
+				if (type % 2 == 0) {
+					pos.x = pos.x - randInt(250, 500);
+				}
+				else {
+					pos.x = pos.x + randInt(250, 500);
 				}
 				animal->setPosition(pos);
 				animal->saveOrgPos(pos);
@@ -333,7 +348,7 @@ void GMAP::generateTrafficLight() {
 
 void GMAP::generateMoney() {
 	for (int i = mapPos.size() - 1; i >= 0; --i) {
-		int hasMoney = randBiasedInt(0, 1, 0.8f);
+		int hasMoney = randBiasedInt(0, 1, 0.6f);
 		sf::Vector2f pos;
 		if (hasMoney) {
 			int randPos = randInt(80, SCREEN_WIDTH - 50);
@@ -359,57 +374,47 @@ void GMAP::generateCars()
 	//float speed;
 	for (int i = 0; i < mapPos.size(); i++) {
 		if (mapPos[i].second == 0) {
-			//int type = randInt(0, 7);
-			//sf::Vector2f position(Constants::SCREEN_WIDTH, mapPos[i].first.y);
 			sf::Vector2f position;
 			if (type % 2 != 0) {
 				position = sf::Vector2f(mapPos[i].first.x - 5000.f, mapPos[i].first.y);
-				//type = randEvenOdd(0, 7, false);
-				//std::cout << type << " Pos: " << mapPos[i].first.x << std::endl;
 			}
 			else {
 				position = sf::Vector2f(Constants::SCREEN_WIDTH - 100.f, mapPos[i].first.y);
-				//type = randEvenOdd(0, 7, true);
-				//std::cout << type << " Pos: " << mapPos[i].first.x << std::endl;
 
 			}
-			//position.y -= 10;
-			//speed = static_cast<float>(rand() % 50 + 150);
-			position.y -= 20;
-			//sf::Vector2f position(Constants::SCREEN_WIDTH, mapPos[i].first.y);
-			for (int i = 0; i < Constants::maxCar; ++i) {
-				if (type % 2 == 0) {
-					type = randEvenOdd(0, 7, false);
-				}
-				else {
-					type = randEvenOdd(0, 7, true);
-
-				}
-				//float speed = static_cast<float>(rand() % 200 + 200);
-				std::unique_ptr<CVEHICLE> vehicle(new CVEHICLE(type, mWorldBounds, *mTextures, 200, 0.1));
-				mVehicle.push_back(vehicle.get());
-				/*if (type % 2 == 0) {
-					position.x = position.x + randInt(250, 500);
-				}
-				else {
-					position.x = position.x + randInt(50, 100);
-
-				}*/
-				position.x = position.x + randInt(200, 1000);
-				vehicle->setPosition(position);
-				vehicle->saveOrgPos(position);
-
-				//std::cout << "GEN CARS: " << vehicle->getPosition().y << std::endl;
-				mSceneLayers->at(Vehicle)->attachChild(std::move(vehicle));
-
-			}
+			position.y -= 5;
 			if (type % 2 == 0) {
-				type = randEvenOdd(0, 7, true);
+				type = randEvenOdd(0, 7, false);
 			}
 			else {
-				type = randEvenOdd(0, 7, false);
+				type = randEvenOdd(0, 7, true);
 
 			}
+			for (int i = 0; i < Constants::maxCar; ++i) {
+				float speed = 150.0f;
+				if (type == 0 || type == 1) {
+					speed = 200.0f;
+				}
+				else if (type == 2 || type == 3) {
+					speed = 400.0f;
+				}
+				else if (type == 6 || type == 7) {
+					speed = 120.0f;
+				}
+				std::unique_ptr<CVEHICLE> vehicle(new CVEHICLE(type, mWorldBounds, *mTextures, speed, 0.1));
+				mVehicle.push_back(vehicle.get());
+				position.x = position.x + randInt(300, 700);
+				vehicle->setPosition(position);
+				vehicle->saveOrgPos(position);
+				mSceneLayers->at(Vehicle)->attachChild(std::move(vehicle));
+			}
+			//if (type % 2 == 0) {
+			//	type = randEvenOdd(0, 7, true);
+			//}
+			//else {
+			//	type = randEvenOdd(0, 7, false);
+
+			//}
 		}
 
 	}
@@ -436,27 +441,26 @@ void GMAP::generateTrain()
 				pos = sf::Vector2f(Constants::SCREEN_WIDTH - 400, mapPos[i].first.y);
 			}*/
 			if (type % 2 != 0) {
-				pos = sf::Vector2f(mapPos[i].first.x - 1000, mapPos[i].first.y - 50);
+				pos = sf::Vector2f(mapPos[i].first.x - 1000, mapPos[i].first.y - 30);
 			}
 			else {
-				pos = sf::Vector2f(Constants::SCREEN_WIDTH - 400, mapPos[i].first.y - 50);
+				pos = sf::Vector2f(Constants::SCREEN_WIDTH - 400, mapPos[i].first.y - 30);
 			}
-			pos.y -= 50;
+			//pos.y += 30;
 			float headSize = 0;
 			float tailSize = 0;
 			for (int i = 0; i < Constants::maxTrain; i++) {
-				std::unique_ptr<CVEHICLE> train(new CVEHICLE(type, mWorldBounds, *mTextures, 700, 0.1));
+				std::unique_ptr<CVEHICLE> train(new CVEHICLE(type, mWorldBounds, *mTextures, 400, 0.1));
 				mTrain.push_back(train.get());
 				pos.x = pos.x + randInt(1000, 1500) + headSize + (tailSize * 5);
 				train->setPosition(pos);
 				train->saveOrgPos(pos);
 				//float headSize;
 				headSize = train->getBound().width;
-				if (type % 2 == 0) pos.x += headSize - 45;
-				else pos.x -= (headSize + 60);
-				//mSceneLayers->at(Vehicle)->attachChild(std::move(train));
+				if (type % 2 == 0) pos.x += headSize - 50;
+				else pos.x -= (headSize + 30);
 				for (int i = 0; i < 5; i++) {
-					std::unique_ptr<CVEHICLE> train_tail(new CVEHICLE(type1, mWorldBounds, *mTextures, 700, 0.1));
+					std::unique_ptr<CVEHICLE> train_tail(new CVEHICLE(type1, mWorldBounds, *mTextures, 400, 0.1));
 					tailSize = train_tail->getBound().width;
 					if (i > 0) {
 						if (type % 2 == 0) {
@@ -466,7 +470,7 @@ void GMAP::generateTrain()
 							pos.x -= (tailSize - 50);
 						}
 					}
-					pos.y += 9;
+					pos.y += 15;
 					train_tail->setPosition(pos);
 					train_tail->saveOrgPos(pos);
 
@@ -480,7 +484,7 @@ void GMAP::generateTrain()
 					//pos.y -= 40;
 					mTrainTail.push_back(train_tail.get());
 					mSceneLayers->at(Vehicle)->attachChild(std::move(train_tail));
-					pos.y -= 9;
+					pos.y -= 15;
 				}
 
 				mSceneLayers->at(Vehicle)->attachChild(std::move(train));

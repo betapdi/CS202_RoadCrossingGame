@@ -79,8 +79,6 @@ public:
 		BLUE_CAR_R,
 		GREEN_CAR_L,
 		GREEN_CAR_R,
-		//ORANGE_CAR_L,
-		//ORANGE_CAR_R,
 		RED_CAR_L,
 		RED_CAR_R,
 		POLICE_CAR_L,
@@ -105,6 +103,7 @@ public:
 	int fromIntToDir(int dir);
 	sf::FloatRect getBound() const;
 	void setSpeed(const float& speed);
+	void setDefaultSpeed();
 private:
 	void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 private:
@@ -114,5 +113,6 @@ private:
 	sf::FloatRect mWorldBound;
 	int mDirection;
 	float mSpeed;
+	float orgSpeed;
 };
 #endif // !CVEHICLE_H

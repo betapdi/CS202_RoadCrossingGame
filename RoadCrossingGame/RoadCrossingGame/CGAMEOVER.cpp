@@ -125,13 +125,12 @@ void CGAMEOVER::init() {
 		//Score
 		score[i].setFont(*Constants::BRUCE_FOREVER);
 		score[i].setFillColor(sf::Color::White);
-		score[i].setCharacterSize(30);
+		score[i].setCharacterSize(50);
 		score[i].setOutlineThickness(3);
 		score[i].setOutlineColor(sf::Color(136, 28, 28, 255));
-		textBounds = text[i].getGlobalBounds();
-		score[i].setOrigin(0, textBounds.height / 2);
-		score[i].setPosition(Constants::SCREEN_WIDTH / 5.2f + 500 , Constants::SCREEN_HEIGHT / 2.9f + i * 120);
-		
+		textBounds = score[i].getGlobalBounds();
+		score[i].setOrigin(textBounds.width / 2.0f, textBounds.height / 2.0f);
+		score[i].setPosition(Constants::SCREEN_WIDTH / 1.5f , Constants::SCREEN_HEIGHT / 3.1f + i * 120);
 	}
 
 	star.setTexture(*Constants::STAR);
