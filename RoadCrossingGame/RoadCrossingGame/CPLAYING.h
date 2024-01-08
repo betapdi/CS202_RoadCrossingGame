@@ -3,6 +3,7 @@
 #include "GSTATE.h"
 #include "GWORLD.h"
 #include "CSHAPE.h"
+#include "CBACKGROUND.h"
 
 class CPLAYING : public GSTATE{
 public:
@@ -27,6 +28,7 @@ private:
 
 	//sf::RenderWindow		mWindow;
 	GWORLD						mWorld;
+	CSNOW						snoweffect;
 	sf::RoundedRectangleShape	rrect;
 	sf::Text					point;
 	sf::Sprite					star;
@@ -35,6 +37,7 @@ private:
 	float						mStatisticsUpdateTime;
 	std::size_t					mStatisticsNumFrames;
 	bool isPause;
+	bool hasSnow;
 };
 
 #endif // !CPLAYING_H

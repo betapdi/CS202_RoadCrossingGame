@@ -43,3 +43,29 @@ void CBACKGROUND::render(sf::RenderWindow* window) {
 		layer->render(window);
 	}
 }
+
+void CSNOW::init() {
+	snow1.setTexture(*Constants::SNOW);
+	snow2.setTexture(*Constants::SNOW);
+
+	snow2.setPosition(0.0f, 0.0f);
+	long yCoor = Constants::SNOW->getSize().y;
+	snow1.setPosition(0, -yCoor);
+}
+
+void CSNOW::update(float deltaTime, float mapScrollSpeed) {
+	snow2.move(0, mapScrollSpeed * deltaTime);
+	snow1.move(0, mapScrollSpeed * deltaTime);
+
+	// Reset the snowflakes if they go below the screen
+	if (snow1.getPosition().y >= 0) {
+		snow2.setPosition(0, 0);
+		long yCoor = Constants::SNOW->getSize().y;
+		snow1.setPosition(0, -yCoor);
+	}
+}
+
+void CSNOW::render(sf::RenderWindow* window) {
+	window->draw(snow1);
+	window->draw(snow2);
+}

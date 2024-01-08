@@ -13,4 +13,14 @@ private:
 	std::vector<CLAYER*> background;
 };
 
+
+class CSNOW {
+public:
+	void init();
+	void update(float deltaTime, float mapScrollSpeed);
+	void render(sf::RenderWindow* window);
+private:
+	sf::Sprite snow1;
+	sf::Sprite snow2;
+};
 #endif // !CBACKGROUND_H

@@ -339,7 +339,7 @@ void CMENU::processEvents() {
 			moveDown();
 		}
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
 			isEntered = true;
 		}
 	}

@@ -53,7 +53,7 @@ namespace Constants {
 	static sf::Texture* RANK_STAR	=		CASSET::getInstance()->GetTexture("gui/ranking_star.png");
 	static sf::Texture* STAR		=		CASSET::getInstance()->GetTexture("gui/star.png");
 	static sf::Texture* STAMP		=		CASSET::getInstance()->GetTexture("gui/selected_stamp.png");
-
+	static sf::Texture* SNOW		=		CASSET::getInstance()->GetTexture("snow.png");
 
 	//static sf::Texture* CLOWN		=		CASSET::getInstance()->GetTexture("character/clown.png");
 	//static sf::Texture* PENGUIN		=		CASSET::getInstance()->GetTexture("character/penguin.png");

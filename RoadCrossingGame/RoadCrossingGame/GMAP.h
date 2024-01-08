@@ -33,7 +33,6 @@ public:
 
 	sf::Vector2f getCoordinate();
 	void rebuild(const float& yMapCoordinate, bool isInit);
-	void handleTouchBorder(Aircraft* mPlayerAircraft);
 	bool isCollided(sf::FloatRect &border);
 	void setSFXAllow(bool isAllowed);
 	void savePos(std::ofstream& fout);
@@ -42,9 +41,6 @@ public:
 private:
 	void buildScene(bool isInit);
 	void generateRoads();
-	//void adaptPlayerPosition();
-	//void adaptPlayerVelocity();
-	//sf::FloatRect getViewBounds() const;
 	void generateInitialObstacle();
 	void generateObstacle(bool isInit);
 	void generatePosition(bool isInit);
@@ -60,7 +56,6 @@ private:
 private:
 	sf::RenderWindow& mWindow;
 	TextureHolder* mTextures;
-
 	Player* player;
 
 	std::vector<CSCENENODE*>* mSceneLayers;

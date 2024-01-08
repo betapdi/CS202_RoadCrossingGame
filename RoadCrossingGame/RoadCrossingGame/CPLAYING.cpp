@@ -17,6 +17,7 @@ CPLAYING::CPLAYING(sf::RenderWindow* window, int type)
 	//mStatisticsText.setPosition(5.f, 5.f);
 	//mStatisticsText.setCharacterSize(10);
 	isPause = false;
+	hasSnow = true;
 }
 
 CPLAYING::~CPLAYING()
@@ -36,6 +37,7 @@ void CPLAYING::resume()
 }
 
 void CPLAYING::init() {
+	snoweffect.init();
 	rrect.setSize(sf::Vector2f(228, 60));
 	rrect.setCornersRadius(30);
 	rrect.setCornerPointCount(50);
@@ -71,6 +73,14 @@ void CPLAYING::processEvents() {
 				!sf::Keyboard::isKeyPressed(sf::Keyboard::S) || !sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 				isPause = true;
 			}*/
+			/*if (event.key.code == sf::Keyboard::Space) {
+				hasSnow = !hasSnow;
+			}*/
+
+			/*if (event.key.code == sf::Keyboard::Space) {
+				mWorld.setSnow(hasSnow);
+				hasSnow = !hasSnow;
+			}*/
 			if (event.key.code == sf::Keyboard::Escape) {
 				mWorld.setBackFromPause(true);
 				saveWorld();
@@ -87,6 +97,7 @@ void CPLAYING::processEvents() {
 			mWorld.processEvents(event);
 			//handlePlayerInput(event.key.code, false);
 			break;
+
 		case sf::Event::Closed:
 			curWindow->getWindow()->close();
 			break;
@@ -95,14 +106,21 @@ void CPLAYING::processEvents() {
 }
 
 void CPLAYING::update(float deltaTime) {
+	//if (hasSnow) {
+		//snoweffect.update(deltaTime);
+	//}
 	mWorld.update(deltaTime);
+	snoweffect.update(deltaTime, abs(mWorld.getScrollSpeed()));
 	point.setString(std::to_string(mWorld.score));
 }
 
 
 void CPLAYING::render(sf::RenderWindow* window) {
 	mWorld.draw();
-
+	//if (hasSnow) {
+	//	snoweffect.render(window);
+	//}
+	snoweffect.render(window);
 	window->setView(window->getDefaultView());
 	window->draw(rrect);
 	window->draw(star);
@@ -144,7 +162,7 @@ void CPLAYING::saveWorld() {
 	}
 
 	else {
-		std::cout << "WTF, why can't open???" << std::endl;
+		std::cout << "Unable to open save.dat" << std::endl;
 	}
 
 	fout.close();
@@ -159,7 +177,7 @@ void CPLAYING::loadWorld() {
 	}
 
 	else {
-		std::cout << "WTF, why can't open???" << std::endl;
+		std::cout << "Unable to open save.dat" << std::endl;
 	}
 
 	fin.close();

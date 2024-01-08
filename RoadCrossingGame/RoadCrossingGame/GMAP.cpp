@@ -43,10 +43,6 @@ void GMAP::rebuild(const float& lastYCoordinate, bool isInit) {
 	buildScene(isInit);
 }
 
-void GMAP::handleTouchBorder(Aircraft* mPlayerAircraft) {
-
-}
-
 void GMAP::update(float deltaTime)
 {
 	mSceneGraph->update(deltaTime);
@@ -60,7 +56,6 @@ void GMAP::handleTrafficLightChange() {
 	while (!mTrafficLight.empty() && i < mTrafficLight.size()) {
 		auto& it = mTrafficLight[i];
 		float roadYPos = it->getPosition().y - 5.f;
-		//std::cout << "WTF??? " << roadYPos << std::endl;
 
 		for (int j = 0; j < mVehicle.size(); ++j) {
 			auto& it1 = mVehicle[j];
@@ -143,10 +138,7 @@ void GMAP::setSFXAllow(bool isAllowed) {
 bool GMAP::isCollided(sf::FloatRect &border) {
 	for (auto& it : mObstacle) {
 		sf::FloatRect curRect = it->getRect();
-		//std::cout << curRect.width << " " << curRect.height << std::endl;
 		if (curRect.intersects(border)) {
-			//std::cout << "PLAYER: " << border.left << " " << border.top << " " << border.left + border.width << " " << border.top + border.height << std::endl;
-			//std::cout << "OBSTACLE: " << curRect.left << " " << curRect.top << " " << curRect.left + curRect.width << " " << curRect.top + curRect.height << std::endl;
 			return true;
 		}
 	}
@@ -159,17 +151,12 @@ bool GMAP::isCollided(sf::FloatRect &border) {
 	return false;
 }
 
-void GMAP::draw() {}
+void GMAP::draw() {
+}
 
 void GMAP::buildScene(bool isInit)
 {
 	generatePosition(isInit);
-	//std::cout << "After generate position: " << std::endl;
-	//std::cout << "Position:" << std::endl;
-	//for (int i = 0; i < mapPos.size(); ++i) {
-	//	std::cout << mapPos[i].first.x << " - " << mapPos[i].first.y;
-	//	std::cout << ": " << mapPos[i].second << std::endl;
-	//}
 	generateRoads();
 	generateAnimals();
 	generateVehicles();
@@ -271,9 +258,9 @@ void GMAP::generateInitialObstacle() {
 				obstacle->savePos(pos);
 				startPos1 = obstacle->getPosition().x + 120;
 				endPos1 = startPos1 + mWorldBounds.width / numOfObstacle;
-				if ((startPos1 >= Constants::SCREEN_WIDTH / 2 - 130 && startPos1 < Constants::SCREEN_WIDTH / 2 + 50) ||
-					(endPos1 >= Constants::SCREEN_WIDTH / 2 - 130 && endPos1 < Constants::SCREEN_WIDTH / 2 + 50)) {
-					startPos1 = Constants::SCREEN_WIDTH / 2 + 50;
+				if ((startPos1 >= Constants::SCREEN_WIDTH / 2 - 150 && startPos1 < Constants::SCREEN_WIDTH / 2 + 70) ||
+					(endPos1 >= Constants::SCREEN_WIDTH / 2 - 150 && endPos1 < Constants::SCREEN_WIDTH / 2 + 70)) {
+					startPos1 = Constants::SCREEN_WIDTH / 2 + 70;
 					endPos1 = startPos1 + mWorldBounds.width / numOfObstacle;
 				}
 				mObstacle.push_back(obstacle.get());
@@ -301,15 +288,12 @@ void GMAP::generateAnimals() {
 				//Changing speed for different levels
 				float speed = 50.0f;
 				if (*score >= 20 && *score <= 40) {
-					std::cout << *score << std::endl;
 					speed = 70.0f;
 				}
 				else if (*score > 40 && *score <= 60) {
-					std::cout << *score << std::endl;
 					speed = 80.0f;
 				}
 				else {
-					std::cout << *score << std::endl;
 					speed = 100.0f;
 				}
 				std::unique_ptr<CANIMAL> animal(new CANIMAL(type, *mTextures, speed, 0.1));
@@ -333,8 +317,8 @@ void GMAP::generateAnimals() {
 
 void GMAP::generateTrafficLight() {
 	for (int i = 0; i < mapPos.size(); ++i) {
-		if (mapPos[i].second == 0) {
-			int hasTrafficLight = randBiasedInt(0, 1, 0.7f);
+		if (mapPos[i].second == 0 || mapPos[i].second == 2) {
+			int hasTrafficLight = randBiasedInt(0, 1, 0.6f);
 			if (hasTrafficLight) {
 				int randPos = randInt(50, SCREEN_WIDTH - 50);
 				std::unique_ptr<COBJECT> trafficLight(new COBJECT(0, *mTextures, sf::Vector2f(randPos, mapPos[i].first.y + 5.f)));
@@ -396,7 +380,7 @@ void GMAP::generateCars()
 					speed = 200.0f;
 				}
 				else if (type == 2 || type == 3) {
-					speed = 400.0f;
+					speed = 350.0f;
 				}
 				else if (type == 6 || type == 7) {
 					speed = 120.0f;
@@ -408,13 +392,13 @@ void GMAP::generateCars()
 				vehicle->saveOrgPos(position);
 				mSceneLayers->at(Vehicle)->attachChild(std::move(vehicle));
 			}
-			//if (type % 2 == 0) {
-			//	type = randEvenOdd(0, 7, true);
-			//}
-			//else {
-			//	type = randEvenOdd(0, 7, false);
+			if (type % 2 == 0) {
+				type = randEvenOdd(0, 7, true);
+			}
+			else {
+				type = randEvenOdd(0, 7, false);
 
-			//}
+			}
 		}
 
 	}
@@ -464,10 +448,10 @@ void GMAP::generateTrain()
 					tailSize = train_tail->getBound().width;
 					if (i > 0) {
 						if (type % 2 == 0) {
-							pos.x += (tailSize - 50);
+							pos.x += (tailSize - 60);
 						}
 						else {
-							pos.x -= (tailSize - 50);
+							pos.x -= (tailSize - 60);
 						}
 					}
 					pos.y += 15;

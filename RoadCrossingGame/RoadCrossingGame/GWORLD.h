@@ -26,8 +26,8 @@ public:
 	void processEvents(sf::Event& event);
 	void setMoveWorld(bool moveWorld);
 	void setBackFromPause(bool isBack);
-	void saveCharacterID(std::ofstream& fout);
-
+	void setSnow(bool hasSnow);
+	float getScrollSpeed();
 private:
 	void loadTextures();
 	void buildMaps();
@@ -51,7 +51,7 @@ private:
 	sf::RenderWindow& mWindow;
 	TextureHolder mTextures;
 	sf::View mWorldView;
-
+	//CSNOW snow;
 	int playerID;
 	Player player;
 
@@ -71,6 +71,7 @@ private:
 	bool isInit;
 	bool isLoss;
 	bool playSFX;
+	//bool hasSnow;
 
 	int scorey = 7 * 60;
 };

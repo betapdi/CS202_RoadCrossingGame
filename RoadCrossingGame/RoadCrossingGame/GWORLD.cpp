@@ -20,10 +20,18 @@ GWORLD::GWORLD(sf::RenderWindow& window)
 	loadTextures();
 	buildPlayer();
 	buildMaps();
+	//snow.init();
 }
 
 void GWORLD::processEvents(sf::Event &event) {
 	player.process(event);
+	//switch (event.type) {
+	//case sf::Event::KeyPressed:
+	//	if (event.key.code == sf::Keyboard::Space) {
+	//		hasSnow = !hasSnow;
+	//	}
+	//	break;
+	//}
 }
 
 GMAP* GWORLD::getCurrentMap() {
@@ -44,6 +52,11 @@ void GWORLD::update(float deltaTime) {
 	if (!isLoss) {
 		if (moveWorld) mWorldView.move(0.f, mScrollSpeed * deltaTime);
 	}
+
+	//if (hasSnow) {
+	//	snow.update(deltaTime);
+	//}
+
 	if (isBackFromPause || isInit) {
 		std::vector<bool> setting = getSetting();
 		player.setTexture(setting[0]);
@@ -174,6 +187,9 @@ void GWORLD::draw() {
 	}
 
 	player.render(&mWindow);
+	//if (hasSnow) {
+	//	snow.render(&mWindow);
+	//}
 }
 
 void GWORLD::playerMovement(float deltaTime)
@@ -271,9 +287,14 @@ void GWORLD::setBackFromPause(bool isBack) {
 	isBackFromPause = isBack;
 }
 
-void GWORLD::saveCharacterID(std::ofstream& fout) {
-	fout.write((char*)(&playerID), sizeof(int));
+//void GWORLD::setSnow(bool hasSnow) {
+//	this->hasSnow = hasSnow;
+//}
+
+float GWORLD::getScrollSpeed() {
+	return mScrollSpeed;
 }
+
 
 void GWORLD::loadTextures()
 {
